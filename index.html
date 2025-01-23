@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+   <style>
+       .file-tree {
+           position: fixed;
+           width: 300px;
+           height: 100vh;
+           overflow-y: auto;
+           background: #f8f9fa;
+           padding: 1rem;
+           border-right: 1px solid #dee2e6;
+       }
+       .content {
+           margin-left: 300px;
+           padding: 1rem;
+       }
+       .directory {
+           padding-left: 1.5rem;
+       }
+   </style>
+</head>
+<body>
+   <div id="root"></div>
+   <script type="text/babel">
+       const FileTree = ({ files, onFileSelect, selectedFile }) => {
+           const [expanded, setExpanded] = React.useState(new Set(['src', 'src/script', 'src/wallet']));
+
+           const toggleDir = (path) => {
+               const newExpanded = new Set(expanded);
+               if (newExpanded.has(path)) newExpanded.delete(path);
+               else newExpanded.add(path);
+               setExpanded(newExpanded);
+           };
+
+           const renderTree = (tree, path = '') => {
+               return Object.entries(tree).map(([name, value]) => {
+                   const currentPath = path ? `${path}/${name}` : name;
+                   if (typeof value === 'string') {
+                       return (
+                           <div 
+                               key={currentPath}
+                               className={`pl-6 py-1 cursor-pointer hover:bg-gray-200 ${selectedFile === currentPath ? 'bg-blue-100' : ''}`}
+                               onClick={() => onFileSelect(currentPath)}
+                           >
+                               📄 {name}
+                           </div>
+                       );
+                   } else {
+                       return (
+                           <div key={currentPath}>
+                               <div 
+                                   className="py-1 cursor-pointer hover:bg-gray-200 flex items-center"
+                                   onClick={() => toggleDir(currentPath)}
+                               >
+                                   <span className="mr-2">{expanded.has(currentPath) ? '📂' : '📁'}</span>
+                                   {name}
+                               </div>
+                               {expanded.has(currentPath) && (
+                                   <div className="directory">
+                                       {renderTree(value, currentPath)}
+                                   </div>
+                               )}
+                           </div>
+                       );
+                   }
+               });
+           };
+
+           return (
+               <div className="file-tree">
+                   <h2 className="text-xl font-bold mb-4">Files</h2>
+                   {renderTree(files)}
+               </div>
+           );
+       };
+
+       const MutationViewer = () => {
+           const [selectedFile, setSelectedFile] = React.useState('src/pow.cpp');
+           const [fileContent, setFileContent] = React.useState('');
+           const [mutationData, setMutationData] = React.useState({});
+           const [expandedLines, setExpandedLines] = React.useState(new Set());
+
+           const files = {
+               'src': {
+                   'wallet': {
+                       'coinselection.cpp': 'content',
+                   },/*
+		            'net_permissions.cpp': 'content',*/
+                    'script': {
+                        'interpreter.cpp': 'content'
+                    },
+                    'consensus': {
+                        'tx_verify.cpp': 'content',
+                        'tx_check.cpp': 'content',
+                    },
+                    'pow.cpp': 'content'
+               },
+           };
+
+           React.useEffect(() => {
+               const loadData = async () => {
+                   try {
+                       // Load mutations
+                       const mutationsResp = await fetch('./public/mutations.json');
+                       const mutations = await mutationsResp.json();
+                       setMutationData(mutations[selectedFile] || {});
+
+                       // Load file content
+                       const contentResp = await fetch(`./public/${selectedFile}`);
+                       const content = await contentResp.text();
+                       setFileContent(content);
+                   } catch (error) {
+                       console.error('Error:', error);
+                       setFileContent('Error loading content');
+                   }
+               };
+               loadData();
+           }, [selectedFile]);
+
+           const toggleLine = (lineNumber) => {
+               setExpandedLines(prev => {
+                   const newSet = new Set(prev);
+                   if (newSet.has(lineNumber)) newSet.delete(lineNumber);
+                   else newSet.add(lineNumber);
+                   return newSet;
+               });
+           };
+
+           return (
+               <div>
+                   <FileTree
+                       files={files} 
+                       onFileSelect={setSelectedFile}
+                       selectedFile={selectedFile}
+                   />
+                   
+                   {selectedFile && (
+                       <div className="content">
+                           <div className="max-w-6xl mx-auto">
+                               <div className="bg-white rounded-lg shadow-lg">
+                                   <div className="p-4 border-b">
+                                       <h2 className="text-xl font-bold">{selectedFile}</h2>
+                                   </div>
+                                   
+                                   <div className="bg-gray-50 rounded-lg p-4 overflow-x-auto">
+                                       <pre className="font-mono text-sm">
+                                           {fileContent.split('\n').map((line, index) => {
+                                               const lineNumber = index + 1;
+                                               const hasMutants = mutationData[lineNumber];
+                                               const lineColor = hasMutants ? 'text-red-600' : 'text-green-600';
+                                               
+                                               return (
+                                                   <div key={lineNumber}>
+                                                       <div
+                                                           className={`flex items-start ${hasMutants ? 'cursor-pointer hover:bg-gray-100' : ''} ${lineColor}`}
+                                                           onClick={() => hasMutants && toggleLine(lineNumber)}
+                                                       >
+                                                           <div className="w-12 text-gray-500 select-none">
+                                                               {lineNumber}
+                                                           </div>
+                                                           <div className="flex-1">
+                                                               {hasMutants && (
+                                                                   <span className="mr-2">
+                                                                       {expandedLines.has(lineNumber) ? '▼' : '▶'}
+                                                                   </span>
+                                                               )}
+                                                               <span>{line}</span>
+                                                           </div>
+                                                       </div>
+                                                       
+                                                       {expandedLines.has(lineNumber) && hasMutants && (
+                                                           <div className="ml-12 mt-2 mb-2 border-l-2 border-gray-200 pl-4">
+                                                               {hasMutants.map((mutant) => (
+                                                                   <div key={mutant.id} className="mb-4">
+                                                                       <div className="text-sm text-gray-600 mb-1">
+                                                                           Mutant #{mutant.id} - {mutant.status}
+                                                                       </div>
+                                                                       <div className="font-mono text-sm bg-gray-100 p-2 rounded whitespace-pre">
+                                                                           {mutant.diff}
+                                                                       </div>
+                                                                   </div>
+                                                               ))}
+                                                           </div>
+                                                       )}
+                                                   </div>
+                                               );
+                                           })}
+                                       </pre>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   )}
+               </div>
+           );
+       };
+
+       const container = document.getElementById('root');
+       const root = ReactDOM.createRoot(container);
+       root.render(<MutationViewer />);
+   </script>
+</body>
+</html>

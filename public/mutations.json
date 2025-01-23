@@ -1,0 +1,705 @@
+{
+    "src/wallet/coinselection.cpp": {
+        "669": [
+            {
+                "id": 1,
+                "diff": "@@ -666,7 +666,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n     for (const OutputGroup& group : groups) {\n         if (group.m_weight > max_selection_weight) {\n-            max_weight_exceeded = true;\n+                    max_weight_exceeded = false;\n             continue;\n         }\n         if (group.GetSelectionAmount() == nTargetValue) {\n",
+                "status": "alive"
+            }
+        ],
+        "929": [
+            {
+                "id": 1,
+                "diff": "@@ -926,7 +926,7 @@ void SelectionResult::Merge(const SelectionResult& other)\n \n     m_target += other.m_target;\n     m_use_effective |= other.m_use_effective;\n-    if (m_algo == SelectionAlgorithm::MANUAL) {\n+    if (1==0) {\n         m_algo = other.m_algo;\n     }\n \n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -926,7 +926,7 @@ void SelectionResult::Merge(const SelectionResult& other)\n \n     m_target += other.m_target;\n     m_use_effective |= other.m_use_effective;\n-    if (m_algo == SelectionAlgorithm::MANUAL) {\n+    if (1==1) {\n         m_algo = other.m_algo;\n     }\n \n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -926,7 +926,7 @@ void SelectionResult::Merge(const SelectionResult& other)\n \n     m_target += other.m_target;\n     m_use_effective |= other.m_use_effective;\n-    if (m_algo == SelectionAlgorithm::MANUAL) {\n+    if (m_algo != SelectionAlgorithm::MANUAL) {\n         m_algo = other.m_algo;\n     }\n \n",
+                "status": "alive"
+            }
+        ],
+        "567": [
+            {
+                "id": 1,
+                "diff": "@@ -564,7 +564,7 @@ util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utx\n \n         // If the selection weight exceeds the maximum allowed size, remove the least valuable inputs until we\n         // are below max weight.\n-        if (weight > max_selection_weight) {\n+            if (weight >= max_selection_weight) {\n             max_tx_weight_exceeded = true; // mark it in case we don't find any useful result.\n             do {\n                 const OutputGroup& to_remove_group = heap.top();\n",
+                "status": "alive"
+            }
+        ],
+        "816": [
+            {
+                "id": 1,
+                "diff": "@@ -813,7 +813,7 @@ CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_f\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n         const auto upper_bound = std::min(payment_value * 2, CHANGE_UPPER);\n-        return change_fee + rng.randrange(upper_bound - CHANGE_LOWER) + CHANGE_LOWER;\n+            return change_fee * rng.randrange(upper_bound - CHANGE_LOWER) * CHANGE_LOWER;\n     }\n }\n \n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -813,7 +813,7 @@ CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_f\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n         const auto upper_bound = std::min(payment_value * 2, CHANGE_UPPER);\n-        return change_fee + rng.randrange(upper_bound - CHANGE_LOWER) + CHANGE_LOWER;\n+            return change_fee / rng.randrange(upper_bound - CHANGE_LOWER) / CHANGE_LOWER;\n     }\n }\n \n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -813,7 +813,7 @@ CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_f\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n         const auto upper_bound = std::min(payment_value * 2, CHANGE_UPPER);\n-        return change_fee + rng.randrange(upper_bound - CHANGE_LOWER) + CHANGE_LOWER;\n+            return change_fee + rng.randrange(upper_bound + CHANGE_LOWER) + CHANGE_LOWER;\n     }\n }\n \n",
+                "status": "alive"
+            }
+        ],
+        "670": [
+            {
+                "id": 1,
+                "diff": "@@ -667,7 +667,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n     for (const OutputGroup& group : groups) {\n         if (group.m_weight > max_selection_weight) {\n             max_weight_exceeded = true;\n-            continue;\n+                    break;\n         }\n         if (group.GetSelectionAmount() == nTargetValue) {\n             result.AddInput(group);\n",
+                "status": "alive"
+            }
+        ],
+        "91": [
+            {
+                "id": 1,
+                "diff": "@@ -88,7 +88,7 @@ struct {\n  * @returns The result of this coin selection algorithm, or std::nullopt\n  */\n \n-static const size_t TOTAL_TRIES = 100000;\n+static const size_t TOTAL_TRIES = 100000 - 1;\n \n util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, const CAmount& cost_of_change,\n                                              int max_selection_weight)\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -88,7 +88,7 @@ struct {\n  * @returns The result of this coin selection algorithm, or std::nullopt\n  */\n \n-static const size_t TOTAL_TRIES = 100000;\n+static const size_t TOTAL_TRIES = 100000 + 1;\n \n util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, const CAmount& cost_of_change,\n                                              int max_selection_weight)\n",
+                "status": "alive"
+            }
+        ],
+        "892": [
+            {
+                "id": 1,
+                "diff": "@@ -889,7 +889,7 @@ CAmount SelectionResult::GetSelectedEffectiveValue() const\n \n CAmount SelectionResult::GetTotalBumpFees() const\n {\n-    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmount sum, const auto& coin) { return sum + coin->ancestor_bump_fees; }) - bump_fee_group_discount;\n+    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmount sum, const auto& coin) { return sum * coin->ancestor_bump_fees; }) - bump_fee_group_discount;\n }\n \n void SelectionResult::Clear()\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -889,7 +889,7 @@ CAmount SelectionResult::GetSelectedEffectiveValue() const\n \n CAmount SelectionResult::GetTotalBumpFees() const\n {\n-    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmount sum, const auto& coin) { return sum + coin->ancestor_bump_fees; }) - bump_fee_group_discount;\n+    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmount sum, const auto& coin) { return sum / coin->ancestor_bump_fees; }) - bump_fee_group_discount;\n }\n \n void SelectionResult::Clear()\n",
+                "status": "alive"
+            }
+        ],
+        "347": [
+            {
+                "id": 1,
+                "diff": "@@ -344,7 +344,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n     }\n \n     const CAmount total_target = selection_target + change_target;\n-    if (total_available < total_target) {\n+    if (total_available <= total_target) {\n         // Insufficient funds\n         return util::Error();\n     }\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -344,7 +344,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n     }\n \n     const CAmount total_target = selection_target + change_target;\n-    if (total_available < total_target) {\n+    if (1==0) {\n         // Insufficient funds\n         return util::Error();\n     }\n",
+                "status": "alive"
+            }
+        ],
+        "675": [
+            {
+                "id": 1,
+                "diff": "@@ -672,7 +672,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         if (group.GetSelectionAmount() == nTargetValue) {\n             result.AddInput(group);\n             return result;\n-        } else if (group.GetSelectionAmount() < nTargetValue + change_target) {\n+            } else if (group.GetSelectionAmount() <= nTargetValue + change_target) {\n             applicable_groups.push_back(group);\n             nTotalLower += group.GetSelectionAmount();\n         } else if (!lowest_larger || group.GetSelectionAmount() < lowest_larger->GetSelectionAmount()) {\n",
+                "status": "alive"
+            }
+        ],
+        "815": [
+            {
+                "id": 1,
+                "diff": "@@ -812,7 +812,7 @@ CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_f\n         return change_fee + CHANGE_LOWER;\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n-        const auto upper_bound = std::min(payment_value * 2, CHANGE_UPPER);\n+            const auto upper_bound = std::max(payment_value * 2, CHANGE_UPPER);\n         return change_fee + rng.randrange(upper_bound - CHANGE_LOWER) + CHANGE_LOWER;\n     }\n }\n",
+                "status": "alive"
+            }
+        ],
+        "811": [
+            {
+                "id": 1,
+                "diff": "@@ -808,7 +808,7 @@ void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool in\n \n CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng)\n {\n-    if (payment_value <= CHANGE_LOWER / 2) {\n+    if (payment_value <= CHANGE_LOWER * 2) {\n         return change_fee + CHANGE_LOWER;\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -808,7 +808,7 @@ void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool in\n \n CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng)\n {\n-    if (payment_value <= CHANGE_LOWER / 2) {\n+    if (1==1) {\n         return change_fee + CHANGE_LOWER;\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -808,7 +808,7 @@ void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool in\n \n CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng)\n {\n-    if (payment_value <= CHANGE_LOWER / 2) {\n+    if (1==0) {\n         return change_fee + CHANGE_LOWER;\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n",
+                "status": "alive"
+            }
+        ],
+        "357": [
+            {
+                "id": 1,
+                "diff": "@@ -354,7 +354,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n     std::vector<size_t> best_selection;\n \n     // The currently selected effective amount, and the effective amount of the best selection so far\n-    CAmount curr_amount = 0;\n+    CAmount curr_amount = 0 + 1;\n     CAmount best_selection_amount = MAX_MONEY;\n \n     // The weight of the currently selected input set, and the weight of the best selection\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -354,7 +354,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n     std::vector<size_t> best_selection;\n \n     // The currently selected effective amount, and the effective amount of the best selection so far\n-    CAmount curr_amount = 0;\n+    CAmount curr_amount = 0 - 1;\n     CAmount best_selection_amount = MAX_MONEY;\n \n     // The weight of the currently selected input set, and the weight of the best selection\n",
+                "status": "alive"
+            }
+        ],
+        "553": [
+            {
+                "id": 1,
+                "diff": "@@ -550,7 +550,7 @@ util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utx\n     std::iota(indexes.begin(), indexes.end(), 0);\n     std::shuffle(indexes.begin(), indexes.end(), rng);\n \n-    CAmount selected_eff_value = 0;\n+    CAmount selected_eff_value = 0 + 1;\n     int weight = 0;\n     bool max_tx_weight_exceeded = false;\n     for (const size_t i : indexes) {\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -550,7 +550,7 @@ util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utx\n     std::iota(indexes.begin(), indexes.end(), 0);\n     std::shuffle(indexes.begin(), indexes.end(), rng);\n \n-    CAmount selected_eff_value = 0;\n+    CAmount selected_eff_value = 0 - 1;\n     int weight = 0;\n     bool max_tx_weight_exceeded = false;\n     for (const size_t i : indexes) {\n",
+                "status": "alive"
+            }
+        ],
+        "612": [
+            {
+                "id": 1,
+                "diff": "@@ -609,7 +609,7 @@ static void ApproximateBestSubset(FastRandomContext& insecure_rand, const std::v\n     vfBest.assign(groups.size(), true);\n     nBest = nTotalLower;\n \n-    for (int nRep = 0; nRep < iterations && nBest != nTargetValue; nRep++)\n+    for (int nRep = 0; nRep <= iterations && nBest != nTargetValue; nRep++)\n     {\n         vfIncluded.assign(groups.size(), false);\n         CAmount nTotal = 0;\n",
+                "status": "alive"
+            }
+        ],
+        "618": [
+            {
+                "id": 1,
+                "diff": "@@ -615,7 +615,7 @@ static void ApproximateBestSubset(FastRandomContext& insecure_rand, const std::v\n         CAmount nTotal = 0;\n         int selected_coins_weight{0};\n         bool fReachedTarget = false;\n-        for (int nPass = 0; nPass < 2 && !fReachedTarget; nPass++)\n+            for (int nPass = 0; nPass <= 2 && !fReachedTarget; nPass++)\n         {\n             for (unsigned int i = 0; i < groups.size(); i++)\n             {\n",
+                "status": "alive"
+            }
+        ],
+        "634": [
+            {
+                "id": 1,
+                "diff": "@@ -631,7 +631,7 @@ static void ApproximateBestSubset(FastRandomContext& insecure_rand, const std::v\n                     selected_coins_weight += groups[i].m_weight;\n                     vfIncluded[i] = true;\n                     if (nTotal >= nTargetValue && selected_coins_weight <= max_selection_weight) {\n-                        fReachedTarget = true;\n+                                            fReachedTarget = false;\n                         // If the total is between nTargetValue and nBest, it's our new best\n                         // approximation.\n                         if (nTotal < nBest)\n",
+                "status": "alive"
+            }
+        ],
+        "48": [
+            {
+                "id": 1,
+                "diff": "@@ -45,7 +45,7 @@ struct {\n             // Sort lower weight to front on tied effective_value\n             return a.m_weight < b.m_weight;\n         }\n-        return a.GetSelectionAmount() > b.GetSelectionAmount();\n+        return a.GetSelectionAmount() >= b.GetSelectionAmount();\n     }\n } descending_effval_weight;\n \n",
+                "status": "alive"
+            }
+        ],
+        "812": [
+            {
+                "id": 1,
+                "diff": "@@ -809,7 +809,7 @@ void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool in\n CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng)\n {\n     if (payment_value <= CHANGE_LOWER / 2) {\n-        return change_fee + CHANGE_LOWER;\n+            return change_fee / CHANGE_LOWER;\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n         const auto upper_bound = std::min(payment_value * 2, CHANGE_UPPER);\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -809,7 +809,7 @@ void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool in\n CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng)\n {\n     if (payment_value <= CHANGE_LOWER / 2) {\n-        return change_fee + CHANGE_LOWER;\n+            return change_fee * CHANGE_LOWER;\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n         const auto upper_bound = std::min(payment_value * 2, CHANGE_UPPER);\n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -809,7 +809,7 @@ void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool in\n CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng)\n {\n     if (payment_value <= CHANGE_LOWER / 2) {\n-        return change_fee + CHANGE_LOWER;\n+            return change_fee - CHANGE_LOWER;\n     } else {\n         // random value between 50ksat and min (payment_value * 2, 1milsat)\n         const auto upper_bound = std::min(payment_value * 2, CHANGE_UPPER);\n",
+                "status": "alive"
+            }
+        ],
+        "121": [
+            {
+                "id": 1,
+                "diff": "@@ -118,7 +118,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool\n     CAmount best_waste = MAX_MONEY;\n \n     bool is_feerate_high = utxo_pool.at(0).fee > utxo_pool.at(0).long_term_fee;\n-    bool max_tx_weight_exceeded = false;\n+    bool max_tx_weight_exceeded = true;\n \n     // Depth First search loop for choosing the UTXOs\n     for (size_t curr_try = 0, utxo_pool_index = 0; curr_try < TOTAL_TRIES; ++curr_try, ++utxo_pool_index) {\n",
+                "status": "alive"
+            }
+        ],
+        "668": [
+            {
+                "id": 1,
+                "diff": "@@ -665,7 +665,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n     std::shuffle(groups.begin(), groups.end(), rng);\n \n     for (const OutputGroup& group : groups) {\n-        if (group.m_weight > max_selection_weight) {\n+            if (group.m_weight >= max_selection_weight) {\n             max_weight_exceeded = true;\n             continue;\n         }\n",
+                "status": "alive"
+            }
+        ],
+        "772": [
+            {
+                "id": 1,
+                "diff": "@@ -769,7 +769,7 @@ void OutputGroup::Insert(const std::shared_ptr<COutput>& output, size_t ancestor\n     // ancestors here express the number of ancestors the new coin will end up having, which is\n     // the sum, rather than the max; this will overestimate in the cases where multiple inputs\n     // have common ancestors\n-    m_ancestors += ancestors;\n+    m_ancestors *= ancestors;\n     // descendants is the count as seen from the top ancestor, not the descendants as seen from the\n     // coin itself; thus, this value is counted as the max, not the sum\n     m_descendants = std::max(m_descendants, descendants);\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -769,7 +769,7 @@ void OutputGroup::Insert(const std::shared_ptr<COutput>& output, size_t ancestor\n     // ancestors here express the number of ancestors the new coin will end up having, which is\n     // the sum, rather than the max; this will overestimate in the cases where multiple inputs\n     // have common ancestors\n-    m_ancestors += ancestors;\n+    m_ancestors /= ancestors;\n     // descendants is the count as seen from the top ancestor, not the descendants as seen from the\n     // coin itself; thus, this value is counted as the max, not the sum\n     m_descendants = std::max(m_descendants, descendants);\n",
+                "status": "alive"
+            }
+        ],
+        "728": [
+            {
+                "id": 1,
+                "diff": "@@ -725,7 +725,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         // If the result exceeds the maximum allowed size, return closest UTXO above the target\n         if (result.GetWeight() > max_selection_weight) {\n             // No coin above target, nothing to do.\n-            if (!lowest_larger) return ErrorMaxWeightExceeded();\n+                    if (1==1) return ErrorMaxWeightExceeded();\n \n             // Return closest UTXO above target\n             result.Clear();\n",
+                "status": "alive"
+            }
+        ],
+        "444": [
+            {
+                "id": 1,
+                "diff": "@@ -441,7 +441,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n-                should_cut = true;\n+                            should_cut = false;\n             } else {\n                 should_shift  = true;\n             }\n",
+                "status": "alive"
+            }
+        ],
+        "688": [
+            {
+                "id": 1,
+                "diff": "@@ -685,7 +685,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n             result.AddInput(group);\n         }\n         if (result.GetWeight() <= max_selection_weight) return result;\n-        else max_weight_exceeded = true;\n+            else max_weight_exceeded = false;\n \n         // Try something else\n         result.Clear();\n",
+                "status": "alive"
+            }
+        ],
+        "696": [
+            {
+                "id": 1,
+                "diff": "@@ -693,7 +693,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n     if (nTotalLower < nTargetValue) {\n         if (!lowest_larger) {\n-            if (max_weight_exceeded) return ErrorMaxWeightExceeded();\n+        \n             return util::Error();\n         }\n         result.AddInput(*lowest_larger);\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -693,7 +693,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n     if (nTotalLower < nTargetValue) {\n         if (!lowest_larger) {\n-            if (max_weight_exceeded) return ErrorMaxWeightExceeded();\n+                    if (1==0) return ErrorMaxWeightExceeded();\n             return util::Error();\n         }\n         result.AddInput(*lowest_larger);\n",
+                "status": "alive"
+            }
+        ],
+        "775": [
+            {
+                "id": 1,
+                "diff": "@@ -772,7 +772,7 @@ void OutputGroup::Insert(const std::shared_ptr<COutput>& output, size_t ancestor\n     m_ancestors += ancestors;\n     // descendants is the count as seen from the top ancestor, not the descendants as seen from the\n     // coin itself; thus, this value is counted as the max, not the sum\n-    m_descendants = std::max(m_descendants, descendants);\n+    m_descendants = std::min(m_descendants, descendants);\n \n     if (output->input_bytes > 0) {\n         m_weight += output->input_bytes * WITNESS_SCALE_FACTOR;\n",
+                "status": "alive"
+            }
+        ],
+        "683": [
+            {
+                "id": 1,
+                "diff": "@@ -680,7 +680,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         }\n     }\n \n-    if (nTotalLower == nTargetValue) {\n+    if (1==0) {\n         for (const auto& group : applicable_groups) {\n             result.AddInput(group);\n         }\n",
+                "status": "alive"
+            }
+        ],
+        "737": [
+            {
+                "id": 1,
+                "diff": "@@ -734,7 +734,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n         if (LogAcceptCategory(BCLog::SELECTCOINS, BCLog::Level::Debug)) {\n             std::string log_message{\"Coin selection best subset: \"};\n-            for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n+                    for (unsigned int i = 0; i > applicable_groups.size(); i++) {\n                 if (vfBest[i]) {\n                     log_message += strprintf(\"%s \", FormatMoney(applicable_groups[i].m_value));\n                 }\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -734,7 +734,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n         if (LogAcceptCategory(BCLog::SELECTCOINS, BCLog::Level::Debug)) {\n             std::string log_message{\"Coin selection best subset: \"};\n-            for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n+                    for (unsigned int i = 0; i <= applicable_groups.size(); i++) {\n                 if (vfBest[i]) {\n                     log_message += strprintf(\"%s \", FormatMoney(applicable_groups[i].m_value));\n                 }\n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -734,7 +734,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n         if (LogAcceptCategory(BCLog::SELECTCOINS, BCLog::Level::Debug)) {\n             std::string log_message{\"Coin selection best subset: \"};\n-            for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n+                    for (unsigned int i = 0; i < applicable_groups.size(); i--) {\n                 if (vfBest[i]) {\n                     log_message += strprintf(\"%s \", FormatMoney(applicable_groups[i].m_value));\n                 }\n",
+                "status": "alive"
+            },
+            {
+                "id": 4,
+                "diff": "@@ -734,7 +734,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n         if (LogAcceptCategory(BCLog::SELECTCOINS, BCLog::Level::Debug)) {\n             std::string log_message{\"Coin selection best subset: \"};\n-            for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n+                    for (unsigned int i = 0; i >= applicable_groups.size(); i++) {\n                 if (vfBest[i]) {\n                     log_message += strprintf(\"%s \", FormatMoney(applicable_groups[i].m_value));\n                 }\n",
+                "status": "alive"
+            },
+            {
+                "id": 5,
+                "diff": "@@ -734,7 +734,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n \n         if (LogAcceptCategory(BCLog::SELECTCOINS, BCLog::Level::Debug)) {\n             std::string log_message{\"Coin selection best subset: \"};\n-            for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n+                    for (unsigned int i = 0; i < applicable_groups.size(); i++) {break;\n                 if (vfBest[i]) {\n                     log_message += strprintf(\"%s \", FormatMoney(applicable_groups[i].m_value));\n                 }\n",
+                "status": "alive"
+            }
+        ],
+        "46": [
+            {
+                "id": 1,
+                "diff": "@@ -43,7 +43,7 @@ struct {\n     {\n         if (a.GetSelectionAmount() == b.GetSelectionAmount()) {\n             // Sort lower weight to front on tied effective_value\n-            return a.m_weight < b.m_weight;\n+            return a.m_weight > b.m_weight;\n         }\n         return a.GetSelectionAmount() > b.GetSelectionAmount();\n     }\n",
+                "status": "alive"
+            }
+        ],
+        "448": [
+            {
+                "id": 1,
+                "diff": "@@ -445,7 +445,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             } else {\n                 should_shift  = true;\n             }\n-        } else if (curr_amount >= total_target) {\n+            } else if (curr_amount > total_target) {\n             // Success, adding more weight cannot be better: SHIFT\n             should_shift  = true;\n             if (curr_weight < best_selection_weight || (curr_weight == best_selection_weight && curr_amount < best_selection_amount)) {\n",
+                "status": "alive"
+            }
+        ],
+        "532": [
+            {
+                "id": 1,
+                "diff": "@@ -529,7 +529,7 @@ class MinOutputGroupComparator\n public:\n     int operator() (const OutputGroup& group1, const OutputGroup& group2) const\n     {\n-        return group1.GetSelectionAmount() > group2.GetSelectionAmount();\n+            return group1.GetSelectionAmount() >= group2.GetSelectionAmount();\n     }\n };\n \n",
+                "status": "alive"
+            }
+        ],
+        "435": [
+            {
+                "id": 1,
+                "diff": "@@ -432,7 +432,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n \n         // EVALUATE current selection: check for solutions and see whether we can CUT or SHIFT before EXPLORING further\n         auto curr_tail = curr_selection.back();\n-        if (curr_amount + lookahead[curr_tail] < total_target) {\n+            if (curr_amount + lookahead[curr_tail] <= total_target) {\n             // Insufficient funds with lookahead: CUT\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n",
+                "status": "alive"
+            }
+        ],
+        "131": [
+            {
+                "id": 1,
+                "diff": "@@ -128,7 +128,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool\n             curr_value > selection_target + cost_of_change || // Selected value is out of range, go back and try other branch\n             (curr_waste > best_waste && is_feerate_high)) { // Don't select things which we know will be more wasteful if the waste is increasing\n             backtrack = true;\n-        } else if (curr_selection_weight > max_selection_weight) { // Selected UTXOs weight exceeds the maximum weight allowed, cannot find more solutions by adding more inputs\n+        } else if (curr_selection_weight >= max_selection_weight) { // Selected UTXOs weight exceeds the maximum weight allowed, cannot find more solutions by adding more inputs\n             max_tx_weight_exceeded = true; // at least one selection attempt exceeded the max weight\n             backtrack = true;\n         } else if (curr_value >= selection_target) {       // Selected value is within range\n",
+                "status": "alive"
+            }
+        ],
+        "777": [
+            {
+                "id": 1,
+                "diff": "@@ -774,7 +774,7 @@ void OutputGroup::Insert(const std::shared_ptr<COutput>& output, size_t ancestor\n     // coin itself; thus, this value is counted as the max, not the sum\n     m_descendants = std::max(m_descendants, descendants);\n \n-    if (output->input_bytes > 0) {\n+    if (output->input_bytes >= 0) {\n         m_weight += output->input_bytes * WITNESS_SCALE_FACTOR;\n     }\n }\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -774,7 +774,7 @@ void OutputGroup::Insert(const std::shared_ptr<COutput>& output, size_t ancestor\n     // coin itself; thus, this value is counted as the max, not the sum\n     m_descendants = std::max(m_descendants, descendants);\n \n-    if (output->input_bytes > 0) {\n+    if (1==1) {\n         m_weight += output->input_bytes * WITNESS_SCALE_FACTOR;\n     }\n }\n",
+                "status": "alive"
+            }
+        ],
+        "738": [
+            {
+                "id": 1,
+                "diff": "@@ -735,7 +735,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         if (LogAcceptCategory(BCLog::SELECTCOINS, BCLog::Level::Debug)) {\n             std::string log_message{\"Coin selection best subset: \"};\n             for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n-                if (vfBest[i]) {\n+                            if (1==0) {\n                     log_message += strprintf(\"%s \", FormatMoney(applicable_groups[i].m_value));\n                 }\n             }\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -735,7 +735,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         if (LogAcceptCategory(BCLog::SELECTCOINS, BCLog::Level::Debug)) {\n             std::string log_message{\"Coin selection best subset: \"};\n             for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n-                if (vfBest[i]) {\n+                            if (1==1) {\n                     log_message += strprintf(\"%s \", FormatMoney(applicable_groups[i].m_value));\n                 }\n             }\n",
+                "status": "alive"
+            }
+        ],
+        "709": [
+            {
+                "id": 1,
+                "diff": "@@ -706,7 +706,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n     CAmount nBest;\n \n     ApproximateBestSubset(rng, applicable_groups, nTotalLower, nTargetValue, vfBest, nBest, max_selection_weight);\n-    if (nBest != nTargetValue && nTotalLower >= nTargetValue + change_target) {\n+    if (nBest != nTargetValue && nTotalLower >= nTargetValue / change_target) {\n         ApproximateBestSubset(rng, applicable_groups, nTotalLower, nTargetValue + change_target, vfBest, nBest, max_selection_weight);\n     }\n \n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -706,7 +706,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n     CAmount nBest;\n \n     ApproximateBestSubset(rng, applicable_groups, nTotalLower, nTargetValue, vfBest, nBest, max_selection_weight);\n-    if (nBest != nTargetValue && nTotalLower >= nTargetValue + change_target) {\n+    if (nBest != nTargetValue && nTotalLower > nTargetValue + change_target) {\n         ApproximateBestSubset(rng, applicable_groups, nTotalLower, nTargetValue + change_target, vfBest, nBest, max_selection_weight);\n     }\n \n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -706,7 +706,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n     CAmount nBest;\n \n     ApproximateBestSubset(rng, applicable_groups, nTotalLower, nTargetValue, vfBest, nBest, max_selection_weight);\n-    if (nBest != nTargetValue && nTotalLower >= nTargetValue + change_target) {\n+    if (nBest != nTargetValue && nTotalLower >= nTargetValue - change_target) {\n         ApproximateBestSubset(rng, applicable_groups, nTotalLower, nTargetValue + change_target, vfBest, nBest, max_selection_weight);\n     }\n \n",
+                "status": "alive"
+            }
+        ],
+        "140": [
+            {
+                "id": 1,
+                "diff": "@@ -137,7 +137,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool\n             // However we are not going to explore that because this optimization for the waste is only done when we have hit our target\n             // value. Adding any more UTXOs will be just burning the UTXO; it will go entirely to fees. Thus we aren't going to\n             // explore any more UTXOs to avoid burning money like that.\n-            if (curr_waste <= best_waste) {\n+            if (1==1) {\n                 best_selection = curr_selection;\n                 best_waste = curr_waste;\n             }\n",
+                "status": "alive"
+            }
+        ],
+        "440": [
+            {
+                "id": 1,
+                "diff": "@@ -437,7 +437,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n             // best_selection_weight is initialized to max_selection_weight\n-            if (curr_weight > max_selection_weight) max_tx_weight_exceeded = true;\n+                    if (curr_weight >= max_selection_weight) max_tx_weight_exceeded = true;\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -437,7 +437,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n             // best_selection_weight is initialized to max_selection_weight\n-            if (curr_weight > max_selection_weight) max_tx_weight_exceeded = true;\n+                    if (1==1) max_tx_weight_exceeded = true;\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n",
+                "status": "alive"
+            }
+        ],
+        "466": [
+            {
+                "id": 1,
+                "diff": "@@ -463,7 +463,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             }\n         }\n \n-        if (curr_try >= TOTAL_TRIES) {\n+            if (curr_try > TOTAL_TRIES) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n             result.SetAlgoCompleted(false);\n             break;\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -463,7 +463,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             }\n         }\n \n-        if (curr_try >= TOTAL_TRIES) {\n+            if (1==0) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n             result.SetAlgoCompleted(false);\n             break;\n",
+                "status": "alive"
+            }
+        ],
+        "34": [
+            {
+                "id": 1,
+                "diff": "@@ -31,7 +31,7 @@ struct {\n     {\n         if (a.GetSelectionAmount() == b.GetSelectionAmount()) {\n             // Lower waste is better when effective_values are tied\n-            return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n+                    return (a.fee + a.long_term_fee) < (b.fee + b.long_term_fee);\n         }\n         return a.GetSelectionAmount() > b.GetSelectionAmount();\n     }\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -31,7 +31,7 @@ struct {\n     {\n         if (a.GetSelectionAmount() == b.GetSelectionAmount()) {\n             // Lower waste is better when effective_values are tied\n-            return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n+                    return (a.fee - a.long_term_fee) > (b.fee - b.long_term_fee);\n         }\n         return a.GetSelectionAmount() > b.GetSelectionAmount();\n     }\n",
+                "status": "alive"
+            }
+        ],
+        "36": [
+            {
+                "id": 1,
+                "diff": "@@ -33,7 +33,7 @@ struct {\n             // Lower waste is better when effective_values are tied\n             return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n         }\n-        return a.GetSelectionAmount() > b.GetSelectionAmount();\n+            return a.GetSelectionAmount() >= b.GetSelectionAmount();\n     }\n } descending;\n \n",
+                "status": "alive"
+            }
+        ],
+        "468": [
+            {
+                "id": 1,
+                "diff": "@@ -465,7 +465,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n \n         if (curr_try >= TOTAL_TRIES) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n-            result.SetAlgoCompleted(false);\n+                    result.SetAlgoCompleted(true);\n             break;\n         }\n \n",
+                "status": "alive"
+            }
+        ],
+        "124": [
+            {
+                "id": 1,
+                "diff": "@@ -121,7 +121,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool\n     bool max_tx_weight_exceeded = false;\n \n     // Depth First search loop for choosing the UTXOs\n-    for (size_t curr_try = 0, utxo_pool_index = 0; curr_try < TOTAL_TRIES; ++curr_try, ++utxo_pool_index) {\n+    for (size_t curr_try = 0, utxo_pool_index = 0; curr_try <= TOTAL_TRIES; ++curr_try, ++utxo_pool_index) {\n         // Conditions for starting a backtrack\n         bool backtrack = false;\n         if (curr_value + curr_available_value < selection_target || // Cannot possibly reach target with the amount remaining in the curr_available_value.\n",
+                "status": "alive"
+            }
+        ],
+        "716": [
+            {
+                "id": 1,
+                "diff": "@@ -713,7 +713,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n     // If we have a bigger coin and (either the stochastic approximation didn't find a good solution,\n     //                                   or the next bigger coin is closer), return the bigger coin\n     if (lowest_larger &&\n-        ((nBest != nTargetValue && nBest < nTargetValue + change_target) || lowest_larger->GetSelectionAmount() <= nBest)) {\n+            ((nBest != nTargetValue && nBest <= nTargetValue + change_target) || lowest_larger->GetSelectionAmount() <= nBest)) {\n         result.AddInput(*lowest_larger);\n     } else {\n         for (unsigned int i = 0; i < applicable_groups.size(); i++) {\n",
+                "status": "alive"
+            }
+        ],
+        "761": [
+            {
+                "id": 1,
+                "diff": "@@ -758,7 +758,7 @@ void OutputGroup::Insert(const std::shared_ptr<COutput>& output, size_t ancestor\n \n     fee += coin.GetFee();\n \n-    coin.long_term_fee = coin.input_bytes < 0 ? 0 : m_long_term_feerate.GetFee(coin.input_bytes);\n+    coin.long_term_fee = coin.input_bytes <= 0 ? 0 : m_long_term_feerate.GetFee(coin.input_bytes);\n     long_term_fee += coin.long_term_fee;\n \n     effective_value += coin.GetEffectiveValue();\n",
+                "status": "alive"
+            }
+        ],
+        "796": [
+            {
+                "id": 1,
+                "diff": "@@ -793,7 +793,7 @@ CAmount OutputGroup::GetSelectionAmount() const\n \n void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool insert_positive, bool insert_mixed)\n {\n-    if (group.m_outputs.empty()) return;\n+\n \n     Groups& groups = groups_by_type[type];\n     if (insert_positive && group.GetSelectionAmount() > 0) {\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -793,7 +793,7 @@ CAmount OutputGroup::GetSelectionAmount() const\n \n void OutputGroupTypeMap::Push(const OutputGroup& group, OutputType type, bool insert_positive, bool insert_mixed)\n {\n-    if (group.m_outputs.empty()) return;\n+\n \n     Groups& groups = groups_by_type[type];\n     if (insert_positive && group.GetSelectionAmount() > 0) {\n",
+                "status": "alive"
+            }
+        ],
+        "726": [
+            {
+                "id": 1,
+                "diff": "@@ -723,7 +723,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         }\n \n         // If the result exceeds the maximum allowed size, return closest UTXO above the target\n-        if (result.GetWeight() > max_selection_weight) {\n+            if (result.GetWeight() >= max_selection_weight) {\n             // No coin above target, nothing to do.\n             if (!lowest_larger) return ErrorMaxWeightExceeded();\n \n",
+                "status": "alive"
+            }
+        ],
+        "490": [
+            {
+                "id": 1,
+                "diff": "@@ -487,7 +487,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             if (curr_selection.empty()) {\n                 // Exhausted search space before running into attempt limit\n                 is_done = true;\n-                result.SetAlgoCompleted(true);\n+                            result.SetAlgoCompleted(false);\n                 break;\n             }\n             next_utxo = curr_selection.back() + 1;\n",
+                "status": "alive"
+            }
+        ],
+        "694": [
+            {
+                "id": 1,
+                "diff": "@@ -691,7 +691,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         result.Clear();\n     }\n \n-    if (nTotalLower < nTargetValue) {\n+    if (nTotalLower <= nTargetValue) {\n         if (!lowest_larger) {\n             if (max_weight_exceeded) return ErrorMaxWeightExceeded();\n             return util::Error();\n",
+                "status": "alive"
+            }
+        ],
+        "443": [
+            {
+                "id": 1,
+                "diff": "@@ -440,7 +440,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             if (curr_weight > max_selection_weight) max_tx_weight_exceeded = true;\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n-            if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n+                    if (1==0) {\n                 should_cut = true;\n             } else {\n                 should_shift  = true;\n",
+                "status": "alive"
+            }
+        ],
+        "953": [
+            {
+                "id": 1,
+                "diff": "@@ -950,7 +950,7 @@ bool SelectionResult::operator<(SelectionResult other) const\n     Assert(m_waste.has_value());\n     Assert(other.m_waste.has_value());\n     // As this operator is only used in std::min_element, we want the result that has more inputs when waste are equal.\n-    return *m_waste < *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() > other.m_selected_inputs.size());\n+    return *m_waste < *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() < other.m_selected_inputs.size());\n }\n \n std::string COutput::ToString() const\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -950,7 +950,7 @@ bool SelectionResult::operator<(SelectionResult other) const\n     Assert(m_waste.has_value());\n     Assert(other.m_waste.has_value());\n     // As this operator is only used in std::min_element, we want the result that has more inputs when waste are equal.\n-    return *m_waste < *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() > other.m_selected_inputs.size());\n+    return *m_waste < *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() >= other.m_selected_inputs.size());\n }\n \n std::string COutput::ToString() const\n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -950,7 +950,7 @@ bool SelectionResult::operator<(SelectionResult other) const\n     Assert(m_waste.has_value());\n     Assert(other.m_waste.has_value());\n     // As this operator is only used in std::min_element, we want the result that has more inputs when waste are equal.\n-    return *m_waste < *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() > other.m_selected_inputs.size());\n+    return *m_waste < *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() <= other.m_selected_inputs.size());\n }\n \n std::string COutput::ToString() const\n",
+                "status": "alive"
+            },
+            {
+                "id": 4,
+                "diff": "@@ -950,7 +950,7 @@ bool SelectionResult::operator<(SelectionResult other) const\n     Assert(m_waste.has_value());\n     Assert(other.m_waste.has_value());\n     // As this operator is only used in std::min_element, we want the result that has more inputs when waste are equal.\n-    return *m_waste < *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() > other.m_selected_inputs.size());\n+    return *m_waste <= *other.m_waste || (*m_waste == *other.m_waste && m_selected_inputs.size() > other.m_selected_inputs.size());\n }\n \n std::string COutput::ToString() const\n",
+                "status": "alive"
+            }
+        ],
+        "365": [
+            {
+                "id": 1,
+                "diff": "@@ -362,7 +362,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n     int best_selection_weight = max_selection_weight; // Tie is fine, because we prefer lower selection amount\n \n     // Whether the input sets generated during this search have exceeded the maximum transaction weight at any point\n-    bool max_tx_weight_exceeded = false;\n+    bool max_tx_weight_exceeded = true;\n \n     // Index of the next UTXO to consider in utxo_pool\n     size_t next_utxo = 0;\n",
+                "status": "alive"
+            }
+        ],
+        "120": [
+            {
+                "id": 1,
+                "diff": "@@ -117,7 +117,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool\n     std::vector<size_t> best_selection;\n     CAmount best_waste = MAX_MONEY;\n \n-    bool is_feerate_high = utxo_pool.at(0).fee > utxo_pool.at(0).long_term_fee;\n+    bool is_feerate_high = utxo_pool.at(0).fee >= utxo_pool.at(0).long_term_fee;\n     bool max_tx_weight_exceeded = false;\n \n     // Depth First search loop for choosing the UTXOs\n",
+                "status": "alive"
+            }
+        ],
+        "574": [
+            {
+                "id": 1,
+                "diff": "@@ -571,7 +571,7 @@ util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utx\n                 selected_eff_value -= to_remove_group.GetSelectionAmount();\n                 weight -= to_remove_group.m_weight;\n                 heap.pop();\n-            } while (!heap.empty() && weight > max_selection_weight);\n+                    } while (!heap.empty() && weight >= max_selection_weight);\n         }\n \n         // Now check if we are above the target\n",
+                "status": "alive"
+            }
+        ],
+        "637": [
+            {
+                "id": 1,
+                "diff": "@@ -634,7 +634,7 @@ static void ApproximateBestSubset(FastRandomContext& insecure_rand, const std::v\n                         fReachedTarget = true;\n                         // If the total is between nTargetValue and nBest, it's our new best\n                         // approximation.\n-                        if (nTotal < nBest)\n+                                            if (nTotal <= nBest)\n                         {\n                             nBest = nTotal;\n                             vfBest = vfIncluded;\n",
+                "status": "alive"
+            }
+        ],
+        "678": [
+            {
+                "id": 1,
+                "diff": "@@ -675,7 +675,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         } else if (group.GetSelectionAmount() < nTargetValue + change_target) {\n             applicable_groups.push_back(group);\n             nTotalLower += group.GetSelectionAmount();\n-        } else if (!lowest_larger || group.GetSelectionAmount() < lowest_larger->GetSelectionAmount()) {\n+            } else if (!lowest_larger || group.GetSelectionAmount() <= lowest_larger->GetSelectionAmount()) {\n             lowest_larger = group;\n         }\n     }\n",
+                "status": "alive"
+            }
+        ],
+        "631": [
+            {
+                "id": 1,
+                "diff": "@@ -628,7 +628,7 @@ static void ApproximateBestSubset(FastRandomContext& insecure_rand, const std::v\n                 if (nPass == 0 ? insecure_rand.randbool() : !vfIncluded[i])\n                 {\n                     nTotal += groups[i].GetSelectionAmount();\n-                    selected_coins_weight += groups[i].m_weight;\n+                                    selected_coins_weight *= groups[i].m_weight;\n                     vfIncluded[i] = true;\n                     if (nTotal >= nTargetValue && selected_coins_weight <= max_selection_weight) {\n                         fReachedTarget = true;\n",
+                "status": "alive"
+            },
+            {
+                "id": 2,
+                "diff": "@@ -628,7 +628,7 @@ static void ApproximateBestSubset(FastRandomContext& insecure_rand, const std::v\n                 if (nPass == 0 ? insecure_rand.randbool() : !vfIncluded[i])\n                 {\n                     nTotal += groups[i].GetSelectionAmount();\n-                    selected_coins_weight += groups[i].m_weight;\n+                                    selected_coins_weight -= groups[i].m_weight;\n                     vfIncluded[i] = true;\n                     if (nTotal >= nTargetValue && selected_coins_weight <= max_selection_weight) {\n                         fReachedTarget = true;\n",
+                "status": "alive"
+            },
+            {
+                "id": 3,
+                "diff": "@@ -628,7 +628,7 @@ static void ApproximateBestSubset(FastRandomContext& insecure_rand, const std::v\n                 if (nPass == 0 ? insecure_rand.randbool() : !vfIncluded[i])\n                 {\n                     nTotal += groups[i].GetSelectionAmount();\n-                    selected_coins_weight += groups[i].m_weight;\n+                                    selected_coins_weight /= groups[i].m_weight;\n                     vfIncluded[i] = true;\n                     if (nTotal >= nTargetValue && selected_coins_weight <= max_selection_weight) {\n                         fReachedTarget = true;\n",
+                "status": "alive"
+            }
+        ],
+        "987": [
+            {
+                "id": 1,
+                "diff": "@@ -984,7 +984,7 @@ CAmount SelectionResult::GetChange(const CAmount min_viable_change, const CAmoun\n                            ? GetSelectedEffectiveValue() - m_target - change_fee\n                            : GetSelectedValue() - m_target;\n \n-    if (change < min_viable_change) {\n+    if (change <= min_viable_change) {\n         return 0;\n     }\n \n",
+                "status": "alive"
+            }
+        ],
+        "334": [
+            {
+                "id": 1,
+                "diff": "@@ -331,7 +331,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n     std::vector<int> min_tail_weight(utxo_pool.size());\n \n     // Calculate lookahead values, min_tail_weights, and check that there are sufficient funds\n-    CAmount total_available = 0;\n+    CAmount total_available = 0 + 1;\n     int min_group_weight = std::numeric_limits<int>::max();\n     for (size_t i = 0; i < utxo_pool.size(); ++i) {\n         size_t index = utxo_pool.size() - 1 - i; // Loop over every element in reverse order\n",
+                "status": "alive"
+            },
+            {
+                "id": 1,
+                "diff": "@@ -331,7 +331,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n     std::vector<int> min_tail_weight(utxo_pool.size());\n \n     // Calculate lookahead values, min_tail_weights, and check that there are sufficient funds\n-    CAmount total_available = 0;\n+    CAmount total_available = 0 - 1;\n     int min_group_weight = std::numeric_limits<int>::max();\n     for (size_t i = 0; i < utxo_pool.size(); ++i) {\n         size_t index = utxo_pool.size() - 1 - i; // Loop over every element in reverse order\n",
+                "status": "alive"
+            }
+        ],
+        "578": [
+            {
+                "id": 1,
+                "diff": "@@ -575,7 +575,7 @@ util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utx\n         }\n \n         // Now check if we are above the target\n-        if (selected_eff_value >= target_value) {\n+            if (selected_eff_value > target_value) {\n             // Result found, add it.\n             while (!heap.empty()) {\n                 result.AddInput(heap.top());\n",
+                "status": "alive"
+            }
+        ],
+        "663": [
+            {
+                "id": 1,
+                "diff": "@@ -660,7 +660,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n     // Groups with selection amount smaller than the target and any change we might produce.\n     // Don't include groups larger than this, because they will only cause us to overshoot.\n     std::vector<OutputGroup> applicable_groups;\n-    CAmount nTotalLower = 0;\n+    CAmount nTotalLower = 0 + 1;\n \n     std::shuffle(groups.begin(), groups.end(), rng);\n \n",
+                "status": "alive"
+            }
+        ]
+    },
+    "src/script/interpreter.cpp": {
+        "963": [
+            {
+                "id": 1,
+                "diff": "@@ -960,7 +960,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript&\n                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);\n                     CScriptNum bn1(stacktop(-2), fRequireMinimal);\n                     CScriptNum bn2(stacktop(-1), fRequireMinimal);\n-                    CScriptNum bn(0);\n+                    CScriptNum bn(0 + 1);\n                     switch (opcode)\n                     {\n                     case OP_ADD:\n",
+                "status": "alive"
+            }
+        ],
+        "606": [
+            {
+                "id": 1,
+                "diff": "@@ -603,7 +603,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript&\n                 case OP_NOTIF:\n                 {\n                     // <expression> if [statements] [else [statements]] endif\n-                    bool fValue = false;\n+                    bool fValue = true;\n                     if (fExec)\n                     {\n                         if (stack.size() < 1)\n",
+                "status": "alive"
+            }
+        ],
+        "1095": [
+            {
+                "id": 1,
+                "diff": "@@ -1092,7 +1092,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript&\n                     const CScriptNum num(stacktop(-2), fRequireMinimal);\n                     const valtype& pubkey = stacktop(-1);\n \n-                    bool success = true;\n+                                        bool success = false;\n                     if (!EvalChecksig(sig, pubkey, pbegincodehash, pend, execdata, flags, checker, sigversion, serror, success)) return false;\n                     popstack(stack);\n                     popstack(stack);\n",
+                "status": "alive"
+            }
+        ],
+        "749": [
+            {
+                "id": 1,
+                "diff": "@@ -746,7 +746,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript&\n                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);\n                     valtype vch1 = stacktop(-6);\n                     valtype vch2 = stacktop(-5);\n-                    stack.erase(stack.end()-6, stack.end()-4);\n+                    \n                     stack.push_back(vch1);\n                     stack.push_back(vch2);\n                 }\n",
+                "status": "alive"
+            }
+        ],
+        "1040": [
+            {
+                "id": 1,
+                "diff": "@@ -1037,7 +1037,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript&\n                         CSHA256().Write(vch.data(), vch.size()).Finalize(vchHash.data());\n                     else if (opcode == OP_HASH160)\n                         CHash160().Write(vch).Finalize(vchHash);\n-                    else if (opcode == OP_HASH256)\n+                    else if (1==1)\n                         CHash256().Write(vch).Finalize(vchHash);\n                     popstack(stack);\n                     stack.push_back(vchHash);\n",
+                "status": "alive"
+            }
+        ],
+        "934": [
+            {
+                "id": 1,
+                "diff": "@@ -931,7 +931,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript&\n                     case OP_1ADD:       bn += bnOne; break;\n                     case OP_1SUB:       bn -= bnOne; break;\n                     case OP_NEGATE:     bn = -bn; break;\n-                    case OP_ABS:        if (bn < bnZero) bn = -bn; break;\n+                    case OP_ABS:        if (bn <= bnZero) bn = -bn; break;\n                     case OP_NOT:        bn = (bn == bnZero); break;\n                     case OP_0NOTEQUAL:  bn = (bn != bnZero); break;\n                     default:            assert(!\"invalid opcode\"); break;\n",
+                "status": "alive"
+            }
+        ],
+        "1998": [
+            {
+                "id": 1,
+                "diff": "@ -2040,7 +2040,7 @@ bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, const C\n                     // reintroduce malleability.\n                     return set_error(serror, SCRIPT_ERR_WITNESS_MALLEATED_P2SH);\n                 }\n-                if (!VerifyWitnessProgram(*witness, witnessversion, witnessprogram, flags, checker, serror, /*is_p2sh=*/true)) {\n+                if (!VerifyWitnessProgram(*witness, witnessversion, witnessprogram, flags, checker, serror, /*is_p2sh=*/false)) {\n                     return false;\n                 }\n                 // Bypass the cleanstack check at the end. The actual stack is obviously not clean\n",
+                "status": "alive"
+            }
+        ],
+        "1905": [
+            {
+                "id": 1,
+                "diff": "@@ -1902,7 +1902,7 @@ static bool VerifyWitnessProgram(const CScriptWitness& witness, int witversion,\n         }\n     } else if (witversion == 1 && program.size() == WITNESS_V1_TAPROOT_SIZE && !is_p2sh) {\n         // BIP341 Taproot: 32-byte non-P2SH witness v1 program (which encodes a P2C-tweaked pubkey)\n-        if (!(flags & SCRIPT_VERIFY_TAPROOT)) return set_success(serror);\n+        \n         if (stack.size() == 0) return set_error(serror, SCRIPT_ERR_WITNESS_PROGRAM_WITNESS_EMPTY);\n         if (stack.size() >= 2 && !stack.back().empty() && stack.back()[0] == ANNEX_TAG) {\n             // Drop annex (this is non-standard; see IsWitnessStandard)\n",
+                "status": "alive"
+            }
+        ],
+        "1692": [
+            {
+                "id": 1,
+                "diff": "@@ -1689,7 +1689,7 @@ bool GenericTransactionSignatureChecker<T>::CheckSchnorrSignature(Span<const uns\n         if (hashtype == SIGHASH_DEFAULT) return set_error(serror, SCRIPT_ERR_SCHNORR_SIG_HASHTYPE);\n     }\n     uint256 sighash;\n-    if (!this->txdata) return HandleMissingData(m_mdb);\n+    \n     if (!SignatureHashSchnorr(sighash, execdata, *txTo, nIn, hashtype, sigversion, *this->txdata, m_mdb)) {\n         return set_error(serror, SCRIPT_ERR_SCHNORR_SIG_HASHTYPE);\n     }\n",
+                "status": "alive"
+            }
+        ],
+        "1662": [
+            {
+                "id": 1,
+                "diff": "@@ -1659,7 +1659,7 @@ bool GenericTransactionSignatureChecker<T>::CheckECDSASignature(const std::vecto\n     vchSig.pop_back();\n \n     // Witness sighashes need the amount.\n-    if (sigversion == SigVersion::WITNESS_V0 && amount < 0) return HandleMissingData(m_mdb);\n+    \n \n     uint256 sighash = SignatureHash(scriptCode, *txTo, nIn, nHashType, amount, sigversion, this->txdata);\n \n",
+                "status": "alive"
+            }
+        ]
+    },
+    "src/consensus/tx_verify.cpp": {
+        "100": [
+            {
+                "id": 1,
+                "diff": "@@ -97,7 +97,7 @@ std::pair<int, int64_t> CalculateSequenceLocks(const CTransaction &tx, int flags\n bool EvaluateSequenceLocks(const CBlockIndex& block, std::pair<int, int64_t> lockPair)\n {\n     assert(block.pprev);\n-    int64_t nBlockTime = block.pprev->GetMedianTimePast();\n+    int64_t nBlockTime = (block.pprev->GetMedianTimePast()) + 1;\n     if (lockPair.first >= block.nHeight || lockPair.second >= nBlockTime)\n         return false;\n \n",
+                "status": "alive"
+            }
+        ],
+        "117": [
+            {
+                "id": 1,
+                "diff": "@@ -114,7 +114,7 @@ unsigned int GetLegacySigOpCount(const CTransaction& tx)\n     unsigned int nSigOps = 0;\n     for (const auto& txin : tx.vin)\n     {\n-        nSigOps += txin.scriptSig.GetSigOpCount(false);\n+        nSigOps += txin.scriptSig.GetSigOpCount(true);\n     }\n     for (const auto& txout : tx.vout)\n     {\n",
+                "status": "alive"
+            }
+        ],
+        "19": [
+            {
+                "id": 1,
+                "diff": "@@ -16,7 +16,7 @@\n \n bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)\n {\n-    if (tx.nLockTime == 0)\n+    if (1==0)\n         return true;\n     if ((int64_t)tx.nLockTime < ((int64_t)tx.nLockTime < LOCKTIME_THRESHOLD ? (int64_t)nBlockHeight : nBlockTime))\n         return true;\n",
+                "status": "alive"
+            }
+        ],
+        "49": [
+            {
+                "id": 1,
+                "diff": "@@ -46,7 +46,7 @@ std::pair<int, int64_t> CalculateSequenceLocks(const CTransaction &tx, int flags\n     // The semantics of nLockTime are the last invalid height/time, so\n     // use -1 to have the effect of any height or time being valid.\n     int nMinHeight = -1;\n-    int64_t nMinTime = -1;\n+    int64_t nMinTime = (-1) - 1;\n \n     bool fEnforceBIP68 = tx.version >= 2 && flags & LOCKTIME_VERIFY_SEQUENCE;\n \n",
+                "status": "alive"
+            }
+        ],
+        "129": [
+            {
+                "id": 1,
+                "diff": "@@ -126,7 +126,7 @@ unsigned int GetLegacySigOpCount(const CTransaction& tx)\n unsigned int GetP2SHSigOpCount(const CTransaction& tx, const CCoinsViewCache& inputs)\n {\n     if (tx.IsCoinBase())\n-        return 0;\n+        return 1;\n \n     unsigned int nSigOps = 0;\n     for (unsigned int i = 0; i < tx.vin.size(); i++)\n",
+                "status": "alive"
+            }
+        ]
+    }
+}
