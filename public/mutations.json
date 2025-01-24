@@ -308,14 +308,14 @@
         "532": [
             {
                 "id": 1,
-                "diff": "@@ -529,7 +529,7 @@ class MinOutputGroupComparator\n public:\n     int operator() (const OutputGroup& group1, const OutputGroup& group2) const\n     {\n-        return group1.GetSelectionAmount() > group2.GetSelectionAmount();\n+            return group1.GetSelectionAmount() >= group2.GetSelectionAmount();\n     }\n };\n \n",
+                "diff": "@@ -529,7 +529,7 @@ class MinOutputGroupComparator\n public:\n     int operator() (const OutputGroup& group1, const OutputGroup& group2) const\n     {\n-        return group1.GetSelectionAmount() > group2.GetSelectionAmount();\n+        return group1.GetSelectionAmount() >= group2.GetSelectionAmount();\n     }\n };\n \n",
                 "status": "alive"
             }
         ],
         "435": [
             {
                 "id": 1,
-                "diff": "@@ -432,7 +432,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n \n         // EVALUATE current selection: check for solutions and see whether we can CUT or SHIFT before EXPLORING further\n         auto curr_tail = curr_selection.back();\n-        if (curr_amount + lookahead[curr_tail] < total_target) {\n+            if (curr_amount + lookahead[curr_tail] <= total_target) {\n             // Insufficient funds with lookahead: CUT\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n",
+                "diff": "@@ -432,7 +432,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n \n         // EVALUATE current selection: check for solutions and see whether we can CUT or SHIFT before EXPLORING further\n         auto curr_tail = curr_selection.back();\n-        if (curr_amount + lookahead[curr_tail] < total_target) {\n+        if (curr_amount + lookahead[curr_tail] <= total_target) {\n             // Insufficient funds with lookahead: CUT\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n",
                 "status": "alive"
             }
         ],
@@ -377,12 +377,12 @@
         "440": [
             {
                 "id": 1,
-                "diff": "@@ -437,7 +437,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n             // best_selection_weight is initialized to max_selection_weight\n-            if (curr_weight > max_selection_weight) max_tx_weight_exceeded = true;\n+                    if (curr_weight >= max_selection_weight) max_tx_weight_exceeded = true;\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n",
+                "diff": "@@ -437,7 +437,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n             // best_selection_weight is initialized to max_selection_weight\n-            if (curr_weight > max_selection_weight) max_tx_weight_exceeded = true;\n+             if (curr_weight >= max_selection_weight) max_tx_weight_exceeded = true;\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n",
                 "status": "alive"
             },
             {
                 "id": 2,
-                "diff": "@@ -437,7 +437,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n             // best_selection_weight is initialized to max_selection_weight\n-            if (curr_weight > max_selection_weight) max_tx_weight_exceeded = true;\n+                    if (1==1) max_tx_weight_exceeded = true;\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n",
+                "diff": "@@ -437,7 +437,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             should_cut = true;\n         } else if (curr_weight > best_selection_weight) {\n             // best_selection_weight is initialized to max_selection_weight\n-            if (curr_weight > max_selection_weight) max_tx_weight_exceeded = true;\n+            if (1==1) max_tx_weight_exceeded = true;\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n",
                 "status": "alive"
             }
         ],
@@ -401,26 +401,26 @@
         "34": [
             {
                 "id": 1,
-                "diff": "@@ -31,7 +31,7 @@ struct {\n     {\n         if (a.GetSelectionAmount() == b.GetSelectionAmount()) {\n             // Lower waste is better when effective_values are tied\n-            return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n+                    return (a.fee + a.long_term_fee) < (b.fee + b.long_term_fee);\n         }\n         return a.GetSelectionAmount() > b.GetSelectionAmount();\n     }\n",
+                "diff": "@@ -31,7 +31,7 @@ struct {\n     {\n         if (a.GetSelectionAmount() == b.GetSelectionAmount()) {\n             // Lower waste is better when effective_values are tied\n-            return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n+            return (a.fee + a.long_term_fee) < (b.fee + b.long_term_fee);\n         }\n         return a.GetSelectionAmount() > b.GetSelectionAmount();\n     }\n",
                 "status": "alive"
             },
             {
                 "id": 2,
-                "diff": "@@ -31,7 +31,7 @@ struct {\n     {\n         if (a.GetSelectionAmount() == b.GetSelectionAmount()) {\n             // Lower waste is better when effective_values are tied\n-            return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n+                    return (a.fee - a.long_term_fee) > (b.fee - b.long_term_fee);\n         }\n         return a.GetSelectionAmount() > b.GetSelectionAmount();\n     }\n",
+                "diff": "@@ -31,7 +31,7 @@ struct {\n     {\n         if (a.GetSelectionAmount() == b.GetSelectionAmount()) {\n             // Lower waste is better when effective_values are tied\n-            return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n+             return (a.fee - a.long_term_fee) > (b.fee - b.long_term_fee);\n         }\n         return a.GetSelectionAmount() > b.GetSelectionAmount();\n     }\n",
                 "status": "alive"
             }
         ],
         "36": [
             {
                 "id": 1,
-                "diff": "@@ -33,7 +33,7 @@ struct {\n             // Lower waste is better when effective_values are tied\n             return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n         }\n-        return a.GetSelectionAmount() > b.GetSelectionAmount();\n+            return a.GetSelectionAmount() >= b.GetSelectionAmount();\n     }\n } descending;\n \n",
+                "diff": "@@ -33,7 +33,7 @@ struct {\n             // Lower waste is better when effective_values are tied\n             return (a.fee - a.long_term_fee) < (b.fee - b.long_term_fee);\n         }\n-        return a.GetSelectionAmount() > b.GetSelectionAmount();\n+        return a.GetSelectionAmount() >= b.GetSelectionAmount();\n     }\n } descending;\n \n",
                 "status": "alive"
             }
         ],
         "468": [
             {
                 "id": 1,
-                "diff": "@@ -465,7 +465,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n \n         if (curr_try >= TOTAL_TRIES) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n-            result.SetAlgoCompleted(false);\n+                    result.SetAlgoCompleted(true);\n             break;\n         }\n \n",
+                "diff": "@@ -465,7 +465,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n \n         if (curr_try >= TOTAL_TRIES) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n-            result.SetAlgoCompleted(false);\n+            result.SetAlgoCompleted(true);\n             break;\n         }\n \n",
                 "status": "alive"
             }
         ],
