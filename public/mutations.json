@@ -389,12 +389,12 @@
         "466": [
             {
                 "id": 1,
-                "diff": "@@ -463,7 +463,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             }\n         }\n \n-        if (curr_try >= TOTAL_TRIES) {\n+            if (curr_try > TOTAL_TRIES) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n             result.SetAlgoCompleted(false);\n             break;\n",
+                "diff": "@@ -463,7 +463,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             }\n         }\n \n-        if (curr_try >= TOTAL_TRIES) {\n+        if (curr_try > TOTAL_TRIES) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n             result.SetAlgoCompleted(false);\n             break;\n",
                 "status": "alive"
             },
             {
                 "id": 2,
-                "diff": "@@ -463,7 +463,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             }\n         }\n \n-        if (curr_try >= TOTAL_TRIES) {\n+            if (1==0) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n             result.SetAlgoCompleted(false);\n             break;\n",
+                "diff": "@@ -463,7 +463,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             }\n         }\n \n-        if (curr_try >= TOTAL_TRIES) {\n+        if (1==0) {\n             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES\n             result.SetAlgoCompleted(false);\n             break;\n",
                 "status": "alive"
             }
         ],
@@ -467,7 +467,7 @@
         "490": [
             {
                 "id": 1,
-                "diff": "@@ -487,7 +487,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             if (curr_selection.empty()) {\n                 // Exhausted search space before running into attempt limit\n                 is_done = true;\n-                result.SetAlgoCompleted(true);\n+                            result.SetAlgoCompleted(false);\n                 break;\n             }\n             next_utxo = curr_selection.back() + 1;\n",
+                "diff": "@@ -487,7 +487,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             if (curr_selection.empty()) {\n                 // Exhausted search space before running into attempt limit\n                 is_done = true;\n-                result.SetAlgoCompleted(true);\n+                result.SetAlgoCompleted(false);\n                 break;\n             }\n             next_utxo = curr_selection.back() + 1;\n",
                 "status": "alive"
             }
         ],
