@@ -524,7 +524,7 @@
         "574": [
             {
                 "id": 1,
-                "diff": "@@ -571,7 +571,7 @@ util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utx\n                 selected_eff_value -= to_remove_group.GetSelectionAmount();\n                 weight -= to_remove_group.m_weight;\n                 heap.pop();\n-            } while (!heap.empty() && weight > max_selection_weight);\n+                    } while (!heap.empty() && weight >= max_selection_weight);\n         }\n \n         // Now check if we are above the target\n",
+                "diff": "@@ -571,7 +571,7 @@ util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utx\n                 selected_eff_value -= to_remove_group.GetSelectionAmount();\n                 weight -= to_remove_group.m_weight;\n                 heap.pop();\n-            } while (!heap.empty() && weight > max_selection_weight);\n+            } while (!heap.empty() && weight >= max_selection_weight);\n         }\n \n         // Now check if we are above the target\n",
                 "status": "alive"
             }
         ],
