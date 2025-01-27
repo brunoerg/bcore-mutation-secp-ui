@@ -227,7 +227,7 @@
         "444": [
             {
                 "id": 1,
-                "diff": "@@ -441,7 +441,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n-                should_cut = true;\n+                            should_cut = false;\n             } else {\n                 should_shift  = true;\n             }\n",
+                "diff": "@@ -441,7 +441,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c\n             // Worse weight than best solution. More UTXOs only increase weight:\n             // CUT if last selected group had minimal weight, else SHIFT\n             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {\n-                should_cut = true;\n+                  should_cut = false;\n             } else {\n                 should_shift  = true;\n             }\n",
                 "status": "alive"
             }
         ],
@@ -538,7 +538,7 @@
         "678": [
             {
                 "id": 1,
-                "diff": "@@ -675,7 +675,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         } else if (group.GetSelectionAmount() < nTargetValue + change_target) {\n             applicable_groups.push_back(group);\n             nTotalLower += group.GetSelectionAmount();\n-        } else if (!lowest_larger || group.GetSelectionAmount() < lowest_larger->GetSelectionAmount()) {\n+            } else if (!lowest_larger || group.GetSelectionAmount() <= lowest_larger->GetSelectionAmount()) {\n             lowest_larger = group;\n         }\n     }\n",
+                "diff": "@@ -675,7 +675,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c\n         } else if (group.GetSelectionAmount() < nTargetValue + change_target) {\n             applicable_groups.push_back(group);\n             nTotalLower += group.GetSelectionAmount();\n-        } else if (!lowest_larger || group.GetSelectionAmount() < lowest_larger->GetSelectionAmount()) {\n+        } else if (!lowest_larger || group.GetSelectionAmount() <= lowest_larger->GetSelectionAmount()) {\n             lowest_larger = group;\n         }\n     }\n",
                 "status": "alive"
             }
         ],
