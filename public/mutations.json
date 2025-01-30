@@ -703,7 +703,7 @@
         ]
     },
     "src/pow.cpp": {
-        "129": [
+        "132": [
             {
                 "id": 1,
                 "diff": "@@ -129,7 +129,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n         arith_uint256 minimum_new_target;\n         minimum_new_target.SetCompact(smallest_difficulty_target.GetCompact());\n         if (minimum_new_target > observed_new_target) return false;\n-    } else if (old_nbits != new_nbits) {\n+        } else if (1==0) {\n         return false;\n     }\n     return true;\n",
@@ -720,7 +720,7 @@
                 "status": "alive"
             }
         ],
-        "120": [
+        "123": [
             {
                 "id": 1,
                 "diff": "@@ -120,7 +120,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n         smallest_difficulty_target *= smallest_timespan;\n         smallest_difficulty_target /= params.nPowTargetTimespan;\n \n-        if (smallest_difficulty_target > pow_limit) {\n+                if (smallest_difficulty_target >= pow_limit) {\n             smallest_difficulty_target = pow_limit;\n         }\n \n",
@@ -732,14 +732,14 @@
                 "status": "alive"
             }
         ],
-        "130": [
+        "133": [
             {
                 "id": 1,
                 "diff": "@@ -130,7 +130,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n         minimum_new_target.SetCompact(smallest_difficulty_target.GetCompact());\n         if (minimum_new_target > observed_new_target) return false;\n     } else if (old_nbits != new_nbits) {\n-        return false;\n+                return true;\n     }\n     return true;\n }\n",
                 "status": "alive"
             }
         ],
-        "104": [
+        "107": [
             {
                 "id": 1,
                 "diff": "@@ -104,7 +104,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n         largest_difficulty_target *= largest_timespan;\n         largest_difficulty_target /= params.nPowTargetTimespan;\n \n-        if (largest_difficulty_target > pow_limit) {\n+                if (1==0) {\n             largest_difficulty_target = pow_limit;\n         }\n \n",
@@ -751,7 +751,7 @@
                 "status": "alive"
             }
         ],
-        "92": [
+        "95": [
             {
                 "id": 1,
                 "diff": "@@ -92,7 +92,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n \n     if (height % params.DifficultyAdjustmentInterval() == 0) {\n         int64_t smallest_timespan = params.nPowTargetTimespan/4;\n-        int64_t largest_timespan = params.nPowTargetTimespan*4;\n+                int64_t largest_timespan = (params.nPowTargetTimespan*4) - 1;\n \n         const arith_uint256 pow_limit = UintToArith256(params.powLimit);\n         arith_uint256 observed_new_target;\n",
@@ -763,7 +763,7 @@
                 "status": "alive"
             }
         ],
-        "91": [
+        "94": [
             {
                 "id": 1,
                 "diff": "@@ -91,7 +91,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n     if (params.fPowAllowMinDifficultyBlocks) return true;\n \n     if (height % params.DifficultyAdjustmentInterval() == 0) {\n-        int64_t smallest_timespan = params.nPowTargetTimespan/4;\n+                int64_t smallest_timespan = (params.nPowTargetTimespan/4) + 1;\n         int64_t largest_timespan = params.nPowTargetTimespan*4;\n \n         const arith_uint256 pow_limit = UintToArith256(params.powLimit);\n",
