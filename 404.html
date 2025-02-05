@@ -4,22 +4,11 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script>
-      const segment = 1;
-      const l = window.location;
-      const origin = l.origin || (l.protocol + '//' + l.host);
+      // Store the full path and hash
+      sessionStorage.redirect = window.location.pathname + window.location.hash;
       
-      // Store path and hash for redirection
-      sessionStorage.redirect = l.pathname + l.hash;
-      
-      // Redirect to index with a special parameter
-      l.replace(
-        origin + 
-        l.pathname
-          .split('/')
-          .slice(0, segment + 1)
-          .join('/') + 
-        '/?p=1'
-      );
+      // Redirect to the root
+      window.location.replace('/');
     </script>
   </head>
   <body>
