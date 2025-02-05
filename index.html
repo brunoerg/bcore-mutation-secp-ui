@@ -7,6 +7,15 @@
    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
    <title>Mutation testing - Bitcoin Core</title>
+   <script>
+    (function(){
+      const redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != location.href) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+   </script>
    <style>
        .file-tree {
            position: fixed;
@@ -82,48 +91,115 @@
        };
 
        const MutationViewer = () => {
-           const [selectedFile, setSelectedFile] = React.useState('src/wallet/coinselection.cpp');
+           const [selectedFile, setSelectedFile] = React.useState('');
+           const [focusedLine, setFocusedLine] = React.useState(null);
            const [fileContent, setFileContent] = React.useState('');
            const [mutationData, setMutationData] = React.useState({});
            const [expandedLines, setExpandedLines] = React.useState(new Set());
+           const lineRefs = React.useRef({});
 
            const files = {
                'src': {
                    'wallet': {
                        'coinselection.cpp': 'content',
-                   },/*
-		            'net_permissions.cpp': 'content',*/
-                    'script': {
-                        'interpreter.cpp': 'content'
-                    },
-                    'consensus': {
-                        'tx_verify.cpp': 'content',
-                        'tx_check.cpp': 'content',
-                    },
-                    'pow.cpp': 'content',
-                    'addrman.cpp': 'content'
+                   },
+                   'script': {
+                       'interpreter.cpp': 'content'
+                   },
+                   'consensus': {
+                       'tx_verify.cpp': 'content',
+                       'tx_check.cpp': 'content',
+                   },
+                   'pow.cpp': 'content',
+                   'addrman.cpp': 'content'
                },
            };
 
+           // Handle URL changes and initial load
+           React.useEffect(() => {
+               const getPathAndHash = () => {
+                   let path = window.location.pathname;
+                   // Handle GitHub Pages base path if needed
+                   const baseUrl = '/mutation-testing-ui'; // Replace with your actual repo name
+                   if (path.startsWith(baseUrl)) {
+                       path = path.slice(baseUrl.length);
+                   }
+                   return {
+                       path: path.slice(1), // Remove leading slash
+                       hash: window.location.hash.slice(1) // Remove leading #
+                   };
+               };
+               const handleUrlChange = () => {
+                   const { path, hash } = getPathAndHash();
+                   
+                   if (path && path.startsWith('src/')) {
+                       setSelectedFile(path);
+                       if (hash) {
+                           const lineNumber = parseInt(hash);
+                           setFocusedLine(lineNumber);
+                           // Add small delay to ensure DOM is ready
+                           setTimeout(() => {
+                               const element = lineRefs.current[lineNumber];
+                               if (element) {
+                                   element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                   element.classList.add('bg-yellow-100');
+                               }
+                           }, 500);
+                       }
+                   }
+               };
+
+               // Handle initial load and subsequent changes
+               handleUrlChange();
+               window.addEventListener('hashchange', handleUrlChange);
+               window.addEventListener('popstate', handleUrlChange);
+               
+               return () => {
+                   window.removeEventListener('hashchange', handleUrlChange);
+                   window.removeEventListener('popstate', handleUrlChange);
+               };
+           }, []);
+
+           // Handle file selection
+           const handleFileSelect = (file) => {
+               window.history.pushState(null, '', `/${file}`);
+               setSelectedFile(file);
+               setFocusedLine(null);
+           };
+
+           // Load file data
            React.useEffect(() => {
                const loadData = async () => {
+                   if (!selectedFile) return;
+                   
                    try {
                        // Load mutations
-                       const mutationsResp = await fetch('./public/mutations.json');
+                       const mutationsResp = await fetch('/public/mutations.json');
                        const mutations = await mutationsResp.json();
                        setMutationData(mutations[selectedFile] || {});
 
                        // Load file content
-                       const contentResp = await fetch(`./public/${selectedFile}`);
+                       const contentResp = await fetch(`/public/${selectedFile}`);
                        const content = await contentResp.text();
                        setFileContent(content);
+
+                       // Focus line if needed
+                       if (focusedLine) {
+                           setTimeout(() => {
+                               const element = lineRefs.current[focusedLine];
+                               if (element) {
+                                   element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                   element.classList.add('bg-yellow-100');
+                               }
+                           }, 100);
+                       }
                    } catch (error) {
                        console.error('Error:', error);
                        setFileContent('Error loading content');
                    }
                };
                loadData();
-           }, [selectedFile]);
+           }, [selectedFile, focusedLine]);
 
            const toggleLine = (lineNumber) => {
                setExpandedLines(prev => {
@@ -137,8 +213,8 @@
            return (
                <div>
                    <FileTree
-                       files={files} 
-                       onFileSelect={setSelectedFile}
+                       files={files}
+                       onFileSelect={handleFileSelect}
                        selectedFile={selectedFile}
                    />
                    
@@ -156,9 +232,14 @@
                                                const lineNumber = index + 1;
                                                const hasMutants = mutationData[lineNumber];
                                                const lineColor = hasMutants ? 'text-red-600' : 'text-green-600';
+                                               const isFocused = focusedLine === lineNumber;
                                                
                                                return (
-                                                   <div key={lineNumber}>
+                                                   <div 
+                                                       key={lineNumber}
+                                                       ref={el => lineRefs.current[lineNumber] = el}
+                                                       className={`transition-colors duration-300 ${isFocused ? 'bg-yellow-100' : ''}`}
+                                                   >
                                                        <div
                                                            className={`flex items-start ${hasMutants ? 'cursor-pointer hover:bg-gray-100' : ''} ${lineColor}`}
                                                            onClick={() => hasMutants && toggleLine(lineNumber)}
