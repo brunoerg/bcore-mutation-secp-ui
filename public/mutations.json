@@ -779,48 +779,6 @@
                 "status": "alive"
             }
         ],
-        "389": [
-            {
-                "id": 1,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (1==1) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            },
-            {
-                "id": 2,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (nLost / nLostUnk > 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            },
-            {
-                "id": 3,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (nLost - nLostUnk > 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            },
-            {
-                "id": 4,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (nLost * nLostUnk > 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            },
-            {
-                "id": 5,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (nLost + nLostUnk <= 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            },
-            {
-                "id": 6,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (nLost + nLostUnk >= 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            },
-            {
-                "id": 7,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (1==0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            },
-            {
-                "id": 8,
-                "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+        if (nLost + nLostUnk < 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
-                "status": "alive"
-            }
-        ],
         "503": [
             {
                 "id": 1,
@@ -984,7 +942,7 @@
         "208": [
             {
                 "id": 1,
-                "diff": "@@ -205,7 +205,7 @@ void AddrManImpl::Serialize(Stream& s_) const\n         if (info.fInTried) {\n             assert(nIds != nTried); // this means nTried was wrong, oh ow\n             s << info;\n-            nIds++;\n+                        nIds--;\n         }\n     }\n     for (int bucket = 0; bucket < ADDRMAN_NEW_BUCKET_COUNT; bucket++) {\n",
+                "diff": "@@ -205,7 +205,7 @@ void AddrManImpl::Serialize(Stream& s_) const\n         if (info.fInTried) {\n             assert(nIds != nTried); // this means nTried was wrong, oh ow\n             s << info;\n-            nIds++;\n+                nIds--;\n         }\n     }\n     for (int bucket = 0; bucket < ADDRMAN_NEW_BUCKET_COUNT; bucket++) {\n",
                 "status": "alive"
             }
         ],
@@ -1481,7 +1439,7 @@
         "338": [
             {
                 "id": 1,
-                "diff": "@@ -335,7 +335,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     // serialization.\n     uint256 supplied_asmap_checksum{m_netgroupman.GetAsmapChecksum()};\n     uint256 serialized_asmap_checksum;\n-    if (format >= Format::V2_ASMAP) {\n+        if (format > Format::V2_ASMAP) {\n         s >> serialized_asmap_checksum;\n     }\n     const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n",
+                "diff": "@@ -335,7 +335,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     // serialization.\n     uint256 supplied_asmap_checksum{m_netgroupman.GetAsmapChecksum()};\n     uint256 serialized_asmap_checksum;\n-    if (format >= Format::V2_ASMAP) {\n+    if (format > Format::V2_ASMAP) {\n         s >> serialized_asmap_checksum;\n     }\n     const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n",
                 "status": "alive"
             }
         ],
@@ -1719,7 +1677,99 @@
         "268": [
             {
                 "id": 1,
-                "diff": "@@ -265,7 +265,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         nUBuckets ^= (1 << 30);\n     }\n \n-    if (nNew > ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {\n+        if (nNew >= ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {\n         throw std::ios_base::failure(\n                 strprintf(\"Corrupt AddrMan serialization: nNew=%d, should be in [0, %d]\",\n                     nNew,\n",
+                "diff": "@@ -265,7 +265,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         nUBuckets ^= (1 << 30);\n     }\n \n-    if (nNew > ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {\n+    if (nNew >= ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {\n         throw std::ios_base::failure(\n                 strprintf(\"Corrupt AddrMan serialization: nNew=%d, should be in [0, %d]\",\n                     nNew,\n",
+                "status": "alive"
+            }
+        ]
+    },
+    "src/consensus/merkle.cpp": {
+        "93": [
+            {
+                "id": 1,
+                "diff": "@@ -90,7 +90,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n     if (path) path->clear();\n     Assume(leaves.size() <= UINT32_MAX);\n     if (leaves.size() == 0) {\n-        if (pmutated) *pmutated = false;\n+        if (pmutated) *pmutated = true;\n         if (proot) *proot = uint256();\n         return;\n     }\n",
+                "status": "alive"
+            },
+            {
+                "id": 1,
+                "diff": "@@ -90,7 +90,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n     if (path) path->clear();\n     Assume(leaves.size() <= UINT32_MAX);\n     if (leaves.size() == 0) {\n-        if (pmutated) *pmutated = false;\n+        if (1==1) *pmutated = false;\n         if (proot) *proot = uint256();\n         return;\n     }\n",
+                "status": "alive"
+            },
+            {
+                "id": 1,
+                "diff": "@@ -90,7 +90,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n     if (path) path->clear();\n     Assume(leaves.size() <= UINT32_MAX);\n     if (leaves.size() == 0) {\n-        if (pmutated) *pmutated = false;\n+                if (1==0) *pmutated = false;\n         if (proot) *proot = uint256();\n         return;\n     }\n",
+                "status": "alive"
+            }
+        ],
+        "97": [
+            {
+                "id": 1,
+                "diff": "@@ -94,7 +94,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n         if (proot) *proot = uint256();\n         return;\n     }\n-    bool mutated = false;\n+        bool mutated = true;\n     // count is the number of leaves processed so far.\n     uint32_t count = 0;\n     // inner is an array of eagerly computed subtree hashes, indexed by tree\n",
+                "status": "alive"
+            }
+        ],
+        "94": [
+            {
+                "id": 1,
+                "diff": "@@ -91,7 +91,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n     Assume(leaves.size() <= UINT32_MAX);\n     if (leaves.size() == 0) {\n         if (pmutated) *pmutated = false;\n-        if (proot) *proot = uint256();\n+        if (1==1) *proot = uint256();\n         return;\n     }\n     bool mutated = false;\n",
+                "status": "alive"
+            },
+            {
+                "id": 1,
+                "diff": "@@ -91,7 +91,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n     Assume(leaves.size() <= UINT32_MAX);\n     if (leaves.size() == 0) {\n         if (pmutated) *pmutated = false;\n-        if (proot) *proot = uint256();\n+                if (1==0) *proot = uint256();\n         return;\n     }\n     bool mutated = false;\n",
+                "status": "alive"
+            }
+        ],
+        "90": [
+            {
+                "id": 1,
+                "diff": "@@ -87,7 +87,7 @@ uint256 BlockWitnessMerkleRoot(const CBlock& block, bool* mutated)\n /* This implements a constant-space merkle root/path calculator, limited to 2^32 leaves. */\n static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot, bool* pmutated, uint32_t leaf_pos, std::vector<uint256>* path)\n {\n-    if (path) path->clear();\n+    if (1==1) path->clear();\n     Assume(leaves.size() <= UINT32_MAX);\n     if (leaves.size() == 0) {\n         if (pmutated) *pmutated = false;\n",
+                "status": "alive"
+            },
+            {
+                "id": 1,
+                "diff": "@@ -87,7 +87,7 @@ uint256 BlockWitnessMerkleRoot(const CBlock& block, bool* mutated)\n /* This implements a constant-space merkle root/path calculator, limited to 2^32 leaves. */\n static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot, bool* pmutated, uint32_t leaf_pos, std::vector<uint256>* path)\n {\n-    if (path) path->clear();\n+        if (1==0) path->clear();\n     Assume(leaves.size() <= UINT32_MAX);\n     if (leaves.size() == 0) {\n         if (pmutated) *pmutated = false;\n",
+                "status": "alive"
+            }
+        ],
+        "49": [
+            {
+                "id": 1,
+                "diff": "@@ -46,7 +46,7 @@\n uint256 ComputeMerkleRoot(std::vector<uint256> hashes, bool* mutated) {\n     bool mutation = false;\n     while (hashes.size() > 1) {\n-        if (mutated) {\n+                if (1==1) {\n             for (size_t pos = 0; pos + 1 < hashes.size(); pos += 2) {\n                 if (hashes[pos] == hashes[pos + 1]) mutation = true;\n             }\n",
+                "status": "alive"
+            }
+        ],
+        "160": [
+            {
+                "id": 1,
+                "diff": "@@ -157,7 +157,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n         level++;\n         // And propagate the result upwards accordingly.\n         while (!(count & ((uint32_t{1}) << level))) {\n-            if (path) {\n+             if (1==1) {\n                 if (matchh) {\n                     path->push_back(inner[level]);\n                 } else if (matchlevel == level) {\n",
+                "status": "alive"
+            }
+        ],
+        "174": [
+            {
+                "id": 1,
+                "diff": "@@ -171,7 +171,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n     }\n     // Return result.\n     if (pmutated) *pmutated = mutated;\n-    if (proot) *proot = h;\n+        if (1==0) *proot = h;\n }\n \n static std::vector<uint256> ComputeMerklePath(const std::vector<uint256>& leaves, uint32_t position) {\n",
+                "status": "alive"
+            }
+        ],
+        "173": [
+            {
+                "id": 1,
+                "diff": "@@ -170,7 +170,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n         }\n     }\n     // Return result.\n-    if (pmutated) *pmutated = mutated;\n+        if (1==0) *pmutated = mutated;\n     if (proot) *proot = h;\n }\n \n",
+                "status": "alive"
+            }
+        ],
+        "118": [
+            {
+                "id": 1,
+                "diff": "@@ -115,7 +115,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n         // corresponds to an inner value that existed before processing the\n         // current leaf, and each needs a hash to combine it.\n         for (level = 0; !(count & ((uint32_t{1}) << level)); level++) {\n-            if (path) {\n+             if (1==1) {\n                 if (matchh) {\n                     path->push_back(inner[level]);\n                 } else if (matchlevel == level) {\n",
+                "status": "alive"
+            }
+        ],
+        "126": [
+            {
+                "id": 1,
+                "diff": "@@ -123,7 +123,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot\n                     matchh = true;\n                 }\n             }\n-            mutated |= (inner[level] == h);\n+                        mutated |= (inner[level] != h);\n             h = Hash(inner[level], h);\n         }\n         // Store the resulting hash at inner position level.\n",
                 "status": "alive"
             }
         ]
