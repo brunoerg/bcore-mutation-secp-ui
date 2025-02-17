@@ -750,18 +750,6 @@
                     "status": "alive"
                 }
             ],
-            "107": [
-                {
-                    "id": 1,
-                    "diff": "@@ -104,7 +104,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n         largest_difficulty_target *= largest_timespan;\n         largest_difficulty_target /= params.nPowTargetTimespan;\n \n-        if (largest_difficulty_target > pow_limit) {\n+        if (1==0) {\n             largest_difficulty_target = pow_limit;\n         }\n \n",
-                    "status": "alive"
-                },
-                {
-                    "id": 2,
-                    "diff": "@@ -104,7 +104,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n         largest_difficulty_target *= largest_timespan;\n         largest_difficulty_target /= params.nPowTargetTimespan;\n \n-        if (largest_difficulty_target > pow_limit) {\n+                if (largest_difficulty_target >= pow_limit) {\n             largest_difficulty_target = pow_limit;\n         }\n \n",
-                    "status": "alive"
-                }
-            ],
             "95": [
                 {
                     "id": 1,
