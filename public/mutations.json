@@ -765,7 +765,7 @@
             "95": [
                 {
                     "id": 1,
-                    "diff": "@@ -92,7 +92,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n \n     if (height % params.DifficultyAdjustmentInterval() == 0) {\n         int64_t smallest_timespan = params.nPowTargetTimespan/4;\n-        int64_t largest_timespan = params.nPowTargetTimespan*4;\n+                int64_t largest_timespan = (params.nPowTargetTimespan*4) - 1;\n \n         const arith_uint256 pow_limit = UintToArith256(params.powLimit);\n         arith_uint256 observed_new_target;\n",
+                    "diff": "@@ -92,7 +92,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n \n     if (height % params.DifficultyAdjustmentInterval() == 0) {\n         int64_t smallest_timespan = params.nPowTargetTimespan/4;\n-        int64_t largest_timespan = params.nPowTargetTimespan*4;\n+        int64_t largest_timespan = (params.nPowTargetTimespan*4) - 1;\n \n         const arith_uint256 pow_limit = UintToArith256(params.powLimit);\n         arith_uint256 observed_new_target;\n",
                     "status": "alive"
                 },
                 {
@@ -777,7 +777,7 @@
             "94": [
                 {
                     "id": 1,
-                    "diff": "@@ -91,7 +91,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n     if (params.fPowAllowMinDifficultyBlocks) return true;\n \n     if (height % params.DifficultyAdjustmentInterval() == 0) {\n-        int64_t smallest_timespan = params.nPowTargetTimespan/4;\n+                int64_t smallest_timespan = (params.nPowTargetTimespan/4) + 1;\n         int64_t largest_timespan = params.nPowTargetTimespan*4;\n \n         const arith_uint256 pow_limit = UintToArith256(params.powLimit);\n",
+                    "diff": "@@ -91,7 +91,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig\n     if (params.fPowAllowMinDifficultyBlocks) return true;\n \n     if (height % params.DifficultyAdjustmentInterval() == 0) {\n-        int64_t smallest_timespan = params.nPowTargetTimespan/4;\n+        int64_t smallest_timespan = (params.nPowTargetTimespan/4) + 1;\n         int64_t largest_timespan = params.nPowTargetTimespan*4;\n \n         const arith_uint256 pow_limit = UintToArith256(params.powLimit);\n",
                     "status": "alive"
                 }
             ]
@@ -793,27 +793,69 @@
                     "status": "alive"
                 }
             ],
-            "503": [
+            "389": [
                 {
                     "id": 1,
-                    "diff": "@@ -500,7 +500,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n-            if (info.nRefCount == 0) break;\n+                 if (1==0) break;\n         }\n     }\n     nNew--;\n",
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (1==1) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -500,7 +500,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n-            if (info.nRefCount == 0) break;\n+                 if (1==1) break;\n         }\n     }\n     nNew--;\n",
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (nLost / nLostUnk > 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -500,7 +500,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n-            if (info.nRefCount == 0) break;\n+                 if (info.nRefCount != 0) break;\n         }\n     }\n     nNew--;\n",
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (nLost - nLostUnk > 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (nLost * nLostUnk > 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
+                    "status": "alive"
+                },
+                {
+                    "id": 5,
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (nLost + nLostUnk <= 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
+                    "status": "alive"
+                },
+                {
+                    "id": 6,
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (nLost + nLostUnk >= 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
+                    "status": "alive"
+                },
+                {
+                    "id": 7,
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (1==0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
+                    "status": "alive"
+                },
+                {
+                    "id": 8,
+                    "diff": "@@ -386,7 +386,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             ++it;\n         }\n     }\n-    if (nLost + nLostUnk > 0) {\n+    if (nLost + nLostUnk < 0) {\n         LogDebug(BCLog::ADDRMAN, \"addrman lost %i new and %i tried addresses due to collisions or invalid addresses\\n\", nLostUnk, nLost);\n     }\n \n",
+                    "status": "alive"
+                }
+            ],
+            "503": [
+                {
+                    "id": 1,
+                    "diff": "@@ -500,7 +500,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n-            if (info.nRefCount == 0) break;\n+            if (1==0) break;\n         }\n     }\n     nNew--;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -500,7 +500,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n-            if (info.nRefCount == 0) break;\n+            if (1==1) break;\n         }\n     }\n     nNew--;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -500,7 +500,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n-            if (info.nRefCount == 0) break;\n+            if (info.nRefCount != 0) break;\n         }\n     }\n     nNew--;\n",
                     "status": "alive"
                 }
             ],
             "264": [
                 {
                     "id": 1,
-                    "diff": "@@ -261,7 +261,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     s >> nTried;\n     int nUBuckets = 0;\n     s >> nUBuckets;\n-    if (format >= Format::V1_DETERMINISTIC) {\n+        if (1==1) {\n         nUBuckets ^= (1 << 30);\n     }\n \n",
+                    "diff": "@@ -261,7 +261,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     s >> nTried;\n     int nUBuckets = 0;\n     s >> nUBuckets;\n-    if (format >= Format::V1_DETERMINISTIC) {\n+    if (1==1) {\n         nUBuckets ^= (1 << 30);\n     }\n \n",
                     "status": "alive"
                 }
             ],
@@ -827,7 +869,14 @@
             "1102": [
                 {
                     "id": 1,
-                    "diff": "@@ -1099,7 +1099,7 @@ int AddrManImpl::CheckAddrman() const\n         }\n         if (info.nRandomPos < 0 || (size_t)info.nRandomPos >= vRandom.size() || vRandom[info.nRandomPos] != n)\n             return -14;\n-        if (info.m_last_try < NodeSeconds{0s}) {\n+         if (1==0) {\n             return -6;\n         }\n         if (info.m_last_success < NodeSeconds{0s}) {\n",
+                    "diff": "@@ -1099,7 +1099,7 @@ int AddrManImpl::CheckAddrman() const\n         }\n         if (info.nRandomPos < 0 || (size_t)info.nRandomPos >= vRandom.size() || vRandom[info.nRandomPos] != n)\n             return -14;\n-        if (info.m_last_try < NodeSeconds{0s}) {\n+        if (1==0) {\n             return -6;\n         }\n         if (info.m_last_success < NodeSeconds{0s}) {\n",
+                    "status": "alive"
+                }
+            ],
+            "785": [
+                {
+                    "id": 1,
+                    "diff": "@@ -782,7 +782,7 @@ std::pair<CAddress, NodeSeconds> AddrManImpl::Select_(bool new_only, const std::\n         const AddrInfo& info{it_found->second};\n \n         // With probability GetChance() * chance_factor, return the entry.\n-        if (insecure_rand.randbits<30>() < chance_factor * info.GetChance() * (1 << 30)) {\n+        if (insecure_rand.randbits<30>() <= chance_factor * info.GetChance() * (1 << 30)) {\n             LogDebug(BCLog::ADDRMAN, \"Selected %s from %s\\n\", info.ToStringAddrPort(), search_tried ? \"tried\" : \"new\");\n             return {info, info.m_last_try};\n         }\n",
                     "status": "alive"
                 }
             ],
@@ -841,7 +890,7 @@
             "537": [
                 {
                     "id": 1,
-                    "diff": "@@ -534,7 +534,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         // Enter it into the new set again.\n         infoOld.nRefCount = 1;\n         vvNew[nUBucket][nUBucketPos] = nIdEvict;\n-        nNew++;\n+                nNew--;\n         m_network_counts[infoOld.GetNetwork()].n_new++;\n         LogDebug(BCLog::ADDRMAN, \"Moved %s from tried[%i][%i] to new[%i][%i] to make space\\n\",\n                  infoOld.ToStringAddrPort(), nKBucket, nKBucketPos, nUBucket, nUBucketPos);\n",
+                    "diff": "@@ -534,7 +534,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         // Enter it into the new set again.\n         infoOld.nRefCount = 1;\n         vvNew[nUBucket][nUBucketPos] = nIdEvict;\n-        nNew++;\n+        nNew--;\n         m_network_counts[infoOld.GetNetwork()].n_new++;\n         LogDebug(BCLog::ADDRMAN, \"Moved %s from tried[%i][%i] to new[%i][%i] to make space\\n\",\n                  infoOld.ToStringAddrPort(), nKBucket, nKBucketPos, nUBucket, nUBucketPos);\n",
                     "status": "alive"
                 }
             ],
@@ -853,14 +902,19 @@
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -1051,7 +1051,7 @@ void AddrManImpl::Check() const\n \n     // Run consistency checks 1 in m_consistency_check_ratio times if enabled\n     if (m_consistency_check_ratio == 0) return;\n-    if (insecure_rand.randrange(m_consistency_check_ratio) >= 1) return;\n+        if (insecure_rand.randrange(m_consistency_check_ratio) <= 1) return;\n \n     const int err{CheckAddrman()};\n     if (err) {\n",
+                    "diff": "@@ -1051,7 +1051,7 @@ void AddrManImpl::Check() const\n \n     // Run consistency checks 1 in m_consistency_check_ratio times if enabled\n     if (m_consistency_check_ratio == 0) return;\n-    if (insecure_rand.randrange(m_consistency_check_ratio) >= 1) return;\n+    \n \n     const int err{CheckAddrman()};\n     if (err) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -1051,7 +1051,7 @@ void AddrManImpl::Check() const\n \n     // Run consistency checks 1 in m_consistency_check_ratio times if enabled\n     if (m_consistency_check_ratio == 0) return;\n-    if (insecure_rand.randrange(m_consistency_check_ratio) >= 1) return;\n+    if (insecure_rand.randrange(m_consistency_check_ratio) > 1) return;\n \n     const int err{CheckAddrman()};\n     if (err) {\n",
                     "status": "alive"
                 }
             ],
             "1084": [
                 {
                     "id": 1,
-                    "diff": "@@ -1081,7 +1081,7 @@ int AddrManImpl::CheckAddrman() const\n             if (!TicksSinceEpoch<std::chrono::seconds>(info.m_last_success)) {\n                 return -1;\n             }\n-            if (info.nRefCount)\n+                 if (1==0)\n                 return -2;\n             setTried.insert(n);\n             local_counts[info.GetNetwork()].n_tried++;\n",
+                    "diff": "@@ -1081,7 +1081,7 @@ int AddrManImpl::CheckAddrman() const\n             if (!TicksSinceEpoch<std::chrono::seconds>(info.m_last_success)) {\n                 return -1;\n             }\n-            if (info.nRefCount)\n+            if (1==0)\n                 return -2;\n             setTried.insert(n);\n             local_counts[info.GetNetwork()].n_tried++;\n",
                     "status": "alive"
                 }
             ],
@@ -874,106 +928,101 @@
             "497": [
                 {
                     "id": 1,
-                    "diff": "@@ -494,7 +494,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n \n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n-    for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n+        for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; --n) {\n         const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n",
+                    "diff": "@@ -494,7 +494,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n \n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n-    for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n+    for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; --n) {\n         const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -494,7 +494,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n \n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n-    for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n+        for (int n = 0; n <= ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n         const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n",
+                    "diff": "@@ -494,7 +494,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n \n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n-    for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n+    for (int n = 0; n <= ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n         const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n",
                     "status": "alive"
                 }
             ],
             "800": [
                 {
                     "id": 1,
-                    "diff": "@@ -797,7 +797,7 @@ nid_type AddrManImpl::GetEntry(bool use_tried, size_t bucket, size_t position) c\n     AssertLockHeld(cs);\n \n     if (use_tried) {\n-        if (Assume(position < ADDRMAN_BUCKET_SIZE) && Assume(bucket < ADDRMAN_TRIED_BUCKET_COUNT)) {\n+         if (Assume(position < ADDRMAN_BUCKET_SIZE) || Assume(bucket < ADDRMAN_TRIED_BUCKET_COUNT)) {\n             return vvTried[bucket][position];\n         }\n     } else {\n",
+                    "diff": "@@ -797,7 +797,7 @@ nid_type AddrManImpl::GetEntry(bool use_tried, size_t bucket, size_t position) c\n     AssertLockHeld(cs);\n \n     if (use_tried) {\n-        if (Assume(position < ADDRMAN_BUCKET_SIZE) && Assume(bucket < ADDRMAN_TRIED_BUCKET_COUNT)) {\n+        if (Assume(position < ADDRMAN_BUCKET_SIZE) || Assume(bucket < ADDRMAN_TRIED_BUCKET_COUNT)) {\n             return vvTried[bucket][position];\n         }\n     } else {\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -797,7 +797,7 @@ nid_type AddrManImpl::GetEntry(bool use_tried, size_t bucket, size_t position) c\n     AssertLockHeld(cs);\n \n     if (use_tried) {\n-        if (Assume(position < ADDRMAN_BUCKET_SIZE) && Assume(bucket < ADDRMAN_TRIED_BUCKET_COUNT)) {\n+         if (Assume(position <= ADDRMAN_BUCKET_SIZE) && Assume(bucket <= ADDRMAN_TRIED_BUCKET_COUNT)) {\n             return vvTried[bucket][position];\n         }\n     } else {\n",
+                    "diff": "@@ -797,7 +797,7 @@ nid_type AddrManImpl::GetEntry(bool use_tried, size_t bucket, size_t position) c\n     AssertLockHeld(cs);\n \n     if (use_tried) {\n-        if (Assume(position < ADDRMAN_BUCKET_SIZE) && Assume(bucket < ADDRMAN_TRIED_BUCKET_COUNT)) {\n+        if (Assume(position <= ADDRMAN_BUCKET_SIZE) && Assume(bucket <= ADDRMAN_TRIED_BUCKET_COUNT)) {\n             return vvTried[bucket][position];\n         }\n     } else {\n",
+                    "status": "alive"
+                }
+            ],
+            "1057": [
+                {
+                    "id": 1,
+                    "diff": "@@ -1054,7 +1054,7 @@ void AddrManImpl::Check() const\n     if (insecure_rand.randrange(m_consistency_check_ratio) >= 1) return;\n \n     const int err{CheckAddrman()};\n-    if (err) {\n+    if (1==0) {\n         LogPrintf(\"ADDRMAN CONSISTENCY CHECK FAILED!!! err=%i\\n\", err);\n         assert(false);\n     }\n",
                     "status": "alive"
                 }
             ],
             "99": [
                 {
                     "id": 1,
-                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+        if (now - m_last_try >= 10min) {\n         fChance *= 0.01;\n     }\n \n",
+                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+    if (now - m_last_try >= 10min) {\n         fChance *= 0.01;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+        if (1==1) {\n         fChance *= 0.01;\n     }\n \n",
+                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+    if (1==1) {\n         fChance *= 0.01;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+        if (1==0) {\n         fChance *= 0.01;\n     }\n \n",
+                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+    if (now - m_last_try <= 10min) {\n         fChance *= 0.01;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 4,
-                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+        if (now - m_last_try <= 10min) {\n         fChance *= 0.01;\n     }\n \n",
-                    "status": "alive"
-                },
-                {
-                    "id": 5,
-                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+        if (now - m_last_try > 10min) {\n         fChance *= 0.01;\n     }\n \n",
+                    "diff": "@@ -96,7 +96,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     double fChance = 1.0;\n \n     // deprioritize very recent attempts away\n-    if (now - m_last_try < 10min) {\n+    if (now - m_last_try > 10min) {\n         fChance *= 0.01;\n     }\n \n",
                     "status": "alive"
                 }
             ],
             "500": [
                 {
                     "id": 1,
-                    "diff": "@@ -497,7 +497,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n         const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n-        if (vvNew[bucket][pos] == nId) {\n+                if (1==1) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n             if (info.nRefCount == 0) break;\n",
+                    "diff": "@@ -497,7 +497,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n         const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n-        if (vvNew[bucket][pos] == nId) {\n+        if (1==1) {\n             vvNew[bucket][pos] = -1;\n             info.nRefCount--;\n             if (info.nRefCount == 0) break;\n",
                     "status": "alive"
                 }
             ],
             "498": [
                 {
                     "id": 1,
-                    "diff": "@@ -495,7 +495,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n-        const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n+                const int bucket{(start_bucket - n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n",
+                    "diff": "@@ -495,7 +495,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n-        const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n+        const int bucket{(start_bucket - n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -495,7 +495,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n-        const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n+                const int bucket{(start_bucket / n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n",
+                    "diff": "@@ -495,7 +495,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n-        const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n+        const int bucket{(start_bucket / n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -495,7 +495,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n-        const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n+                const int bucket{(start_bucket * n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n",
-                    "status": "alive"
-                }
-            ],
-            "822": [
-                {
-                    "id": 1,
-                    "diff": "@@ -819,7 +819,7 @@ std::vector<CAddress> AddrManImpl::GetAddr_(size_t max_addresses, size_t max_pct\n         max_pct = std::min(max_pct, size_t{100});\n         nNodes = max_pct * nNodes / 100;\n     }\n-    if (max_addresses != 0) {\n+        if (1==0) {\n         nNodes = std::min(nNodes, max_addresses);\n     }\n \n",
+                    "diff": "@@ -495,7 +495,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n     // remove the entry from all new buckets\n     const int start_bucket{info.GetNewBucket(nKey, m_netgroupman)};\n     for (int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; ++n) {\n-        const int bucket{(start_bucket + n) % ADDRMAN_NEW_BUCKET_COUNT};\n+        const int bucket{(start_bucket * n) % ADDRMAN_NEW_BUCKET_COUNT};\n         const int pos{info.GetBucketPosition(nKey, true, bucket)};\n         if (vvNew[bucket][pos] == nId) {\n             vvNew[bucket][pos] = -1;\n",
                     "status": "alive"
                 }
             ],
             "208": [
                 {
                     "id": 1,
-                    "diff": "@@ -205,7 +205,7 @@ void AddrManImpl::Serialize(Stream& s_) const\n         if (info.fInTried) {\n             assert(nIds != nTried); // this means nTried was wrong, oh ow\n             s << info;\n-            nIds++;\n+                nIds--;\n         }\n     }\n     for (int bucket = 0; bucket < ADDRMAN_NEW_BUCKET_COUNT; bucket++) {\n",
+                    "diff": "@@ -205,7 +205,7 @@ void AddrManImpl::Serialize(Stream& s_) const\n         if (info.fInTried) {\n             assert(nIds != nTried); // this means nTried was wrong, oh ow\n             s << info;\n-            nIds++;\n+            nIds--;\n         }\n     }\n     for (int bucket = 0; bucket < ADDRMAN_NEW_BUCKET_COUNT; bucket++) {\n",
                     "status": "alive"
                 }
             ],
             "362": [
                 {
                     "id": 1,
-                    "diff": "@@ -359,7 +359,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-        if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n+                if (restore_bucketing && vvNew[bucket][bucket_position] != -1) {\n             // Bucketing has not changed, using existing bucket positions for the new table\n             vvNew[bucket][bucket_position] = entry_index;\n             ++info.nRefCount;\n",
+                    "diff": "@@ -359,7 +359,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-        if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n+        if (restore_bucketing && vvNew[bucket][bucket_position] != -1) {\n             // Bucketing has not changed, using existing bucket positions for the new table\n             vvNew[bucket][bucket_position] = entry_index;\n             ++info.nRefCount;\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -359,7 +359,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-        if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n+                if (1==1) {\n             // Bucketing has not changed, using existing bucket positions for the new table\n             vvNew[bucket][bucket_position] = entry_index;\n             ++info.nRefCount;\n",
+                    "diff": "@@ -359,7 +359,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-        if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n+        if (1==1) {\n             // Bucketing has not changed, using existing bucket positions for the new table\n             vvNew[bucket][bucket_position] = entry_index;\n             ++info.nRefCount;\n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -359,7 +359,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-        if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n+                if (restore_bucketing || vvNew[bucket][bucket_position] == -1) {\n             // Bucketing has not changed, using existing bucket positions for the new table\n             vvNew[bucket][bucket_position] = entry_index;\n             ++info.nRefCount;\n",
+                    "diff": "@@ -359,7 +359,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-        if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n+        if (restore_bucketing || vvNew[bucket][bucket_position] == -1) {\n             // Bucketing has not changed, using existing bucket positions for the new table\n             vvNew[bucket][bucket_position] = entry_index;\n             ++info.nRefCount;\n",
                     "status": "alive"
                 },
                 {
@@ -982,85 +1031,75 @@
                     "status": "alive"
                 }
             ],
-            "862": [
+            "71": [
                 {
                     "id": 1,
-                    "diff": "@@ -859,7 +859,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n-            if (id >= 0) {\n+                 if (1==0) {\n                 AddrInfo info = mapInfo.at(id);\n                 AddressPosition location = AddressPosition(\n                     from_tried,\n",
+                    "diff": "@@ -68,7 +68,7 @@ int AddrInfo::GetBucketPosition(const uint256& nKey, bool fNew, int bucket) cons\n \n bool AddrInfo::IsTerrible(NodeSeconds now) const\n {\n-    if (now - m_last_try <= 1min) { // never remove things tried in the last minute\n+    if (1==0) { // never remove things tried in the last minute\n         return false;\n     }\n \n",
+                    "status": "alive"
+                }
+            ],
+            "344": [
+                {
+                    "id": 1,
+                    "diff": "@@ -341,7 +341,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n         serialized_asmap_checksum == supplied_asmap_checksum};\n \n-    if (!restore_bucketing) {\n+    if (1==1) {\n         LogDebug(BCLog::ADDRMAN, \"Bucketing method was updated, re-bucketing addrman entries from disk\\n\");\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -859,7 +859,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n-            if (id >= 0) {\n+                 if (1==1) {\n                 AddrInfo info = mapInfo.at(id);\n                 AddressPosition location = AddressPosition(\n                     from_tried,\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 3,
-                    "diff": "@@ -859,7 +859,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n-            if (id >= 0) {\n+                 if (id > 0) {\n                 AddrInfo info = mapInfo.at(id);\n                 AddressPosition location = AddressPosition(\n                     from_tried,\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 4,
-                    "diff": "@@ -859,7 +859,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n-            if (id >= 0) {\n+                 if (id <= 0) {\n                 AddrInfo info = mapInfo.at(id);\n                 AddressPosition location = AddressPosition(\n                     from_tried,\n",
-                    "status": "alive"
-                }
-            ],
-            "71": [
-                {
-                    "id": 1,
-                    "diff": "@@ -68,7 +68,7 @@ int AddrInfo::GetBucketPosition(const uint256& nKey, bool fNew, int bucket) cons\n \n bool AddrInfo::IsTerrible(NodeSeconds now) const\n {\n-    if (now - m_last_try <= 1min) { // never remove things tried in the last minute\n+        if (1==0) { // never remove things tried in the last minute\n         return false;\n     }\n \n",
+                    "diff": "@@ -341,7 +341,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n         serialized_asmap_checksum == supplied_asmap_checksum};\n \n-    if (!restore_bucketing) {\n+    if (1==0) {\n         LogDebug(BCLog::ADDRMAN, \"Bucketing method was updated, re-bucketing addrman entries from disk\\n\");\n     }\n \n",
                     "status": "alive"
                 }
             ],
             "327": [
                 {
                     "id": 1,
-                    "diff": "@@ -324,7 +324,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         for (int n = 0; n < num_entries; ++n) {\n             int entry_index{0};\n             s >> entry_index;\n-            if (entry_index >= 0 && entry_index < nNew) {\n+                 if (entry_index >= 0 && entry_index <= nNew) {\n                 bucket_entries.emplace_back(bucket, entry_index);\n             }\n         }\n",
+                    "diff": "@@ -324,7 +324,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         for (int n = 0; n < num_entries; ++n) {\n             int entry_index{0};\n             s >> entry_index;\n-            if (entry_index >= 0 && entry_index < nNew) {\n+            if (entry_index >= 0 && entry_index <= nNew) {\n                 bucket_entries.emplace_back(bucket, entry_index);\n             }\n         }\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -324,7 +324,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         for (int n = 0; n < num_entries; ++n) {\n             int entry_index{0};\n             s >> entry_index;\n-            if (entry_index >= 0 && entry_index < nNew) {\n+                 if (1==1) {\n                 bucket_entries.emplace_back(bucket, entry_index);\n             }\n         }\n",
+                    "diff": "@@ -324,7 +324,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         for (int n = 0; n < num_entries; ++n) {\n             int entry_index{0};\n             s >> entry_index;\n-            if (entry_index >= 0 && entry_index < nNew) {\n+            if (1==1) {\n                 bucket_entries.emplace_back(bucket, entry_index);\n             }\n         }\n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -324,7 +324,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         for (int n = 0; n < num_entries; ++n) {\n             int entry_index{0};\n             s >> entry_index;\n-            if (entry_index >= 0 && entry_index < nNew) {\n+                 if (entry_index >= 0 || entry_index < nNew) {\n                 bucket_entries.emplace_back(bucket, entry_index);\n             }\n         }\n",
+                    "diff": "@@ -324,7 +324,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         for (int n = 0; n < num_entries; ++n) {\n             int entry_index{0};\n             s >> entry_index;\n-            if (entry_index >= 0 && entry_index < nNew) {\n+            if (entry_index >= 0 || entry_index < nNew) {\n                 bucket_entries.emplace_back(bucket, entry_index);\n             }\n         }\n",
                     "status": "alive"
                 }
             ],
             "567": [
                 {
                     "id": 1,
-                    "diff": "@@ -564,7 +564,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n     if (pinfo) {\n         // periodically update nTime\n-        const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n+                const bool currently_online{NodeClock::now() - addr.nTime <= 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n",
+                    "diff": "@@ -564,7 +564,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n     if (pinfo) {\n         // periodically update nTime\n-        const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n+        const bool currently_online{NodeClock::now() - addr.nTime <= 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -564,7 +564,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n     if (pinfo) {\n         // periodically update nTime\n-        const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n+                const bool currently_online{NodeClock::now() - addr.nTime >= 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n",
+                    "diff": "@@ -564,7 +564,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n     if (pinfo) {\n         // periodically update nTime\n-        const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n+        const bool currently_online{NodeClock::now() - addr.nTime >= 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -564,7 +564,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n     if (pinfo) {\n         // periodically update nTime\n-        const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n+                const bool currently_online{NodeClock::now() - addr.nTime > 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n",
+                    "diff": "@@ -564,7 +564,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n     if (pinfo) {\n         // periodically update nTime\n-        const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n+        const bool currently_online{NodeClock::now() - addr.nTime > 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n",
                     "status": "alive"
                 }
             ],
             "570": [
                 {
                     "id": 1,
-                    "diff": "@@ -567,7 +567,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n-            pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n+                        pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime + time_penalty);\n         }\n \n         // add services\n",
+                    "diff": "@@ -567,7 +567,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n-            pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n+            pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime + time_penalty);\n         }\n \n         // add services\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -567,7 +567,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n-            pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n+                        pinfo->nTime = std::min(NodeSeconds{0s}, addr.nTime - time_penalty);\n         }\n \n         // add services\n",
+                    "diff": "@@ -567,7 +567,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n         if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n-            pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n+            pinfo->nTime = std::min(NodeSeconds{0s}, addr.nTime - time_penalty);\n         }\n \n         // add services\n",
                     "status": "alive"
                 }
             ],
             "590": [
                 {
                     "id": 1,
-                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+                if (1==1) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
+                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+        if (1==1) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
                     "status": "alive"
                 },
                 {
@@ -1070,29 +1109,29 @@
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+                if (pinfo->nRefCount >= 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
+                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+        if (pinfo->nRefCount >= 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
                     "status": "alive"
                 },
                 {
                     "id": 4,
-                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+                if (pinfo->nRefCount <= 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
+                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+        if (pinfo->nRefCount <= 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
                     "status": "alive"
                 },
                 {
                     "id": 5,
-                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+                if (pinfo->nRefCount < 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
+                    "diff": "@@ -587,7 +587,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             return false;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n-        if (pinfo->nRefCount > 0) {\n+        if (pinfo->nRefCount < 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n             if (insecure_rand.randrange(nFactor) != 0) return false;\n         }\n",
                     "status": "alive"
                 }
             ],
             "652": [
                 {
                     "id": 1,
-                    "diff": "@@ -649,7 +649,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n     if (info.fInTried) return false;\n \n     // if it is not in new, something bad happened\n-    if (!Assume(info.nRefCount > 0)) return false;\n+        if (!Assume(info.nRefCount >= 0)) return false;\n \n \n     // which tried bucket to move the entry to\n",
+                    "diff": "@@ -649,7 +649,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n     if (info.fInTried) return false;\n \n     // if it is not in new, something bad happened\n-    if (!Assume(info.nRefCount > 0)) return false;\n+    if (!Assume(info.nRefCount >= 0)) return false;\n \n \n     // which tried bucket to move the entry to\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -649,7 +649,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n     if (info.fInTried) return false;\n \n     // if it is not in new, something bad happened\n-    if (!Assume(info.nRefCount > 0)) return false;\n+        if (!Assume(info.nRefCount > 0)) return true;\n \n \n     // which tried bucket to move the entry to\n",
+                    "diff": "@@ -649,7 +649,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n     if (info.fInTried) return false;\n \n     // if it is not in new, something bad happened\n-    if (!Assume(info.nRefCount > 0)) return false;\n+    if (!Assume(info.nRefCount > 0)) return true;\n \n \n     // which tried bucket to move the entry to\n",
                     "status": "alive"
                 },
                 {
@@ -1104,31 +1143,31 @@
             "943": [
                 {
                     "id": 1,
-                    "diff": "@@ -940,7 +940,7 @@ void AddrManImpl::ResolveCollisions_()\n                 // Has successfully connected in last X hours\n                 if (current_time - info_old.m_last_success < ADDRMAN_REPLACEMENT) {\n                     erase_collision = true;\n-                } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n+                                } else if (1==1) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n                     if (current_time - info_old.m_last_try > 60s) {\n",
+                    "diff": "@@ -940,7 +940,7 @@ void AddrManImpl::ResolveCollisions_()\n                 // Has successfully connected in last X hours\n                 if (current_time - info_old.m_last_success < ADDRMAN_REPLACEMENT) {\n                     erase_collision = true;\n-                } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n+                } else if (1==1) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n                     if (current_time - info_old.m_last_try > 60s) {\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -940,7 +940,7 @@ void AddrManImpl::ResolveCollisions_()\n                 // Has successfully connected in last X hours\n                 if (current_time - info_old.m_last_success < ADDRMAN_REPLACEMENT) {\n                     erase_collision = true;\n-                } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n+                                } else if (current_time - info_old.m_last_try <= ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n                     if (current_time - info_old.m_last_try > 60s) {\n",
+                    "diff": "@@ -940,7 +940,7 @@ void AddrManImpl::ResolveCollisions_()\n                 // Has successfully connected in last X hours\n                 if (current_time - info_old.m_last_success < ADDRMAN_REPLACEMENT) {\n                     erase_collision = true;\n-                } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n+                } else if (current_time - info_old.m_last_try <= ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n                     if (current_time - info_old.m_last_try > 60s) {\n",
                     "status": "alive"
                 }
             ],
             "946": [
                 {
                     "id": 1,
-                    "diff": "@@ -943,7 +943,7 @@ void AddrManImpl::ResolveCollisions_()\n                 } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n-                    if (current_time - info_old.m_last_try > 60s) {\n+                                        if (1==1) {\n                         LogDebug(BCLog::ADDRMAN, \"Replacing %s with %s in tried table\\n\", info_old.ToStringAddrPort(), info_new.ToStringAddrPort());\n \n                         // Replaces an existing address already in the tried table with the new address\n",
+                    "diff": "@@ -943,7 +943,7 @@ void AddrManImpl::ResolveCollisions_()\n                 } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n-                    if (current_time - info_old.m_last_try > 60s) {\n+                    if (1==1) {\n                         LogDebug(BCLog::ADDRMAN, \"Replacing %s with %s in tried table\\n\", info_old.ToStringAddrPort(), info_new.ToStringAddrPort());\n \n                         // Replaces an existing address already in the tried table with the new address\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -943,7 +943,7 @@ void AddrManImpl::ResolveCollisions_()\n                 } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n-                    if (current_time - info_old.m_last_try > 60s) {\n+                                        if (current_time - info_old.m_last_try >= 60s) {\n                         LogDebug(BCLog::ADDRMAN, \"Replacing %s with %s in tried table\\n\", info_old.ToStringAddrPort(), info_new.ToStringAddrPort());\n \n                         // Replaces an existing address already in the tried table with the new address\n",
+                    "diff": "@@ -943,7 +943,7 @@ void AddrManImpl::ResolveCollisions_()\n                 } else if (current_time - info_old.m_last_try < ADDRMAN_REPLACEMENT) { // attempted to connect and failed in last X hours\n \n                     // Give address at least 60 seconds to successfully connect\n-                    if (current_time - info_old.m_last_try > 60s) {\n+                    if (current_time - info_old.m_last_try >= 60s) {\n                         LogDebug(BCLog::ADDRMAN, \"Replacing %s with %s in tried table\\n\", info_old.ToStringAddrPort(), info_new.ToStringAddrPort());\n \n                         // Replaces an existing address already in the tried table with the new address\n",
                     "status": "alive"
                 }
             ],
             "1009": [
                 {
                     "id": 1,
-                    "diff": "@@ -1006,7 +1006,7 @@ std::optional<AddressPosition> AddrManImpl::FindAddressEntry_(const CAddress& ad\n \n     AddrInfo* addr_info = Find(addr);\n \n-    if (!addr_info) return std::nullopt;\n+        if (1==0) return std::nullopt;\n \n     if(addr_info->fInTried) {\n         int bucket{addr_info->GetTriedBucket(nKey, m_netgroupman)};\n",
+                    "diff": "@@ -1006,7 +1006,7 @@ std::optional<AddressPosition> AddrManImpl::FindAddressEntry_(const CAddress& ad\n \n     AddrInfo* addr_info = Find(addr);\n \n-    if (!addr_info) return std::nullopt;\n+    if (1==0) return std::nullopt;\n \n     if(addr_info->fInTried) {\n         int bucket{addr_info->GetTriedBucket(nKey, m_netgroupman)};\n",
                     "status": "alive"
                 },
                 {
@@ -1137,91 +1176,69 @@
                     "status": "alive"
                 }
             ],
-            "859": [
+            "87": [
                 {
                     "id": 1,
-                    "diff": "@@ -856,7 +856,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n \n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n-    for (int bucket = 0; bucket < bucket_count; ++bucket) {\n+    for (int bucket = 0; bucket < bucket_count; ++bucket) {break;\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n",
+                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts > ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -856,7 +856,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n \n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n-    for (int bucket = 0; bucket < bucket_count; ++bucket) {\n+    for (int bucket = 0; bucket >= bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n",
+                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+    if (now - m_last_success < ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -856,7 +856,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n \n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n-    for (int bucket = 0; bucket < bucket_count; ++bucket) {\n+    for (int bucket = 0; bucket <= bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n",
+                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+    if (now - m_last_success >= ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 4,
-                    "diff": "@@ -856,7 +856,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n \n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n-    for (int bucket = 0; bucket < bucket_count; ++bucket) {\n+    for (int bucket = 0; bucket > bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n",
+                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+    if (now - m_last_success <= ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 5,
-                    "diff": "@@ -856,7 +856,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n \n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n-    for (int bucket = 0; bucket < bucket_count; ++bucket) {\n+    for (int bucket = 0; bucket < bucket_count; --bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n",
-                    "status": "alive"
-                }
-            ],
-            "87": [
-                {
-                    "id": 1,
-                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+        if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts > ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
-                    "status": "alive"
-                },
-                {
-                    "id": 2,
-                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+        if (now - m_last_success < ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
-                    "status": "alive"
-                },
-                {
-                    "id": 3,
-                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+        if (now - m_last_success >= ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
-                    "status": "alive"
-                },
-                {
-                    "id": 4,
-                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+        if (now - m_last_success <= ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n         return true;\n     }\n \n",
+                    "diff": "@@ -84,7 +84,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - m_last_success > ADDRMAN_MIN_FAIL && nAttempts >= ADDRMAN_MAX_FAILURES) { // N successive failures in the last week\n+    if (1==0) { // N successive failures in the last week\n         return true;\n     }\n \n",
                     "status": "alive"
                 }
             ],
             "605": [
                 {
                     "id": 1,
-                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+                 if (infoExisting.IsTerrible() || (infoExisting.nRefCount < 1 && pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
+                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+            if (infoExisting.IsTerrible() || (infoExisting.nRefCount < 1 && pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+                 if (infoExisting.IsTerrible() || (infoExisting.nRefCount >= 1 && pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
+                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+            if (infoExisting.IsTerrible() || (infoExisting.nRefCount >= 1 && pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+                 if (infoExisting.IsTerrible() || (infoExisting.nRefCount <= 1 && pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
+                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+            if (infoExisting.IsTerrible() || (infoExisting.nRefCount <= 1 && pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
                     "status": "alive"
                 },
                 {
                     "id": 4,
-                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+                 if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 || pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
+                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 || pinfo->nRefCount == 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
                     "status": "alive"
                 },
                 {
                     "id": 5,
-                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+                 if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount != 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
+                    "diff": "@@ -602,7 +602,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     if (vvNew[nUBucket][nUBucketPos] != nId) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n-            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n+            if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount != 0)) {\n                 // Overwrite the existing new table entry.\n                 fInsert = true;\n             }\n",
                     "status": "alive"
                 }
             ],
             "592": [
                 {
                     "id": 1,
-                    "diff": "@@ -589,7 +589,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n         if (pinfo->nRefCount > 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n-            if (insecure_rand.randrange(nFactor) != 0) return false;\n+                 if (insecure_rand.randrange(nFactor) == 0) return false;\n         }\n     } else {\n         pinfo = Create(addr, source, &nId);\n",
+                    "diff": "@@ -589,7 +589,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n         if (pinfo->nRefCount > 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n-            if (insecure_rand.randrange(nFactor) != 0) return false;\n+            if (insecure_rand.randrange(nFactor) == 0) return false;\n         }\n     } else {\n         pinfo = Create(addr, source, &nId);\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -589,7 +589,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n         if (pinfo->nRefCount > 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n-            if (insecure_rand.randrange(nFactor) != 0) return false;\n+                 if (insecure_rand.randrange(nFactor) != 0) return true;\n         }\n     } else {\n         pinfo = Create(addr, source, &nId);\n",
+                    "diff": "@@ -589,7 +589,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n         if (pinfo->nRefCount > 0) {\n             const int nFactor{1 << pinfo->nRefCount};\n-            if (insecure_rand.randrange(nFactor) != 0) return false;\n+            if (insecure_rand.randrange(nFactor) != 0) return true;\n         }\n     } else {\n         pinfo = Create(addr, source, &nId);\n",
                     "status": "alive"
                 },
                 {
@@ -1230,101 +1247,81 @@
                     "status": "alive"
                 }
             ],
-            "860": [
-                {
-                    "id": 1,
-                    "diff": "@@ -857,7 +857,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n-        for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n+                for (int position = 0; position > ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n                 AddrInfo info = mapInfo.at(id);\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 2,
-                    "diff": "@@ -857,7 +857,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n-        for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n+                for (int position = 0; position <= ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n                 AddrInfo info = mapInfo.at(id);\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 3,
-                    "diff": "@@ -857,7 +857,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n-        for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n+                for (int position = 0; position < ADDRMAN_BUCKET_SIZE; --position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n                 AddrInfo info = mapInfo.at(id);\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 4,
-                    "diff": "@@ -857,7 +857,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n-        for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n+                for (int position = 0; position >= ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n                 AddrInfo info = mapInfo.at(id);\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 5,
-                    "diff": "@@ -857,7 +857,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n-        for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n+                for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {break;\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n                 AddrInfo info = mapInfo.at(id);\n",
-                    "status": "alive"
-                }
-            ],
             "341": [
                 {
                     "id": 1,
-                    "diff": "@@ -338,7 +338,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     if (format >= Format::V2_ASMAP) {\n         s >> serialized_asmap_checksum;\n     }\n-    const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n+        const bool restore_bucketing{nUBuckets != ADDRMAN_NEW_BUCKET_COUNT &&\n         serialized_asmap_checksum == supplied_asmap_checksum};\n \n     if (!restore_bucketing) {\n",
+                    "diff": "@@ -338,7 +338,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     if (format >= Format::V2_ASMAP) {\n         s >> serialized_asmap_checksum;\n     }\n-    const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n+    const bool restore_bucketing{nUBuckets != ADDRMAN_NEW_BUCKET_COUNT &&\n         serialized_asmap_checksum == supplied_asmap_checksum};\n \n     if (!restore_bucketing) {\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -338,7 +338,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     if (format >= Format::V2_ASMAP) {\n         s >> serialized_asmap_checksum;\n     }\n-    const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n+        const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT ||\n         serialized_asmap_checksum == supplied_asmap_checksum};\n \n     if (!restore_bucketing) {\n",
+                    "diff": "@@ -338,7 +338,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n     if (format >= Format::V2_ASMAP) {\n         s >> serialized_asmap_checksum;\n     }\n-    const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n+    const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT ||\n         serialized_asmap_checksum == supplied_asmap_checksum};\n \n     if (!restore_bucketing) {\n",
                     "status": "alive"
                 }
             ],
             "618": [
                 {
                     "id": 1,
-                    "diff": "@@ -615,7 +615,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             LogDebug(BCLog::ADDRMAN, \"Added %s%s to new[%i][%i]\\n\",\n                      addr.ToStringAddrPort(), (mapped_as ? strprintf(\" mapped to AS%i\", mapped_as) : \"\"), nUBucket, nUBucketPos);\n         } else {\n-            if (pinfo->nRefCount == 0) {\n+                 if (1==1) {\n                 Delete(nId);\n             }\n         }\n",
+                    "diff": "@@ -615,7 +615,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n             LogDebug(BCLog::ADDRMAN, \"Added %s%s to new[%i][%i]\\n\",\n                      addr.ToStringAddrPort(), (mapped_as ? strprintf(\" mapped to AS%i\", mapped_as) : \"\"), nUBucket, nUBucketPos);\n         } else {\n-            if (pinfo->nRefCount == 0) {\n+            if (1==1) {\n                 Delete(nId);\n             }\n         }\n",
                     "status": "alive"
                 }
             ],
             "583": [
                 {
                     "id": 1,
-                    "diff": "@@ -580,7 +580,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n         // do not update if the entry was already in the \"tried\" table\n         if (pinfo->fInTried)\n-            return false;\n+                 return true;\n \n         // do not update if the max reference count is reached\n         if (pinfo->nRefCount == ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n",
+                    "diff": "@@ -580,7 +580,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n         // do not update if the entry was already in the \"tried\" table\n         if (pinfo->fInTried)\n-            return false;\n+            return true;\n \n         // do not update if the max reference count is reached\n         if (pinfo->nRefCount == ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n",
                     "status": "alive"
                 }
             ],
             "75": [
                 {
                     "id": 1,
-                    "diff": "@@ -72,7 +72,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return false;\n     }\n \n-    if (nTime > now + 10min) { // came in a flying DeLorean\n+        if (nTime >= now + 10min) { // came in a flying DeLorean\n         return true;\n     }\n \n",
+                    "diff": "@@ -72,7 +72,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return false;\n     }\n \n-    if (nTime > now + 10min) { // came in a flying DeLorean\n+    if (nTime >= now + 10min) { // came in a flying DeLorean\n         return true;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -72,7 +72,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return false;\n     }\n \n-    if (nTime > now + 10min) { // came in a flying DeLorean\n+        if (1==0) { // came in a flying DeLorean\n         return true;\n     }\n \n",
+                    "diff": "@@ -72,7 +72,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return false;\n     }\n \n-    if (nTime > now + 10min) { // came in a flying DeLorean\n+    if (1==0) { // came in a flying DeLorean\n         return true;\n     }\n \n",
                     "status": "alive"
                 }
             ],
             "342": [
                 {
                     "id": 1,
-                    "diff": "@@ -339,7 +339,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         s >> serialized_asmap_checksum;\n     }\n     const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n-        serialized_asmap_checksum == supplied_asmap_checksum};\n+                serialized_asmap_checksum != supplied_asmap_checksum};\n \n     if (!restore_bucketing) {\n         LogDebug(BCLog::ADDRMAN, \"Bucketing method was updated, re-bucketing addrman entries from disk\\n\");\n",
+                    "diff": "@@ -339,7 +339,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         s >> serialized_asmap_checksum;\n     }\n     const bool restore_bucketing{nUBuckets == ADDRMAN_NEW_BUCKET_COUNT &&\n-        serialized_asmap_checksum == supplied_asmap_checksum};\n+        serialized_asmap_checksum != supplied_asmap_checksum};\n \n     if (!restore_bucketing) {\n         LogDebug(BCLog::ADDRMAN, \"Bucketing method was updated, re-bucketing addrman entries from disk\\n\");\n",
+                    "status": "alive"
+                }
+            ],
+            "860": [
+                {
+                    "id": 1,
+                    "diff": "@@ -857,7 +857,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n     for (int bucket = 0; bucket < bucket_count; ++bucket) {\n-        for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n+        for (int position = 0; position <= ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n                 AddrInfo info = mapInfo.at(id);\n",
                     "status": "alive"
                 }
             ],
             "929": [
                 {
                     "id": 1,
-                    "diff": "@@ -926,7 +926,7 @@ void AddrManImpl::ResolveCollisions_()\n \n             // Which tried bucket to move the entry to.\n             int tried_bucket = info_new.GetTriedBucket(nKey, m_netgroupman);\n-            int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n+                 int tried_bucket_pos = info_new.GetBucketPosition(nKey, true, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n             } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n",
+                    "diff": "@@ -926,7 +926,7 @@ void AddrManImpl::ResolveCollisions_()\n \n             // Which tried bucket to move the entry to.\n             int tried_bucket = info_new.GetTriedBucket(nKey, m_netgroupman);\n-            int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n+            int tried_bucket_pos = info_new.GetBucketPosition(nKey, true, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n             } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n",
                     "status": "alive"
                 }
             ],
             "582": [
                 {
                     "id": 1,
-                    "diff": "@@ -579,7 +579,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         }\n \n         // do not update if the entry was already in the \"tried\" table\n-        if (pinfo->fInTried)\n+         if (1==0)\n             return false;\n \n         // do not update if the max reference count is reached\n",
+                    "diff": "@@ -579,7 +579,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         }\n \n         // do not update if the entry was already in the \"tried\" table\n-        if (pinfo->fInTried)\n+        if (1==0)\n             return false;\n \n         // do not update if the max reference count is reached\n",
                     "status": "alive"
                 }
             ],
             "953": [
                 {
                     "id": 1,
-                    "diff": "@@ -950,7 +950,7 @@ void AddrManImpl::ResolveCollisions_()\n                         Good_(info_new, false, current_time);\n                         erase_collision = true;\n                     }\n-                } else if (current_time - info_new.m_last_success > ADDRMAN_TEST_WINDOW) {\n+                         } else if (current_time - info_new.m_last_success >= ADDRMAN_TEST_WINDOW) {\n                     // If the collision hasn't resolved in some reasonable amount of time,\n                     // just evict the old entry -- we must not be able to\n                     // connect to it for some reason.\n",
+                    "diff": "@@ -950,7 +950,7 @@ void AddrManImpl::ResolveCollisions_()\n                         Good_(info_new, false, current_time);\n                         erase_collision = true;\n                     }\n-                } else if (current_time - info_new.m_last_success > ADDRMAN_TEST_WINDOW) {\n+                } else if (current_time - info_new.m_last_success >= ADDRMAN_TEST_WINDOW) {\n                     // If the collision hasn't resolved in some reasonable amount of time,\n                     // just evict the old entry -- we must not be able to\n                     // connect to it for some reason.\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -950,7 +950,7 @@ void AddrManImpl::ResolveCollisions_()\n                         Good_(info_new, false, current_time);\n                         erase_collision = true;\n                     }\n-                } else if (current_time - info_new.m_last_success > ADDRMAN_TEST_WINDOW) {\n+                         } else if (1==1) {\n                     // If the collision hasn't resolved in some reasonable amount of time,\n                     // just evict the old entry -- we must not be able to\n                     // connect to it for some reason.\n",
+                    "diff": "@@ -950,7 +950,7 @@ void AddrManImpl::ResolveCollisions_()\n                         Good_(info_new, false, current_time);\n                         erase_collision = true;\n                     }\n-                } else if (current_time - info_new.m_last_success > ADDRMAN_TEST_WINDOW) {\n+                } else if (1==1) {\n                     // If the collision hasn't resolved in some reasonable amount of time,\n                     // just evict the old entry -- we must not be able to\n                     // connect to it for some reason.\n",
                     "status": "alive"
                 }
             ],
@@ -1336,14 +1333,14 @@
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -566,7 +566,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         // periodically update nTime\n         const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n-        if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n+                if (pinfo->nTime <= addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n         }\n \n",
+                    "diff": "@@ -566,7 +566,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         // periodically update nTime\n         const bool currently_online{NodeClock::now() - addr.nTime < 24h};\n         const auto update_interval{currently_online ? 1h : 24h};\n-        if (pinfo->nTime < addr.nTime - update_interval - time_penalty) {\n+        if (pinfo->nTime <= addr.nTime - update_interval - time_penalty) {\n             pinfo->nTime = std::max(NodeSeconds{0s}, addr.nTime - time_penalty);\n         }\n \n",
                     "status": "alive"
                 }
             ],
             "587": [
                 {
                     "id": 1,
-                    "diff": "@@ -584,7 +584,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n         // do not update if the max reference count is reached\n         if (pinfo->nRefCount == ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n-            return false;\n+                 return true;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n         if (pinfo->nRefCount > 0) {\n",
+                    "diff": "@@ -584,7 +584,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n \n         // do not update if the max reference count is reached\n         if (pinfo->nRefCount == ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n-            return false;\n+            return true;\n \n         // stochastic test: previous nRefCount == N: 2^N times harder to increase it\n         if (pinfo->nRefCount > 0) {\n",
                     "status": "alive"
                 }
             ],
@@ -1357,74 +1354,84 @@
             "891": [
                 {
                     "id": 1,
-                    "diff": "@@ -888,7 +888,7 @@ void AddrManImpl::Connected_(const CService& addr, NodeSeconds time)\n \n     // update info\n     const auto update_interval{20min};\n-    if (time - info.nTime > update_interval) {\n+        if (time - info.nTime >= update_interval) {\n         info.nTime = time;\n     }\n }\n",
+                    "diff": "@@ -888,7 +888,7 @@ void AddrManImpl::Connected_(const CService& addr, NodeSeconds time)\n \n     // update info\n     const auto update_interval{20min};\n-    if (time - info.nTime > update_interval) {\n+    if (time - info.nTime >= update_interval) {\n         info.nTime = time;\n     }\n }\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -888,7 +888,7 @@ void AddrManImpl::Connected_(const CService& addr, NodeSeconds time)\n \n     // update info\n     const auto update_interval{20min};\n-    if (time - info.nTime > update_interval) {\n+        if (1==1) {\n         info.nTime = time;\n     }\n }\n",
+                    "diff": "@@ -888,7 +888,7 @@ void AddrManImpl::Connected_(const CService& addr, NodeSeconds time)\n \n     // update info\n     const auto update_interval{20min};\n-    if (time - info.nTime > update_interval) {\n+    if (1==1) {\n         info.nTime = time;\n     }\n }\n",
                     "status": "alive"
                 }
             ],
             "931": [
                 {
                     "id": 1,
-                    "diff": "@@ -928,7 +928,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket = info_new.GetTriedBucket(nKey, m_netgroupman);\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n-                erase_collision = true;\n+                         erase_collision = false;\n             } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n",
+                    "diff": "@@ -928,7 +928,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket = info_new.GetTriedBucket(nKey, m_netgroupman);\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n-                erase_collision = true;\n+                erase_collision = false;\n             } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n",
                     "status": "alive"
                 }
             ],
             "932": [
                 {
                     "id": 1,
-                    "diff": "@@ -929,7 +929,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n-            } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n+                        } else if (vvTried[tried_bucket][tried_bucket_pos] == -1) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n                 nid_type id_old = vvTried[tried_bucket][tried_bucket_pos];\n",
+                    "diff": "@@ -929,7 +929,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n-            } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n+            } else if (vvTried[tried_bucket][tried_bucket_pos] == -1) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n                 nid_type id_old = vvTried[tried_bucket][tried_bucket_pos];\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -929,7 +929,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n-            } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n+                        } else if (1==1) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n                 nid_type id_old = vvTried[tried_bucket][tried_bucket_pos];\n",
+                    "diff": "@@ -929,7 +929,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n-            } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n+            } else if (1==1) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n                 nid_type id_old = vvTried[tried_bucket][tried_bucket_pos];\n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -929,7 +929,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n-            } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n+                        } else if (1==0) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n                 nid_type id_old = vvTried[tried_bucket][tried_bucket_pos];\n",
-                    "status": "alive"
-                }
-            ],
-            "842": [
-                {
-                    "id": 1,
-                    "diff": "@@ -839,7 +839,7 @@ std::vector<CAddress> AddrManImpl::GetAddr_(size_t max_addresses, size_t max_pct\n         const AddrInfo& ai{it->second};\n \n         // Filter by network (optional)\n-        if (network != std::nullopt && ai.GetNetClass() != network) continue;\n+        \n \n         // Filter for quality\n         if (ai.IsTerrible(now) && filtered) continue;\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 2,
-                    "diff": "@@ -839,7 +839,7 @@ std::vector<CAddress> AddrManImpl::GetAddr_(size_t max_addresses, size_t max_pct\n         const AddrInfo& ai{it->second};\n \n         // Filter by network (optional)\n-        if (network != std::nullopt && ai.GetNetClass() != network) continue;\n+                if (network == std::nullopt && ai.GetNetClass() == network) continue;\n \n         // Filter for quality\n         if (ai.IsTerrible(now) && filtered) continue;\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 3,
-                    "diff": "@@ -839,7 +839,7 @@ std::vector<CAddress> AddrManImpl::GetAddr_(size_t max_addresses, size_t max_pct\n         const AddrInfo& ai{it->second};\n \n         // Filter by network (optional)\n-        if (network != std::nullopt && ai.GetNetClass() != network) continue;\n+                if (network != std::nullopt && ai.GetNetClass() != network) break;\n \n         // Filter for quality\n         if (ai.IsTerrible(now) && filtered) continue;\n",
+                    "diff": "@@ -929,7 +929,7 @@ void AddrManImpl::ResolveCollisions_()\n             int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);\n             if (!info_new.IsValid()) { // id_new may no longer map to a valid address\n                 erase_collision = true;\n-            } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty\n+            } else if (1==0) { // The position in the tried bucket is not empty\n \n                 // Get the to-be-evicted address that is being tested\n                 nid_type id_old = vvTried[tried_bucket][tried_bucket_pos];\n",
                     "status": "alive"
                 }
             ],
             "555": [
                 {
                     "id": 1,
-                    "diff": "@@ -552,7 +552,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AssertLockHeld(cs);\n \n     if (!addr.IsRoutable())\n-        return false;\n+                return true;\n \n     nid_type nId;\n     AddrInfo* pinfo = Find(addr, &nId);\n",
+                    "diff": "@@ -552,7 +552,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AssertLockHeld(cs);\n \n     if (!addr.IsRoutable())\n-        return false;\n+        return true;\n \n     nid_type nId;\n     AddrInfo* pinfo = Find(addr, &nId);\n",
+                    "status": "alive"
+                }
+            ],
+            "687": [
+                {
+                    "id": 1,
+                    "diff": "@@ -684,7 +684,7 @@ bool AddrManImpl::Add_(const std::vector<CAddress>& vAddr, const CNetAddr& sourc\n     for (std::vector<CAddress>::const_iterator it = vAddr.begin(); it != vAddr.end(); it++) {\n         added += AddSingle(*it, source, time_penalty) ? 1 : 0;\n     }\n-    if (added > 0) {\n+    if (added >= 0) {\n         LogDebug(BCLog::ADDRMAN, \"Added %i addresses (of %i) from %s: %i tried, %i new\\n\", added, vAddr.size(), source.ToStringAddr(), nTried, nNew);\n     }\n     return added > 0;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -684,7 +684,7 @@ bool AddrManImpl::Add_(const std::vector<CAddress>& vAddr, const CNetAddr& sourc\n     for (std::vector<CAddress>::const_iterator it = vAddr.begin(); it != vAddr.end(); it++) {\n         added += AddSingle(*it, source, time_penalty) ? 1 : 0;\n     }\n-    if (added > 0) {\n+    if (added < 0) {\n         LogDebug(BCLog::ADDRMAN, \"Added %i addresses (of %i) from %s: %i tried, %i new\\n\", added, vAddr.size(), source.ToStringAddr(), nTried, nNew);\n     }\n     return added > 0;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -684,7 +684,7 @@ bool AddrManImpl::Add_(const std::vector<CAddress>& vAddr, const CNetAddr& sourc\n     for (std::vector<CAddress>::const_iterator it = vAddr.begin(); it != vAddr.end(); it++) {\n         added += AddSingle(*it, source, time_penalty) ? 1 : 0;\n     }\n-    if (added > 0) {\n+    if (1==1) {\n         LogDebug(BCLog::ADDRMAN, \"Added %i addresses (of %i) from %s: %i tried, %i new\\n\", added, vAddr.size(), source.ToStringAddr(), nTried, nNew);\n     }\n     return added > 0;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -684,7 +684,7 @@ bool AddrManImpl::Add_(const std::vector<CAddress>& vAddr, const CNetAddr& sourc\n     for (std::vector<CAddress>::const_iterator it = vAddr.begin(); it != vAddr.end(); it++) {\n         added += AddSingle(*it, source, time_penalty) ? 1 : 0;\n     }\n-    if (added > 0) {\n+    if (added <= 0) {\n         LogDebug(BCLog::ADDRMAN, \"Added %i addresses (of %i) from %s: %i tried, %i new\\n\", added, vAddr.size(), source.ToStringAddr(), nTried, nNew);\n     }\n     return added > 0;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 5,
+                    "diff": "@@ -684,7 +684,7 @@ bool AddrManImpl::Add_(const std::vector<CAddress>& vAddr, const CNetAddr& sourc\n     for (std::vector<CAddress>::const_iterator it = vAddr.begin(); it != vAddr.end(); it++) {\n         added += AddSingle(*it, source, time_penalty) ? 1 : 0;\n     }\n-    if (added > 0) {\n+    if (1==0) {\n         LogDebug(BCLog::ADDRMAN, \"Added %i addresses (of %i) from %s: %i tried, %i new\\n\", added, vAddr.size(), source.ToStringAddr(), nTried, nNew);\n     }\n     return added > 0;\n",
                     "status": "alive"
                 }
             ],
             "970": [
                 {
                     "id": 1,
-                    "diff": "@@ -967,7 +967,7 @@ void AddrManImpl::ResolveCollisions_()\n         if (erase_collision) {\n             m_tried_collisions.erase(it++);\n         } else {\n-            it++;\n+                 it--;\n         }\n     }\n }\n",
+                    "diff": "@@ -967,7 +967,7 @@ void AddrManImpl::ResolveCollisions_()\n         if (erase_collision) {\n             m_tried_collisions.erase(it++);\n         } else {\n-            it++;\n+            it--;\n         }\n     }\n }\n",
                     "status": "alive"
                 }
             ],
             "967": [
                 {
                     "id": 1,
-                    "diff": "@@ -964,7 +964,7 @@ void AddrManImpl::ResolveCollisions_()\n             }\n         }\n \n-        if (erase_collision) {\n+                if (1==1) {\n             m_tried_collisions.erase(it++);\n         } else {\n             it++;\n",
+                    "diff": "@@ -964,7 +964,7 @@ void AddrManImpl::ResolveCollisions_()\n             }\n         }\n \n-        if (erase_collision) {\n+        if (1==1) {\n             m_tried_collisions.erase(it++);\n         } else {\n             it++;\n",
                     "status": "alive"
                 }
             ],
@@ -1441,12 +1448,19 @@
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -356,7 +356,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         // The entry shouldn't appear in more than\n         // ADDRMAN_NEW_BUCKETS_PER_ADDRESS. If it has already, just skip\n         // this bucket_entry.\n-        if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n+         if (1==0) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n         if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n",
+                    "diff": "@@ -356,7 +356,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         // The entry shouldn't appear in more than\n         // ADDRMAN_NEW_BUCKETS_PER_ADDRESS. If it has already, just skip\n         // this bucket_entry.\n-        if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n+        if (1==0) continue;\n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n         if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n",
                     "status": "alive"
                 },
                 {
                     "id": 4,
                     "diff": "@@ -356,7 +356,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         // The entry shouldn't appear in more than\n         // ADDRMAN_NEW_BUCKETS_PER_ADDRESS. If it has already, just skip\n         // this bucket_entry.\n-        if (info.nRefCount >= ADDRMAN_NEW_BUCKETS_PER_ADDRESS) continue;\n+        \n \n         int bucket_position = info.GetBucketPosition(nKey, true, bucket);\n         if (restore_bucketing && vvNew[bucket][bucket_position] == -1) {\n",
+                    "status": "alive"
+                }
+            ],
+            "859": [
+                {
+                    "id": 1,
+                    "diff": "@@ -856,7 +856,7 @@ std::vector<std::pair<AddrInfo, AddressPosition>> AddrManImpl::GetEntries_(bool\n \n     const int bucket_count = from_tried ? ADDRMAN_TRIED_BUCKET_COUNT : ADDRMAN_NEW_BUCKET_COUNT;\n     std::vector<std::pair<AddrInfo, AddressPosition>> infos;\n-    for (int bucket = 0; bucket < bucket_count; ++bucket) {\n+    for (int bucket = 0; bucket <= bucket_count; ++bucket) {\n         for (int position = 0; position < ADDRMAN_BUCKET_SIZE; ++position) {\n             nid_type id = GetEntry(from_tried, bucket, position);\n             if (id >= 0) {\n",
                     "status": "alive"
                 }
             ],
@@ -1460,87 +1474,80 @@
             "919": [
                 {
                     "id": 1,
-                    "diff": "@@ -916,7 +916,7 @@ void AddrManImpl::ResolveCollisions_()\n     for (std::set<nid_type>::iterator it = m_tried_collisions.begin(); it != m_tried_collisions.end();) {\n         nid_type id_new = *it;\n \n-        bool erase_collision = false;\n+                bool erase_collision = true;\n \n         // If id_new not found in mapInfo remove it from m_tried_collisions\n         if (mapInfo.count(id_new) != 1) {\n",
+                    "diff": "@@ -916,7 +916,7 @@ void AddrManImpl::ResolveCollisions_()\n     for (std::set<nid_type>::iterator it = m_tried_collisions.begin(); it != m_tried_collisions.end();) {\n         nid_type id_new = *it;\n \n-        bool erase_collision = false;\n+        bool erase_collision = true;\n \n         // If id_new not found in mapInfo remove it from m_tried_collisions\n         if (mapInfo.count(id_new) != 1) {\n",
                     "status": "alive"
                 }
             ],
             "923": [
                 {
                     "id": 1,
-                    "diff": "@@ -920,7 +920,7 @@ void AddrManImpl::ResolveCollisions_()\n \n         // If id_new not found in mapInfo remove it from m_tried_collisions\n         if (mapInfo.count(id_new) != 1) {\n-            erase_collision = true;\n+                        erase_collision = false;\n         } else {\n             AddrInfo& info_new = mapInfo[id_new];\n \n",
+                    "diff": "@@ -920,7 +920,7 @@ void AddrManImpl::ResolveCollisions_()\n \n         // If id_new not found in mapInfo remove it from m_tried_collisions\n         if (mapInfo.count(id_new) != 1) {\n-            erase_collision = true;\n+            erase_collision = false;\n         } else {\n             AddrInfo& info_new = mapInfo[id_new];\n \n",
                     "status": "alive"
                 }
             ],
             "79": [
                 {
                     "id": 1,
-                    "diff": "@@ -76,7 +76,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - nTime > ADDRMAN_HORIZON) { // not seen in recent history\n+        if (now - nTime >= ADDRMAN_HORIZON) { // not seen in recent history\n         return true;\n     }\n \n",
+                    "diff": "@@ -76,7 +76,7 @@ bool AddrInfo::IsTerrible(NodeSeconds now) const\n         return true;\n     }\n \n-    if (now - nTime > ADDRMAN_HORIZON) { // not seen in recent history\n+    if (now - nTime >= ADDRMAN_HORIZON) { // not seen in recent history\n         return true;\n     }\n \n",
                     "status": "alive"
                 }
             ],
             "371": [
                 {
                     "id": 1,
-                    "diff": "@@ -368,7 +368,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             // try to give them a reference based on their primary source address.\n             bucket = info.GetNewBucket(nKey, m_netgroupman);\n             bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-            if (vvNew[bucket][bucket_position] == -1) {\n+                if (1==1) {\n                 vvNew[bucket][bucket_position] = entry_index;\n                 ++info.nRefCount;\n             }\n",
+                    "diff": "@@ -368,7 +368,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n             // try to give them a reference based on their primary source address.\n             bucket = info.GetNewBucket(nKey, m_netgroupman);\n             bucket_position = info.GetBucketPosition(nKey, true, bucket);\n-            if (vvNew[bucket][bucket_position] == -1) {\n+            if (1==1) {\n                 vvNew[bucket][bucket_position] = entry_index;\n                 ++info.nRefCount;\n             }\n",
                     "status": "alive"
                 }
             ],
             "561": [
                 {
                     "id": 1,
-                    "diff": "@@ -558,7 +558,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AddrInfo* pinfo = Find(addr, &nId);\n \n     // Do not set a penalty for a source's self-announcement\n-    if (addr == source) {\n+        if (addr != source) {\n         time_penalty = 0s;\n     }\n \n",
+                    "diff": "@@ -558,7 +558,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AddrInfo* pinfo = Find(addr, &nId);\n \n     // Do not set a penalty for a source's self-announcement\n-    if (addr == source) {\n+    if (addr != source) {\n         time_penalty = 0s;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -558,7 +558,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AddrInfo* pinfo = Find(addr, &nId);\n \n     // Do not set a penalty for a source's self-announcement\n-    if (addr == source) {\n+        if (1==1) {\n         time_penalty = 0s;\n     }\n \n",
+                    "diff": "@@ -558,7 +558,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AddrInfo* pinfo = Find(addr, &nId);\n \n     // Do not set a penalty for a source's self-announcement\n-    if (addr == source) {\n+    if (1==1) {\n         time_penalty = 0s;\n     }\n \n",
                     "status": "alive"
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -558,7 +558,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AddrInfo* pinfo = Find(addr, &nId);\n \n     // Do not set a penalty for a source's self-announcement\n-    if (addr == source) {\n+        if (1==0) {\n         time_penalty = 0s;\n     }\n \n",
+                    "diff": "@@ -558,7 +558,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     AddrInfo* pinfo = Find(addr, &nId);\n \n     // Do not set a penalty for a source's self-announcement\n-    if (addr == source) {\n+    if (1==0) {\n         time_penalty = 0s;\n     }\n \n",
                     "status": "alive"
                 }
             ],
             "275": [
                 {
                     "id": 1,
-                    "diff": "@@ -272,7 +272,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n                     ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE));\n     }\n \n-    if (nTried > ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nTried < 0) {\n+      if (nTried >= ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nTried < 0) {\n         throw std::ios_base::failure(\n                 strprintf(\"Corrupt AddrMan serialization: nTried=%d, should be in [0, %d]\",\n                     nTried,\n",
+                    "diff": "@@ -272,7 +272,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n                     ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE));\n     }\n \n-    if (nTried > ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nTried < 0) {\n+    if (nTried >= ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nTried < 0) {\n         throw std::ios_base::failure(\n                 strprintf(\"Corrupt AddrMan serialization: nTried=%d, should be in [0, %d]\",\n                     nTried,\n",
                     "status": "alive"
                 }
             ],
             "661": [
                 {
                     "id": 1,
-                    "diff": "@@ -658,7 +658,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n \n     // Will moving this address into tried evict another entry?\n     if (test_before_evict && (vvTried[tried_bucket][tried_bucket_pos] != -1)) {\n-        if (m_tried_collisions.size() < ADDRMAN_SET_TRIED_COLLISION_SIZE) {\n+                if (m_tried_collisions.size() <= ADDRMAN_SET_TRIED_COLLISION_SIZE) {\n             m_tried_collisions.insert(nId);\n         }\n         // Output the entry we'd be colliding with, for debugging purposes\n",
+                    "diff": "@@ -658,7 +658,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n \n     // Will moving this address into tried evict another entry?\n     if (test_before_evict && (vvTried[tried_bucket][tried_bucket_pos] != -1)) {\n-        if (m_tried_collisions.size() < ADDRMAN_SET_TRIED_COLLISION_SIZE) {\n+        if (m_tried_collisions.size() <= ADDRMAN_SET_TRIED_COLLISION_SIZE) {\n             m_tried_collisions.insert(nId);\n         }\n         // Output the entry we'd be colliding with, for debugging purposes\n",
                     "status": "alive"
                 }
             ],
             "596": [
                 {
                     "id": 1,
-                    "diff": "@@ -593,7 +593,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         }\n     } else {\n         pinfo = Create(addr, source, &nId);\n-        pinfo->nTime = std::max(NodeSeconds{0s}, pinfo->nTime - time_penalty);\n+                pinfo->nTime = std::max(NodeSeconds{0s}, pinfo->nTime + time_penalty);\n     }\n \n     int nUBucket = pinfo->GetNewBucket(nKey, source, m_netgroupman);\n",
-                    "status": "alive"
-                }
-            ],
-            "610": [
-                {
-                    "id": 1,
-                    "diff": "@@ -607,7 +607,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n                 fInsert = true;\n             }\n         }\n-        if (fInsert) {\n+                if (1==1) {\n             ClearNew(nUBucket, nUBucketPos);\n             pinfo->nRefCount++;\n             vvNew[nUBucket][nUBucketPos] = nId;\n",
+                    "diff": "@@ -593,7 +593,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n         }\n     } else {\n         pinfo = Create(addr, source, &nId);\n-        pinfo->nTime = std::max(NodeSeconds{0s}, pinfo->nTime - time_penalty);\n+        pinfo->nTime = std::max(NodeSeconds{0s}, pinfo->nTime + time_penalty);\n     }\n \n     int nUBucket = pinfo->GetNewBucket(nKey, source, m_netgroupman);\n",
                     "status": "alive"
                 }
             ],
             "602": [
                 {
                     "id": 1,
-                    "diff": "@@ -599,7 +599,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     int nUBucket = pinfo->GetNewBucket(nKey, source, m_netgroupman);\n     int nUBucketPos = pinfo->GetBucketPosition(nKey, true, nUBucket);\n     bool fInsert = vvNew[nUBucket][nUBucketPos] == -1;\n-    if (vvNew[nUBucket][nUBucketPos] != nId) {\n+        if (1==1) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n             if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n",
+                    "diff": "@@ -599,7 +599,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c\n     int nUBucket = pinfo->GetNewBucket(nKey, source, m_netgroupman);\n     int nUBucketPos = pinfo->GetBucketPosition(nKey, true, nUBucket);\n     bool fInsert = vvNew[nUBucket][nUBucketPos] == -1;\n-    if (vvNew[nUBucket][nUBucketPos] != nId) {\n+    if (1==1) {\n         if (!fInsert) {\n             AddrInfo& infoExisting = mapInfo[vvNew[nUBucket][nUBucketPos]];\n             if (infoExisting.IsTerrible() || (infoExisting.nRefCount > 1 && pinfo->nRefCount == 0)) {\n",
                     "status": "alive"
                 }
             ],
             "667": [
                 {
                     "id": 1,
-                    "diff": "@@ -664,7 +664,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n         // Output the entry we'd be colliding with, for debugging purposes\n         auto colliding_entry = mapInfo.find(vvTried[tried_bucket][tried_bucket_pos]);\n         LogDebug(BCLog::ADDRMAN, \"Collision with %s while attempting to move %s to tried table. Collisions=%d\\n\",\n-                 colliding_entry != mapInfo.end() ? colliding_entry->second.ToStringAddrPort() : \"\",\n+                                  colliding_entry == mapInfo.end() ? colliding_entry->second.ToStringAddrPort() : \"\",\n                  addr.ToStringAddrPort(),\n                  m_tried_collisions.size());\n         return false;\n",
+                    "diff": "@@ -664,7 +664,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n         // Output the entry we'd be colliding with, for debugging purposes\n         auto colliding_entry = mapInfo.find(vvTried[tried_bucket][tried_bucket_pos]);\n         LogDebug(BCLog::ADDRMAN, \"Collision with %s while attempting to move %s to tried table. Collisions=%d\\n\",\n-                 colliding_entry != mapInfo.end() ? colliding_entry->second.ToStringAddrPort() : \"\",\n+                 colliding_entry == mapInfo.end() ? colliding_entry->second.ToStringAddrPort() : \"\",\n                  addr.ToStringAddrPort(),\n                  m_tried_collisions.size());\n         return false;\n",
                     "status": "alive"
                 }
             ],
@@ -1549,19 +1556,24 @@
                     "id": 1,
                     "diff": "@@ -646,7 +646,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n     // currently-connected peers.\n \n     // if it is already in the tried set, don't do anything else\n-    if (info.fInTried) return false;\n+    \n \n     // if it is not in new, something bad happened\n     if (!Assume(info.nRefCount > 0)) return false;\n",
                     "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -646,7 +646,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond\n     // currently-connected peers.\n \n     // if it is already in the tried set, don't do anything else\n-    if (info.fInTried) return false;\n+    if (1==0) return false;\n \n     // if it is not in new, something bad happened\n     if (!Assume(info.nRefCount > 0)) return false;\n",
+                    "status": "alive"
                 }
             ],
             "963": [
                 {
                     "id": 1,
-                    "diff": "@@ -960,7 +960,7 @@ void AddrManImpl::ResolveCollisions_()\n                 }\n             } else { // Collision is not actually a collision anymore\n                 Good_(info_new, false, Now<NodeSeconds>());\n-                erase_collision = true;\n+                         erase_collision = false;\n             }\n         }\n \n",
+                    "diff": "@@ -960,7 +960,7 @@ void AddrManImpl::ResolveCollisions_()\n                 }\n             } else { // Collision is not actually a collision anymore\n                 Good_(info_new, false, Now<NodeSeconds>());\n-                erase_collision = true;\n+                erase_collision = false;\n             }\n         }\n \n",
                     "status": "alive"
                 }
             ],
             "962": [
                 {
                     "id": 1,
-                    "diff": "@@ -959,7 +959,7 @@ void AddrManImpl::ResolveCollisions_()\n                     erase_collision = true;\n                 }\n             } else { // Collision is not actually a collision anymore\n-                Good_(info_new, false, Now<NodeSeconds>());\n+                                Good_(info_new, true, Now<NodeSeconds>());\n                 erase_collision = true;\n             }\n         }\n",
+                    "diff": "@@ -959,7 +959,7 @@ void AddrManImpl::ResolveCollisions_()\n                     erase_collision = true;\n                 }\n             } else { // Collision is not actually a collision anymore\n-                Good_(info_new, false, Now<NodeSeconds>());\n+                Good_(info_new, true, Now<NodeSeconds>());\n                 erase_collision = true;\n             }\n         }\n",
                     "status": "alive"
                 }
             ],
@@ -1613,16 +1625,6 @@
                 },
                 {
                     "id": 3,
-                    "diff": "@@ -1050,7 +1050,7 @@ void AddrManImpl::Check() const\n     AssertLockHeld(cs);\n \n     // Run consistency checks 1 in m_consistency_check_ratio times if enabled\n-    if (m_consistency_check_ratio == 0) return;\n+        if (1==1) return;\n     if (insecure_rand.randrange(m_consistency_check_ratio) >= 1) return;\n \n     const int err{CheckAddrman()};\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 4,
-                    "diff": "@@ -1050,7 +1050,7 @@ void AddrManImpl::Check() const\n     AssertLockHeld(cs);\n \n     // Run consistency checks 1 in m_consistency_check_ratio times if enabled\n-    if (m_consistency_check_ratio == 0) return;\n+    if (m_consistency_check_ratio != 0) return;\n     if (insecure_rand.randrange(m_consistency_check_ratio) >= 1) return;\n \n     const int err{CheckAddrman()};\n",
-                    "status": "alive"
-                },
-                {
-                    "id": 5,
                     "diff": "@@ -1050,7 +1050,7 @@ void AddrManImpl::Check() const\n     AssertLockHeld(cs);\n \n     // Run consistency checks 1 in m_consistency_check_ratio times if enabled\n-    if (m_consistency_check_ratio == 0) return;\n+    \n     if (insecure_rand.randrange(m_consistency_check_ratio) >= 1) return;\n \n     const int err{CheckAddrman()};\n",
                     "status": "alive"
                 }
@@ -1637,54 +1639,81 @@
             "707": [
                 {
                     "id": 1,
-                    "diff": "@@ -704,7 +704,7 @@ void AddrManImpl::Attempt_(const CService& addr, bool fCountFailure, NodeSeconds\n \n     // update info\n     info.m_last_try = time;\n-    if (fCountFailure && info.m_last_count_attempt < m_last_good) {\n+  if (fCountFailure || info.m_last_count_attempt < m_last_good) {\n         info.m_last_count_attempt = time;\n         info.nAttempts++;\n     }\n",
+                    "diff": "@@ -704,7 +704,7 @@ void AddrManImpl::Attempt_(const CService& addr, bool fCountFailure, NodeSeconds\n \n     // update info\n     info.m_last_try = time;\n-    if (fCountFailure && info.m_last_count_attempt < m_last_good) {\n+    if (fCountFailure || info.m_last_count_attempt < m_last_good) {\n         info.m_last_count_attempt = time;\n         info.nAttempts++;\n     }\n",
                     "status": "alive"
                 },
                 {
                     "id": 2,
-                    "diff": "@@ -704,7 +704,7 @@ void AddrManImpl::Attempt_(const CService& addr, bool fCountFailure, NodeSeconds\n \n     // update info\n     info.m_last_try = time;\n-    if (fCountFailure && info.m_last_count_attempt < m_last_good) {\n+        if (1==1) {\n         info.m_last_count_attempt = time;\n         info.nAttempts++;\n     }\n",
+                    "diff": "@@ -704,7 +704,7 @@ void AddrManImpl::Attempt_(const CService& addr, bool fCountFailure, NodeSeconds\n \n     // update info\n     info.m_last_try = time;\n-    if (fCountFailure && info.m_last_count_attempt < m_last_good) {\n+    if (1==1) {\n         info.m_last_count_attempt = time;\n         info.nAttempts++;\n     }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -704,7 +704,7 @@ void AddrManImpl::Attempt_(const CService& addr, bool fCountFailure, NodeSeconds\n \n     // update info\n     info.m_last_try = time;\n-    if (fCountFailure && info.m_last_count_attempt < m_last_good) {\n+    if (fCountFailure && info.m_last_count_attempt <= m_last_good) {\n         info.m_last_count_attempt = time;\n         info.nAttempts++;\n     }\n",
                     "status": "alive"
                 }
             ],
             "804": [
                 {
                     "id": 1,
-                    "diff": "@@ -801,7 +801,7 @@ nid_type AddrManImpl::GetEntry(bool use_tried, size_t bucket, size_t position) c\n             return vvTried[bucket][position];\n         }\n     } else {\n-        if (Assume(position < ADDRMAN_BUCKET_SIZE) && Assume(bucket < ADDRMAN_NEW_BUCKET_COUNT)) {\n+         if (Assume(position <= ADDRMAN_BUCKET_SIZE) && Assume(bucket <= ADDRMAN_NEW_BUCKET_COUNT)) {\n             return vvNew[bucket][position];\n         }\n     }\n",
+                    "diff": "@@ -801,7 +801,7 @@ nid_type AddrManImpl::GetEntry(bool use_tried, size_t bucket, size_t position) c\n             return vvTried[bucket][position];\n         }\n     } else {\n-        if (Assume(position < ADDRMAN_BUCKET_SIZE) && Assume(bucket < ADDRMAN_NEW_BUCKET_COUNT)) {\n+        if (Assume(position <= ADDRMAN_BUCKET_SIZE) && Assume(bucket <= ADDRMAN_NEW_BUCKET_COUNT)) {\n             return vvNew[bucket][position];\n         }\n     }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -801,7 +801,7 @@ nid_type AddrManImpl::GetEntry(bool use_tried, size_t bucket, size_t position) c\n             return vvTried[bucket][position];\n         }\n     } else {\n-        if (Assume(position < ADDRMAN_BUCKET_SIZE) && Assume(bucket < ADDRMAN_NEW_BUCKET_COUNT)) {\n+        if (Assume(position < ADDRMAN_BUCKET_SIZE) || Assume(bucket < ADDRMAN_NEW_BUCKET_COUNT)) {\n             return vvNew[bucket][position];\n         }\n     }\n",
                     "status": "alive"
                 }
             ],
             "485": [
                 {
                     "id": 1,
-                    "diff": "@@ -482,7 +482,7 @@ void AddrManImpl::ClearNew(int nUBucket, int nUBucketPos)\n         infoDelete.nRefCount--;\n         vvNew[nUBucket][nUBucketPos] = -1;\n         LogDebug(BCLog::ADDRMAN, \"Removed %s from new[%i][%i]\\n\", infoDelete.ToStringAddrPort(), nUBucket, nUBucketPos);\n-        if (infoDelete.nRefCount == 0) {\n+                if (1==1) {\n             Delete(nIdDelete);\n         }\n     }\n",
+                    "diff": "@@ -482,7 +482,7 @@ void AddrManImpl::ClearNew(int nUBucket, int nUBucketPos)\n         infoDelete.nRefCount--;\n         vvNew[nUBucket][nUBucketPos] = -1;\n         LogDebug(BCLog::ADDRMAN, \"Removed %s from new[%i][%i]\\n\", infoDelete.ToStringAddrPort(), nUBucket, nUBucketPos);\n-        if (infoDelete.nRefCount == 0) {\n+        if (1==1) {\n             Delete(nIdDelete);\n         }\n     }\n",
+                    "status": "alive"
+                }
+            ],
+            "754": [
+                {
+                    "id": 1,
+                    "diff": "@@ -751,7 +751,7 @@ std::pair<CAddress, NodeSeconds> AddrManImpl::Select_(bool new_only, const std::\n \n     // Loop through the addrman table until we find an appropriate entry\n     double chance_factor = 1.0;\n-    while (1) {\n+    while (1==1) {\n         // Pick a bucket, and an initial position in that bucket.\n         int bucket = insecure_rand.randrange(bucket_count);\n         int initial_position = insecure_rand.randrange(ADDRMAN_BUCKET_SIZE);\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -751,7 +751,7 @@ std::pair<CAddress, NodeSeconds> AddrManImpl::Select_(bool new_only, const std::\n \n     // Loop through the addrman table until we find an appropriate entry\n     double chance_factor = 1.0;\n-    while (1) {\n+    while (1 + 1) {\n         // Pick a bucket, and an initial position in that bucket.\n         int bucket = insecure_rand.randrange(bucket_count);\n         int initial_position = insecure_rand.randrange(ADDRMAN_BUCKET_SIZE);\n",
                     "status": "alive"
                 }
             ],
             "1089": [
                 {
                     "id": 1,
-                    "diff": "@@ -1086,7 +1086,7 @@ int AddrManImpl::CheckAddrman() const\n             setTried.insert(n);\n             local_counts[info.GetNetwork()].n_tried++;\n         } else {\n-            if (info.nRefCount < 0 || info.nRefCount > ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n+                 if (info.nRefCount <= 0 || info.nRefCount > ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n                 return -3;\n             if (!info.nRefCount)\n                 return -4;\n",
+                    "diff": "@@ -1086,7 +1086,7 @@ int AddrManImpl::CheckAddrman() const\n             setTried.insert(n);\n             local_counts[info.GetNetwork()].n_tried++;\n         } else {\n-            if (info.nRefCount < 0 || info.nRefCount > ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n+            if (info.nRefCount <= 0 || info.nRefCount > ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n                 return -3;\n             if (!info.nRefCount)\n                 return -4;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -1086,7 +1086,7 @@ int AddrManImpl::CheckAddrman() const\n             setTried.insert(n);\n             local_counts[info.GetNetwork()].n_tried++;\n         } else {\n-            if (info.nRefCount < 0 || info.nRefCount > ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n+            if (1==0)\n                 return -3;\n             if (!info.nRefCount)\n                 return -4;\n",
                     "status": "alive"
                 }
             ],
             "1100": [
                 {
                     "id": 1,
-                    "diff": "@@ -1097,7 +1097,7 @@ int AddrManImpl::CheckAddrman() const\n         if (it == mapAddr.end() || it->second != n) {\n             return -5;\n         }\n-        if (info.nRandomPos < 0 || (size_t)info.nRandomPos >= vRandom.size() || vRandom[info.nRandomPos] != n)\n+                if (info.nRandomPos < 0 || (size_t)info.nRandomPos > vRandom.size() || vRandom[info.nRandomPos] != n)\n             return -14;\n         if (info.m_last_try < NodeSeconds{0s}) {\n             return -6;\n",
+                    "diff": "@@ -1097,7 +1097,7 @@ int AddrManImpl::CheckAddrman() const\n         if (it == mapAddr.end() || it->second != n) {\n             return -5;\n         }\n-        if (info.nRandomPos < 0 || (size_t)info.nRandomPos >= vRandom.size() || vRandom[info.nRandomPos] != n)\n+        if (info.nRandomPos < 0 || (size_t)info.nRandomPos > vRandom.size() || vRandom[info.nRandomPos] != n)\n             return -14;\n         if (info.m_last_try < NodeSeconds{0s}) {\n             return -6;\n",
                     "status": "alive"
                 }
             ],
             "104": [
                 {
                     "id": 1,
-                    "diff": "@@ -101,7 +101,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     }\n \n     // deprioritize 66% after each failed attempt, but at most 1/28th to avoid the search taking forever or overly penalizing outages.\n-    fChance *= pow(0.66, std::min(nAttempts, 8));\n+        fChance *= pow(0.66, std::max(nAttempts, 8));\n \n     return fChance;\n }\n",
+                    "diff": "@@ -101,7 +101,7 @@ double AddrInfo::GetChance(NodeSeconds now) const\n     }\n \n     // deprioritize 66% after each failed attempt, but at most 1/28th to avoid the search taking forever or overly penalizing outages.\n-    fChance *= pow(0.66, std::min(nAttempts, 8));\n+    fChance *= pow(0.66, std::max(nAttempts, 8));\n \n     return fChance;\n }\n",
                     "status": "alive"
                 }
             ],
             "1091": [
                 {
                     "id": 1,
-                    "diff": "@@ -1088,7 +1088,7 @@ int AddrManImpl::CheckAddrman() const\n         } else {\n             if (info.nRefCount < 0 || info.nRefCount > ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n                 return -3;\n-            if (!info.nRefCount)\n+                 if (1==0)\n                 return -4;\n             mapNew[n] = info.nRefCount;\n             local_counts[info.GetNetwork()].n_new++;\n",
+                    "diff": "@@ -1088,7 +1088,7 @@ int AddrManImpl::CheckAddrman() const\n         } else {\n             if (info.nRefCount < 0 || info.nRefCount > ADDRMAN_NEW_BUCKETS_PER_ADDRESS)\n                 return -3;\n-            if (!info.nRefCount)\n+            if (1==0)\n                 return -4;\n             mapNew[n] = info.nRefCount;\n             local_counts[info.GetNetwork()].n_new++;\n",
                     "status": "alive"
                 }
             ],
@@ -1692,6 +1721,53 @@
                 {
                     "id": 1,
                     "diff": "@@ -265,7 +265,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         nUBuckets ^= (1 << 30);\n     }\n \n-    if (nNew > ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {\n+    if (nNew >= ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {\n         throw std::ios_base::failure(\n                 strprintf(\"Corrupt AddrMan serialization: nNew=%d, should be in [0, %d]\",\n                     nNew,\n",
+                    "status": "alive"
+                }
+            ],
+            "525": [
+                {
+                    "id": 1,
+                    "diff": "@@ -522,7 +522,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         // Remove the to-be-evicted item from the tried set.\n         infoOld.fInTried = false;\n         vvTried[nKBucket][nKBucketPos] = -1;\n-        nTried--;\n+        nTried++;\n         m_network_counts[infoOld.GetNetwork()].n_tried--;\n \n         // find which new bucket it belongs to\n",
+                    "status": "alive"
+                }
+            ],
+            "538": [
+                {
+                    "id": 1,
+                    "diff": "@@ -535,7 +535,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         infoOld.nRefCount = 1;\n         vvNew[nUBucket][nUBucketPos] = nIdEvict;\n         nNew++;\n-        m_network_counts[infoOld.GetNetwork()].n_new++;\n+        m_network_counts[infoOld.GetNetwork()].n_new--;\n         LogDebug(BCLog::ADDRMAN, \"Moved %s from tried[%i][%i] to new[%i][%i] to make space\\n\",\n                  infoOld.ToStringAddrPort(), nKBucket, nKBucketPos, nUBucket, nUBucketPos);\n     }\n",
+                    "status": "alive"
+                }
+            ],
+            "384": [
+                {
+                    "id": 1,
+                    "diff": "@@ -381,7 +381,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (it->second.fInTried == false && it->second.nRefCount == 0) {\n             const auto itCopy = it++;\n             Delete(itCopy->first);\n-            ++nLostUnk;\n+            --nLostUnk;\n         } else {\n             ++it;\n         }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -381,7 +381,7 @@ void AddrManImpl::Unserialize(Stream& s_)\n         if (it->second.fInTried == false && it->second.nRefCount == 0) {\n             const auto itCopy = it++;\n             Delete(itCopy->first);\n-            ++nLostUnk;\n+            //nLostUnk;\n         } else {\n             ++it;\n         }\n",
+                    "status": "alive"
+                }
+            ],
+            "728": [
+                {
+                    "id": 1,
+                    "diff": "@@ -725,7 +725,7 @@ std::pair<CAddress, NodeSeconds> AddrManImpl::Select_(bool new_only, const std::\n         for (auto& network : networks) {\n             auto it = m_network_counts.find(network);\n             if (it == m_network_counts.end()) {\n-                continue;\n+                break;\n             }\n             auto counts = it->second;\n             new_count += counts.n_new;\n",
+                    "status": "alive"
+                }
+            ],
+            "526": [
+                {
+                    "id": 1,
+                    "diff": "@@ -523,7 +523,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, nid_type nId)\n         infoOld.fInTried = false;\n         vvTried[nKBucket][nKBucketPos] = -1;\n         nTried--;\n-        m_network_counts[infoOld.GetNetwork()].n_tried--;\n+        m_network_counts[infoOld.GetNetwork()].n_tried++;\n \n         // find which new bucket it belongs to\n         int nUBucket = infoOld.GetNewBucket(nKey, m_netgroupman);\n",
+                    "status": "alive"
+                }
+            ],
+            "436": [
+                {
+                    "id": 1,
+                    "diff": "@@ -433,7 +433,7 @@ void AddrManImpl::SwapRandom(unsigned int nRndPos1, unsigned int nRndPos2) const\n {\n     AssertLockHeld(cs);\n \n-    if (nRndPos1 == nRndPos2)\n+    if (1==0)\n         return;\n \n     assert(nRndPos1 < vRandom.size() && nRndPos2 < vRandom.size());\n",
                     "status": "alive"
                 }
             ]
