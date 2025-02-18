@@ -1967,13 +1967,6 @@
                     "status": "alive"
                 }
             ],
-            "130": [
-                {
-                    "id": 1,
-                    "diff": "@@ -127,7 +127,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n         }\n     }\n     assert(false); // Reached EOF without RETURN, or aborted (see any of the breaks above) - should have been caught by SanityCheckASMap below\n-    return 0; // 0 is not a valid ASN\n+    return 1; // 0 is not a valid ASN\n }\n \n bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n",
-                    "status": "alive"
-                }
-            ],
             "104": [
                 {
                     "id": 1,
