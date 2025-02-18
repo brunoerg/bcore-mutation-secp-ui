@@ -1855,5 +1855,610 @@
                 }
             ]
         }
+    },
+    {
+        "filename": "src/util/asmap.cpp",
+        "mutation_score": 0.6076923076923076,
+        "date": "17/02/2025 19:12:37",
+        "diffs": {
+            "124": [
+                {
+                    "id": 1,
+                    "diff": "@@ -121,7 +121,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             }\n         } else if (opcode == Instruction::DEFAULT) {\n             default_asn = DecodeASN(pos, endpos);\n-            if (default_asn == INVALID) break; // ASN straddles EOF\n+            if (default_asn != INVALID) break; // ASN straddles EOF\n         } else {\n             break; // Instruction straddles EOF\n         }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -121,7 +121,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             }\n         } else if (opcode == Instruction::DEFAULT) {\n             default_asn = DecodeASN(pos, endpos);\n-            if (default_asn == INVALID) break; // ASN straddles EOF\n+            if (1==1) break; // ASN straddles EOF\n         } else {\n             break; // Instruction straddles EOF\n         }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -121,7 +121,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             }\n         } else if (opcode == Instruction::DEFAULT) {\n             default_asn = DecodeASN(pos, endpos);\n-            if (default_asn == INVALID) break; // ASN straddles EOF\n+            if (1==0) break; // ASN straddles EOF\n         } else {\n             break; // Instruction straddles EOF\n         }\n",
+                    "status": "alive"
+                }
+            ],
+            "143": [
+                {
+                    "id": 1,
+                    "diff": "@@ -140,7 +140,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n     bool had_incomplete_match = false;\n     while (pos != endpos) {\n         uint32_t offset = pos - begin;\n-        if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n+        if (!jumps.empty() && offset > jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -140,7 +140,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n     bool had_incomplete_match = false;\n     while (pos != endpos) {\n         uint32_t offset = pos - begin;\n-        if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n+        \n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -140,7 +140,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n     bool had_incomplete_match = false;\n     while (pos != endpos) {\n         uint32_t offset = pos - begin;\n-        if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n+        if (!jumps.empty() && offset >= jumps.back().first) return true; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n",
+                    "status": "alive"
+                }
+            ],
+            "106": [
+                {
+                    "id": 1,
+                    "diff": "@@ -103,7 +103,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) break; // Jump offset straddles EOF\n             if (bits == 0) break; // No input bits left\n-            if (int64_t{jump} >= int64_t{endpos - pos}) break; // Jumping past EOF\n+            if (int64_t{jump} > int64_t{endpos - pos}) break; // Jumping past EOF\n             if (ip[ip.size() - bits]) {\n                 pos += jump;\n             }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -103,7 +103,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) break; // Jump offset straddles EOF\n             if (bits == 0) break; // No input bits left\n-            if (int64_t{jump} >= int64_t{endpos - pos}) break; // Jumping past EOF\n+            if (1==0) break; // Jumping past EOF\n             if (ip[ip.size() - bits]) {\n                 pos += jump;\n             }\n",
+                    "status": "alive"
+                }
+            ],
+            "148": [
+                {
+                    "id": 1,
+                    "diff": "@@ -145,7 +145,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            if (asn == INVALID) return true; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -145,7 +145,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            \n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -145,7 +145,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            if (1==0) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n",
+                    "status": "alive"
+                }
+            ],
+            "122": [
+                {
+                    "id": 1,
+                    "diff": "@@ -119,7 +119,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n                 }\n                 bits--;\n             }\n-        } else if (opcode == Instruction::DEFAULT) {\n+        } else if (1==0) {\n             default_asn = DecodeASN(pos, endpos);\n             if (default_asn == INVALID) break; // ASN straddles EOF\n         } else {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -119,7 +119,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n                 }\n                 bits--;\n             }\n-        } else if (opcode == Instruction::DEFAULT) {\n+        } else if (1==1) {\n             default_asn = DecodeASN(pos, endpos);\n             if (default_asn == INVALID) break; // ASN straddles EOF\n         } else {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -119,7 +119,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n                 }\n                 bits--;\n             }\n-        } else if (opcode == Instruction::DEFAULT) {\n+        } else if (opcode != Instruction::DEFAULT) {\n             default_asn = DecodeASN(pos, endpos);\n             if (default_asn == INVALID) break; // ASN straddles EOF\n         } else {\n",
+                    "status": "alive"
+                }
+            ],
+            "141": [
+                {
+                    "id": 1,
+                    "diff": "@@ -138,7 +138,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n     jumps.reserve(bits);\n     Instruction prevopcode = Instruction::JUMP;\n     bool had_incomplete_match = false;\n-    while (pos != endpos) {\n+    while (1==1) {\n         uint32_t offset = pos - begin;\n         if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n",
+                    "status": "alive"
+                }
+            ],
+            "105": [
+                {
+                    "id": 1,
+                    "diff": "@@ -102,7 +102,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n         } else if (opcode == Instruction::JUMP) {\n             jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) break; // Jump offset straddles EOF\n-            if (bits == 0) break; // No input bits left\n+            if (1==0) break; // No input bits left\n             if (int64_t{jump} >= int64_t{endpos - pos}) break; // Jumping past EOF\n             if (ip[ip.size() - bits]) {\n                 pos += jump;\n",
+                    "status": "alive"
+                }
+            ],
+            "142": [
+                {
+                    "id": 1,
+                    "diff": "@@ -139,7 +139,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n     Instruction prevopcode = Instruction::JUMP;\n     bool had_incomplete_match = false;\n     while (pos != endpos) {\n-        uint32_t offset = pos - begin;\n+        uint32_t offset = (pos - begin) - 1;\n         if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -139,7 +139,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n     Instruction prevopcode = Instruction::JUMP;\n     bool had_incomplete_match = false;\n     while (pos != endpos) {\n-        uint32_t offset = pos - begin;\n+        uint32_t offset = (pos - begin) + 1;\n         if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n",
+                    "status": "alive"
+                }
+            ],
+            "130": [
+                {
+                    "id": 1,
+                    "diff": "@@ -127,7 +127,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n         }\n     }\n     assert(false); // Reached EOF without RETURN, or aborted (see any of the breaks above) - should have been caught by SanityCheckASMap below\n-    return 0; // 0 is not a valid ASN\n+    return 1; // 0 is not a valid ASN\n }\n \n bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n",
+                    "status": "alive"
+                }
+            ],
+            "104": [
+                {
+                    "id": 1,
+                    "diff": "@@ -101,7 +101,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             return default_asn;\n         } else if (opcode == Instruction::JUMP) {\n             jump = DecodeJump(pos, endpos);\n-            if (jump == INVALID) break; // Jump offset straddles EOF\n+            if (1==0) break; // Jump offset straddles EOF\n             if (bits == 0) break; // No input bits left\n             if (int64_t{jump} >= int64_t{endpos - pos}) break; // Jumping past EOF\n             if (ip[ip.size() - bits]) {\n",
+                    "status": "alive"
+                }
+            ],
+            "111": [
+                {
+                    "id": 1,
+                    "diff": "@@ -108,7 +108,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n                 pos += jump;\n             }\n             bits--;\n-        } else if (opcode == Instruction::MATCH) {\n+        } else if (1==1) {\n             match = DecodeMatch(pos, endpos);\n             if (match == INVALID) break; // Match bits straddle EOF\n             matchlen = std::bit_width(match) - 1;\n",
+                    "status": "alive"
+                }
+            ],
+            "140": [
+                {
+                    "id": 1,
+                    "diff": "@@ -137,7 +137,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n     std::vector<std::pair<uint32_t, int>> jumps; // All future positions we may jump to (bit offset in asmap -> bits to consume left)\n     jumps.reserve(bits);\n     Instruction prevopcode = Instruction::JUMP;\n-    bool had_incomplete_match = false;\n+    bool had_incomplete_match = true;\n     while (pos != endpos) {\n         uint32_t offset = pos - begin;\n         if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n",
+                    "status": "alive"
+                }
+            ],
+            "151": [
+                {
+                    "id": 1,
+                    "diff": "@@ -148,7 +148,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n-                if (endpos - pos > 7) return false; // Excessive padding\n+                if (1==0) return false; // Excessive padding\n                 while (pos != endpos) {\n                     if (*pos) return false; // Nonzero padding bit\n                     ++pos;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -148,7 +148,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n-                if (endpos - pos > 7) return false; // Excessive padding\n+                \n                 while (pos != endpos) {\n                     if (*pos) return false; // Nonzero padding bit\n                     ++pos;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -148,7 +148,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n-                if (endpos - pos > 7) return false; // Excessive padding\n+                if (endpos - pos >= 7) return false; // Excessive padding\n                 while (pos != endpos) {\n                     if (*pos) return false; // Nonzero padding bit\n                     ++pos;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -148,7 +148,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n-                if (endpos - pos > 7) return false; // Excessive padding\n+                if (endpos - pos > 7) return true; // Excessive padding\n                 while (pos != endpos) {\n                     if (*pos) return false; // Nonzero padding bit\n                     ++pos;\n",
+                    "status": "alive"
+                }
+            ],
+            "167": [
+                {
+                    "id": 1,
+                    "diff": "@@ -164,7 +164,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             }\n         } else if (opcode == Instruction::JUMP) {\n             uint32_t jump = DecodeJump(pos, endpos);\n-            if (jump == INVALID) return false; // Jump offset straddles EOF\n+            if (jump == INVALID) return true; // Jump offset straddles EOF\n             if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -164,7 +164,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             }\n         } else if (opcode == Instruction::JUMP) {\n             uint32_t jump = DecodeJump(pos, endpos);\n-            if (jump == INVALID) return false; // Jump offset straddles EOF\n+            if (1==0) return false; // Jump offset straddles EOF\n             if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -164,7 +164,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             }\n         } else if (opcode == Instruction::JUMP) {\n             uint32_t jump = DecodeJump(pos, endpos);\n-            if (jump == INVALID) return false; // Jump offset straddles EOF\n+            \n             if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n",
+                    "status": "alive"
+                }
+            ],
+            "172": [
+                {
+                    "id": 1,
+                    "diff": "@@ -169,7 +169,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n-            if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n+            if (!jumps.empty() && jump_offset > jumps.back().first) return false; // Intersecting jumps\n             jumps.emplace_back(jump_offset, bits);\n             prevopcode = Instruction::JUMP;\n         } else if (opcode == Instruction::MATCH) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -169,7 +169,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n-            if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n+            if (!jumps.empty() && jump_offset >= jumps.back().first) return true; // Intersecting jumps\n             jumps.emplace_back(jump_offset, bits);\n             prevopcode = Instruction::JUMP;\n         } else if (opcode == Instruction::MATCH) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -169,7 +169,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n-            if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n+            \n             jumps.emplace_back(jump_offset, bits);\n             prevopcode = Instruction::JUMP;\n         } else if (opcode == Instruction::MATCH) {\n",
+                    "status": "alive"
+                }
+            ],
+            "180": [
+                {
+                    "id": 1,
+                    "diff": "@@ -177,7 +177,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n-            if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n+            \n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -177,7 +177,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n-            if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n+            if (1==0) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -177,7 +177,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n-            if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n+            if (matchlen < 8 && had_incomplete_match) return true; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -177,7 +177,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n-            if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n+            if (matchlen >= 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 5,
+                    "diff": "@@ -177,7 +177,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n-            if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n+            if (matchlen <= 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 6,
+                    "diff": "@@ -177,7 +177,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n-            if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n+            if (matchlen > 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n",
+                    "status": "alive"
+                }
+            ],
+            "177": [
+                {
+                    "id": 1,
+                    "diff": "@@ -174,7 +174,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             prevopcode = Instruction::JUMP;\n         } else if (opcode == Instruction::MATCH) {\n             uint32_t match = DecodeMatch(pos, endpos);\n-            if (match == INVALID) return false; // Match bits straddle EOF\n+            if (1==0) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -174,7 +174,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             prevopcode = Instruction::JUMP;\n         } else if (opcode == Instruction::MATCH) {\n             uint32_t match = DecodeMatch(pos, endpos);\n-            if (match == INVALID) return false; // Match bits straddle EOF\n+            \n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -174,7 +174,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             prevopcode = Instruction::JUMP;\n         } else if (opcode == Instruction::MATCH) {\n             uint32_t match = DecodeMatch(pos, endpos);\n-            if (match == INVALID) return false; // Match bits straddle EOF\n+            if (match == INVALID) return true; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n",
+                    "status": "alive"
+                }
+            ],
+            "186": [
+                {
+                    "id": 1,
+                    "diff": "@@ -183,7 +183,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n+            if (prevopcode == Instruction::DEFAULT) return true; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -183,7 +183,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n+            if (prevopcode != Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -183,7 +183,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n+            \n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -183,7 +183,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n+            if (1==1) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 5,
+                    "diff": "@@ -183,7 +183,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n+            if (1==0) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n",
+                    "status": "alive"
+                }
+            ],
+            "181": [
+                {
+                    "id": 1,
+                    "diff": "@@ -178,7 +178,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n-            had_incomplete_match = (matchlen < 8);\n+            had_incomplete_match = (matchlen > 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n",
+                    "status": "alive"
+                }
+            ],
+            "169": [
+                {
+                    "id": 1,
+                    "diff": "@@ -166,7 +166,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             uint32_t jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n             if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n-            if (bits == 0) return false; // Consuming bits past the end of the input\n+            if (bits == 0) return true; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n             if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -166,7 +166,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             uint32_t jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n             if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n-            if (bits == 0) return false; // Consuming bits past the end of the input\n+            \n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n             if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -166,7 +166,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             uint32_t jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n             if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n-            if (bits == 0) return false; // Consuming bits past the end of the input\n+            if (1==0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n             if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n",
+                    "status": "alive"
+                }
+            ],
+            "179": [
+                {
+                    "id": 1,
+                    "diff": "@@ -176,7 +176,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             uint32_t match = DecodeMatch(pos, endpos);\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n-            if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n+            if (prevopcode != Instruction::MATCH) had_incomplete_match = true;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -176,7 +176,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             uint32_t match = DecodeMatch(pos, endpos);\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n-            if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n+            if (1==0) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -176,7 +176,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             uint32_t match = DecodeMatch(pos, endpos);\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n-            if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n+            if (1==1) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -176,7 +176,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             uint32_t match = DecodeMatch(pos, endpos);\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n-            if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n+            if (prevopcode == Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n",
+                    "status": "alive"
+                }
+            ],
+            "153": [
+                {
+                    "id": 1,
+                    "diff": "@@ -150,7 +150,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n                 while (pos != endpos) {\n-                    if (*pos) return false; // Nonzero padding bit\n+                    \n                     ++pos;\n                 }\n                 return true; // Sanely reached EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -150,7 +150,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n                 while (pos != endpos) {\n-                    if (*pos) return false; // Nonzero padding bit\n+                    if (*pos) return true; // Nonzero padding bit\n                     ++pos;\n                 }\n                 return true; // Sanely reached EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -150,7 +150,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n                 while (pos != endpos) {\n-                    if (*pos) return false; // Nonzero padding bit\n+                    if (1==0) return false; // Nonzero padding bit\n                     ++pos;\n                 }\n                 return true; // Sanely reached EOF\n",
+                    "status": "alive"
+                }
+            ],
+            "168": [
+                {
+                    "id": 1,
+                    "diff": "@@ -165,7 +165,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::JUMP) {\n             uint32_t jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n-            if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n+            \n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -165,7 +165,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::JUMP) {\n             uint32_t jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n-            if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n+            if (int64_t{jump} > int64_t{endpos - pos}) return true; // Jump out of range\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -165,7 +165,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::JUMP) {\n             uint32_t jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n-            if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n+            if (1==0) return false; // Jump out of range\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -165,7 +165,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::JUMP) {\n             uint32_t jump = DecodeJump(pos, endpos);\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n-            if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n+            if (int64_t{jump} >= int64_t{endpos - pos}) return false; // Jump out of range\n             if (bits == 0) return false; // Consuming bits past the end of the input\n             --bits;\n             uint32_t jump_offset = pos - begin + jump;\n",
+                    "status": "alive"
+                }
+            ],
+            "31": [
+                {
+                    "id": 1,
+                    "diff": "@@ -28,7 +28,7 @@ uint32_t DecodeBits(std::vector<bool>::const_iterator& bitpos, const std::vector\n     for (std::vector<uint8_t>::const_iterator bit_sizes_it = bit_sizes.begin();\n         bit_sizes_it != bit_sizes.end(); ++bit_sizes_it) {\n         if (bit_sizes_it + 1 != bit_sizes.end()) {\n-            if (bitpos == endpos) break;\n+            if (1==0) break;\n             bit = *bitpos;\n             bitpos++;\n         } else {\n",
+                    "status": "alive"
+                }
+            ],
+            "188": [
+                {
+                    "id": 1,
+                    "diff": "@@ -185,7 +185,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            \n             prevopcode = Instruction::DEFAULT;\n         } else {\n             return false; // Instruction straddles EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -185,7 +185,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            if (1==0) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n         } else {\n             return false; // Instruction straddles EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -185,7 +185,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            if (asn == INVALID) return true; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n         } else {\n             return false; // Instruction straddles EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -185,7 +185,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            if (asn != INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n         } else {\n             return false; // Instruction straddles EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 5,
+                    "diff": "@@ -185,7 +185,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         } else if (opcode == Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n-            if (asn == INVALID) return false; // ASN straddles EOF\n+            if (1==1) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n         } else {\n             return false; // Instruction straddles EOF\n",
+                    "status": "alive"
+                }
+            ],
+            "152": [
+                {
+                    "id": 1,
+                    "diff": "@@ -149,7 +149,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n-                while (pos != endpos) {\n+                while (1==0) {\n                     if (*pos) return false; // Nonzero padding bit\n                     ++pos;\n                 }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -149,7 +149,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n-                while (pos != endpos) {\n+                while (pos == endpos) {\n                     if (*pos) return false; // Nonzero padding bit\n                     ++pos;\n                 }\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -149,7 +149,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n                 if (endpos - pos > 7) return false; // Excessive padding\n-                while (pos != endpos) {\n+                while (pos != endpos) {break;\n                     if (*pos) return false; // Nonzero padding bit\n                     ++pos;\n                 }\n",
+                    "status": "alive"
+                }
+            ],
+            "170": [
+                {
+                    "id": 1,
+                    "diff": "@@ -167,7 +167,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (jump == INVALID) return false; // Jump offset straddles EOF\n             if (int64_t{jump} > int64_t{endpos - pos}) return false; // Jump out of range\n             if (bits == 0) return false; // Consuming bits past the end of the input\n-            --bits;\n+            ++bits;\n             uint32_t jump_offset = pos - begin + jump;\n             if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n             jumps.emplace_back(jump_offset, bits);\n",
+                    "status": "alive"
+                }
+            ],
+            "22": [
+                {
+                    "id": 1,
+                    "diff": "@@ -19,7 +19,7 @@\n \n namespace {\n \n-constexpr uint32_t INVALID = 0xFFFFFFFF;\n+constexpr uint32_t INVALID = (0xFFFFFFFF) - 1;\n \n uint32_t DecodeBits(std::vector<bool>::const_iterator& bitpos, const std::vector<bool>::const_iterator& endpos, uint8_t minval, const std::vector<uint8_t> &bit_sizes)\n {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -19,7 +19,7 @@\n \n namespace {\n \n-constexpr uint32_t INVALID = 0xFFFFFFFF;\n+constexpr uint32_t INVALID = (0xFFFFFFFF) + 1;\n \n uint32_t DecodeBits(std::vector<bool>::const_iterator& bitpos, const std::vector<bool>::const_iterator& endpos, uint8_t minval, const std::vector<uint8_t> &bit_sizes)\n {\n",
+                    "status": "alive"
+                }
+            ],
+            "182": [
+                {
+                    "id": 1,
+                    "diff": "@@ -179,7 +179,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n-            if (bits < matchlen) return false; // Consuming bits past the end of the input\n+            if (bits <= matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -179,7 +179,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n-            if (bits < matchlen) return false; // Consuming bits past the end of the input\n+            if (1==0) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -179,7 +179,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n-            if (bits < matchlen) return false; // Consuming bits past the end of the input\n+            if (bits < matchlen) return true; // Consuming bits past the end of the input\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 4,
+                    "diff": "@@ -179,7 +179,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n             if (matchlen < 8 && had_incomplete_match) return false; // Within a sequence of matches only at most one should be incomplete\n             had_incomplete_match = (matchlen < 8);\n-            if (bits < matchlen) return false; // Consuming bits past the end of the input\n+            \n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n",
+                    "status": "alive"
+                }
+            ],
+            "187": [
+                {
+                    "id": 1,
+                    "diff": "@@ -184,7 +184,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n-            uint32_t asn = DecodeASN(pos, endpos);\n+            uint32_t asn = (DecodeASN(pos, endpos)) - 1;\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n         } else {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -184,7 +184,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             prevopcode = Instruction::MATCH;\n         } else if (opcode == Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n-            uint32_t asn = DecodeASN(pos, endpos);\n+            uint32_t asn = (DecodeASN(pos, endpos)) + 1;\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n         } else {\n",
+                    "status": "alive"
+                }
+            ],
+            "176": [
+                {
+                    "id": 1,
+                    "diff": "@@ -173,7 +173,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             jumps.emplace_back(jump_offset, bits);\n             prevopcode = Instruction::JUMP;\n         } else if (opcode == Instruction::MATCH) {\n-            uint32_t match = DecodeMatch(pos, endpos);\n+            uint32_t match = (DecodeMatch(pos, endpos)) + 1;\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n             if (prevopcode != Instruction::MATCH) had_incomplete_match = false;\n",
+                    "status": "alive"
+                }
+            ],
+            "160": [
+                {
+                    "id": 1,
+                    "diff": "@@ -157,7 +157,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             } else {\n                 // Continue by pretending we jumped to the next instruction\n                 offset = pos - begin;\n-                if (offset != jumps.back().first) return false; // Unreachable code\n+                \n                 bits = jumps.back().second; // Restore the number of bits we would have had left after this jump\n                 jumps.pop_back();\n                 prevopcode = Instruction::JUMP;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -157,7 +157,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             } else {\n                 // Continue by pretending we jumped to the next instruction\n                 offset = pos - begin;\n-                if (offset != jumps.back().first) return false; // Unreachable code\n+                if (offset != jumps.back().first) return true; // Unreachable code\n                 bits = jumps.back().second; // Restore the number of bits we would have had left after this jump\n                 jumps.pop_back();\n                 prevopcode = Instruction::JUMP;\n",
+                    "status": "alive"
+                }
+            ],
+            "41": [
+                {
+                    "id": 1,
+                    "diff": "@@ -38,7 +38,7 @@ uint32_t DecodeBits(std::vector<bool>::const_iterator& bitpos, const std::vector\n             val += (1 << *bit_sizes_it);\n         } else {\n             for (int b = 0; b < *bit_sizes_it; b++) {\n-                if (bitpos == endpos) return INVALID; // Reached EOF in mantissa\n+                \n                 bit = *bitpos;\n                 bitpos++;\n                 val += bit << (*bit_sizes_it - 1 - b);\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -38,7 +38,7 @@ uint32_t DecodeBits(std::vector<bool>::const_iterator& bitpos, const std::vector\n             val += (1 << *bit_sizes_it);\n         } else {\n             for (int b = 0; b < *bit_sizes_it; b++) {\n-                if (bitpos == endpos) return INVALID; // Reached EOF in mantissa\n+                if (1==0) return INVALID; // Reached EOF in mantissa\n                 bit = *bitpos;\n                 bitpos++;\n                 val += bit << (*bit_sizes_it - 1 - b);\n",
+                    "status": "alive"
+                }
+            ],
+            "185": [
+                {
+                    "id": 1,
+                    "diff": "@@ -182,7 +182,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n-        } else if (opcode == Instruction::DEFAULT) {\n+        } else if (1==0) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -182,7 +182,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n-        } else if (opcode == Instruction::DEFAULT) {\n+        } else if (1==1) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -182,7 +182,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (bits < matchlen) return false; // Consuming bits past the end of the input\n             bits -= matchlen;\n             prevopcode = Instruction::MATCH;\n-        } else if (opcode == Instruction::DEFAULT) {\n+        } else if (opcode != Instruction::DEFAULT) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be two successive DEFAULTs (they could be combined into one)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n",
+                    "status": "alive"
+                }
+            ],
+            "175": [
+                {
+                    "id": 1,
+                    "diff": "@@ -172,7 +172,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (!jumps.empty() && jump_offset >= jumps.back().first) return false; // Intersecting jumps\n             jumps.emplace_back(jump_offset, bits);\n             prevopcode = Instruction::JUMP;\n-        } else if (opcode == Instruction::MATCH) {\n+        } else if (1==1) {\n             uint32_t match = DecodeMatch(pos, endpos);\n             if (match == INVALID) return false; // Match bits straddle EOF\n             int matchlen = std::bit_width(match) - 1;\n",
+                    "status": "alive"
+                }
+            ],
+            "93": [
+                {
+                    "id": 1,
+                    "diff": "@@ -90,7 +90,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n     std::vector<bool>::const_iterator pos = asmap.begin();\n     const std::vector<bool>::const_iterator endpos = asmap.end();\n     uint8_t bits = ip.size();\n-    uint32_t default_asn = 0;\n+    uint32_t default_asn = (0) - 1;\n     uint32_t jump, match, matchlen;\n     Instruction opcode;\n     while (pos != endpos) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -90,7 +90,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n     std::vector<bool>::const_iterator pos = asmap.begin();\n     const std::vector<bool>::const_iterator endpos = asmap.end();\n     uint8_t bits = ip.size();\n-    uint32_t default_asn = 0;\n+    uint32_t default_asn = (0) + 1;\n     uint32_t jump, match, matchlen;\n     Instruction opcode;\n     while (pos != endpos) {\n",
+                    "status": "alive"
+                }
+            ],
+            "113": [
+                {
+                    "id": 1,
+                    "diff": "@@ -110,7 +110,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             bits--;\n         } else if (opcode == Instruction::MATCH) {\n             match = DecodeMatch(pos, endpos);\n-            if (match == INVALID) break; // Match bits straddle EOF\n+            if (1==0) break; // Match bits straddle EOF\n             matchlen = std::bit_width(match) - 1;\n             if (bits < matchlen) break; // Not enough input bits\n             for (uint32_t bit = 0; bit < matchlen; bit++) {\n",
+                    "status": "alive"
+                }
+            ],
+            "146": [
+                {
+                    "id": 1,
+                    "diff": "@@ -143,7 +143,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n+            if (prevopcode == Instruction::DEFAULT) return true; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -143,7 +143,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n+            \n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 3,
+                    "diff": "@@ -143,7 +143,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         if (!jumps.empty() && offset >= jumps.back().first) return false; // There was a jump into the middle of the previous instruction\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n-            if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n+            if (1==0) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n             uint32_t asn = DecodeASN(pos, endpos);\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n",
+                    "status": "alive"
+                }
+            ],
+            "194": [
+                {
+                    "id": 1,
+                    "diff": "@@ -191,7 +191,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             return false; // Instruction straddles EOF\n         }\n     }\n-    return false; // Reached EOF without RETURN instruction\n+    return true; // Reached EOF without RETURN instruction\n }\n \n std::vector<bool> DecodeAsmap(fs::path path)\n",
+                    "status": "alive"
+                }
+            ],
+            "191": [
+                {
+                    "id": 1,
+                    "diff": "@@ -188,7 +188,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n             if (asn == INVALID) return false; // ASN straddles EOF\n             prevopcode = Instruction::DEFAULT;\n         } else {\n-            return false; // Instruction straddles EOF\n+            return true; // Instruction straddles EOF\n         }\n     }\n     return false; // Reached EOF without RETURN instruction\n",
+                    "status": "alive"
+                }
+            ],
+            "96": [
+                {
+                    "id": 1,
+                    "diff": "@@ -93,7 +93,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n     uint32_t default_asn = 0;\n     uint32_t jump, match, matchlen;\n     Instruction opcode;\n-    while (pos != endpos) {\n+    while (1==1) {\n         opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n             default_asn = DecodeASN(pos, endpos);\n",
+                    "status": "alive"
+                }
+            ],
+            "115": [
+                {
+                    "id": 1,
+                    "diff": "@@ -112,7 +112,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             match = DecodeMatch(pos, endpos);\n             if (match == INVALID) break; // Match bits straddle EOF\n             matchlen = std::bit_width(match) - 1;\n-            if (bits < matchlen) break; // Not enough input bits\n+            if (1==0) break; // Not enough input bits\n             for (uint32_t bit = 0; bit < matchlen; bit++) {\n                 if ((ip[ip.size() - bits]) != ((match >> (matchlen - 1 - bit)) & 1)) {\n                     return default_asn;\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -112,7 +112,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n             match = DecodeMatch(pos, endpos);\n             if (match == INVALID) break; // Match bits straddle EOF\n             matchlen = std::bit_width(match) - 1;\n-            if (bits < matchlen) break; // Not enough input bits\n+            if (bits <= matchlen) break; // Not enough input bits\n             for (uint32_t bit = 0; bit < matchlen; bit++) {\n                 if ((ip[ip.size() - bits]) != ((match >> (matchlen - 1 - bit)) & 1)) {\n                     return default_asn;\n",
+                    "status": "alive"
+                }
+            ],
+            "147": [
+                {
+                    "id": 1,
+                    "diff": "@@ -144,7 +144,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n-            uint32_t asn = DecodeASN(pos, endpos);\n+            uint32_t asn = (DecodeASN(pos, endpos)) + 1;\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n",
+                    "status": "alive"
+                },
+                {
+                    "id": 2,
+                    "diff": "@@ -144,7 +144,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)\n         Instruction opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n             if (prevopcode == Instruction::DEFAULT) return false; // There should not be any RETURN immediately after a DEFAULT (could be combined into just RETURN)\n-            uint32_t asn = DecodeASN(pos, endpos);\n+            uint32_t asn = (DecodeASN(pos, endpos)) - 1;\n             if (asn == INVALID) return false; // ASN straddles EOF\n             if (jumps.empty()) {\n                 // Nothing to execute anymore\n",
+                    "status": "alive"
+                }
+            ],
+            "100": [
+                {
+                    "id": 1,
+                    "diff": "@@ -97,7 +97,7 @@ uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip)\n         opcode = DecodeType(pos, endpos);\n         if (opcode == Instruction::RETURN) {\n             default_asn = DecodeASN(pos, endpos);\n-            if (default_asn == INVALID) break; // ASN straddles EOF\n+            if (1==0) break; // ASN straddles EOF\n             return default_asn;\n         } else if (opcode == Instruction::JUMP) {\n             jump = DecodeJump(pos, endpos);\n",
+                    "status": "alive"
+                }
+            ]
+        }
     }
 ]
