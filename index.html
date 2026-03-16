@@ -440,6 +440,16 @@
 
   .pr-card-body { flex: 1; min-width: 0; }
 
+  .pr-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text1);
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .pr-card-meta {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -687,6 +697,7 @@ function init() {
   renderOverview();
   renderPrList();
   fetchBitcoinCoreFiles();
+  fetchPrTitles(Object.keys(PR_DATA));
 
   // Snapshot weekly state so we can restore it when leaving a PR detail view
   window._weeklySnapshot = {
@@ -741,6 +752,39 @@ async function fetchBitcoinCoreFiles() {
     console.warn('GitHub fetch failed, using tested files only:', e.message);
     renderFileList(null);
   }
+}
+
+// ── PR TITLES ─────────────────────────────────────────────────────────────────
+const PR_TITLE_CACHE_KEY = 'btc_pr_titles_v1';
+const PR_TITLE_CACHE_TTL = 24 * 60 * 60 * 1000;
+let prTitles = {};
+
+async function fetchPrTitles(prNums) {
+  const cached = localStorage.getItem(PR_TITLE_CACHE_KEY);
+  if (cached) {
+    try {
+      const { ts, data } = JSON.parse(cached);
+      if (Date.now() - ts < PR_TITLE_CACHE_TTL) {
+        prTitles = data;
+        renderPrList();
+        return;
+      }
+    } catch (e) {}
+  }
+
+  const results = {};
+  await Promise.all(prNums.map(async prNum => {
+    try {
+      const res = await fetch(`https://api.github.com/repos/bitcoin/bitcoin/pulls/${prNum}`);
+      if (!res.ok) return;
+      const json = await res.json();
+      results[prNum] = json.title || null;
+    } catch (e) {}
+  }));
+
+  prTitles = results;
+  localStorage.setItem(PR_TITLE_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: results }));
+  renderPrList();
 }
 
 // ── FILE LIST ─────────────────────────────────────────────────────────────────
@@ -1005,7 +1049,10 @@ function renderMutantList(fileMutants) {
 
 function setFilter(status) {
   mutantFilter = status;
-  if (selectedFile) renderMutantList(DB.mutants.filter(m => m.file_path === selectedFile));
+  if (selectedFile) {
+    const allMutants = selectedPr ? (PR_DATA[selectedPr]?.mutants || []) : DB.mutants;
+    renderMutantList(allMutants.filter(m => m.file_path === selectedFile));
+  }
 }
 
 // ── DIFF ──────────────────────────────────────────────────────────────────────
@@ -1205,10 +1252,12 @@ function renderPrList() {
     const date  = pr.run.created_at ? new Date(pr.run.created_at).toLocaleDateString() : '—';
     const commit = pr.run.commit_hash ? pr.run.commit_hash.slice(0, 8) : '—';
 
+    const title = prTitles[prNum];
     return `
       <div class="pr-card fade-in" onclick="selectPr('${prNum}')">
         <div class="pr-card-number">#${prNum}</div>
         <div class="pr-card-body">
+          ${title ? `<div class="pr-card-title">${title}</div>` : ''}
           <div class="pr-card-meta">
             <span>commit ${commit}</span>
             <span>${files.length} file${files.length !== 1 ? 's' : ''}</span>
@@ -1296,11 +1345,13 @@ function selectPr(prNum) {
       </tr>`;
   }).join('');
 
+  const prTitle = prTitles[prNum];
   const container = document.getElementById('prContent');
   container.innerHTML = `
     <div class="pr-detail-topbar">
       <button onclick="backToPrList()">←</button>
       <span style="color:var(--accent);font-weight:600">PR #${prNum}</span>
+      ${prTitle ? `<span style="color:var(--text3)">·</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${prTitle}">${prTitle}</span>` : ''}
       <span style="color:var(--text3)">·</span>
       <span>commit ${commit}</span>
       <span style="color:var(--text3)">·</span>
