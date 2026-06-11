@@ -618,7 +618,7 @@
   </button>
   <div class="header-logo">
     <div class="btc-icon">₿</div>
-    <span class="header-logo-text">Bitcoin Core</span>
+    <span class="header-logo-text">secp256k1</span>
   </div>
   <span class="header-sep hide-mobile">/</span>
   <span class="header-title hide-mobile">Mutation Testing Dashboard</span>
@@ -729,7 +729,7 @@ function scoreColor(score) {
 }
 
 // ── GITHUB FILE TREE ──────────────────────────────────────────────────────────
-const GH_CACHE_KEY = 'btc_filetree_v2';
+const GH_CACHE_KEY = 'secp_filetree_v1';
 const GH_CACHE_TTL = 6 * 60 * 60 * 1000;
 
 async function fetchBitcoinCoreFiles() {
@@ -744,7 +744,7 @@ async function fetchBitcoinCoreFiles() {
     if (!res.ok) throw new Error('GitHub API error');
     const json = await res.json();
     const cppFiles = json.tree
-      .filter(f => f.type === 'blob' && (f.path.endsWith('.cpp') || f.path.endsWith('.h')))
+      .filter(f => f.type === 'blob' && (f.path.endsWith('.c') || f.path.endsWith('.h')))
       .map(f => f.path);
     localStorage.setItem(GH_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: cppFiles }));
     renderFileList(cppFiles);
