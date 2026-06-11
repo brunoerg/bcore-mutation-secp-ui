@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bitcoin Core — Mutation Testing Dashboard</title>
+<title>secp256k1 — Mutation Testing Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
 <style>
@@ -740,7 +740,7 @@ async function fetchBitcoinCoreFiles() {
       if (Date.now() - ts < GH_CACHE_TTL) { renderFileList(data); return; }
     }
     const commit = DB.runs[0]?.commit_hash || 'master';
-    const res = await fetch(`https://api.github.com/repos/bitcoin/bitcoin/git/trees/${commit}?recursive=1`);
+    const res = await fetch(`https://api.github.com/repos/bitcoin-core/secp256k1/git/trees/${commit}?recursive=1`);
     if (!res.ok) throw new Error('GitHub API error');
     const json = await res.json();
     const cppFiles = json.tree
@@ -775,7 +775,7 @@ async function fetchPrTitles(prNums) {
   const results = {};
   await Promise.all(prNums.map(async prNum => {
     try {
-      const res = await fetch(`https://api.github.com/repos/bitcoin/bitcoin/pulls/${prNum}`);
+      const res = await fetch(`https://api.github.com/repos/bitcoin-core/secp256k1/pulls/${prNum}`);
       if (!res.ok) return;
       const json = await res.json();
       results[prNum] = json.title || null;
@@ -1186,7 +1186,7 @@ function copyDiff() {
 }
 
 // ── REPORT MUTANT ─────────────────────────────────────────────────────────────
-const GITHUB_REPO = 'brunoerg/bcore-mutation-ui';
+const GITHUB_REPO = 'brunoerg/bcore-mutation-secp-ui';
 
 function reportMutant(id) {
   // Look in PR mutants first, then weekly
